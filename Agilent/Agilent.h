@@ -7,6 +7,10 @@
   #include <stdint.h>
   extern char *agilent_path;
 
+  #ifndef N_TWISTORR_DRIVES
+    #define N_TWISTORR_DRIVES 1
+  #endif
+  
   /*
    * flags:
    *   1: window 0 Start/Stop
@@ -25,6 +29,11 @@
     float pump_status; // window 205 (0-6)
     float rotation_speed; // window 210 (100-963/1010)
     unsigned char flags;
+    unsigned char fill[3]; // For alignment
+  } TwisTorr_TM_t;
+  
+  typedef struct __attribute__((__packed__)) {
+    TwisTorr_TM_t drive[N_TWISTORR_DRIVES];
   } TwisTorr_t;
 
   #ifdef __cplusplus
@@ -74,7 +83,7 @@
         int ProcessData(int flag);
         Timeout *GetTimeout();
         void submit_req(command_request *req);
-        static const unsigned TT_DevNo = 1;
+        static const unsigned TT_DevNo[N_TWISTORR_DRIVES] = {1};
       private:
         void update_termios();
         static const unsigned TT_bufsize = 50;
