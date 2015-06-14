@@ -1,0 +1,39 @@
+TwisTorr {
+  HBox { +-; Title: TwisTorr; -+ };
+  ""          "1";
+  ""      (TT1_Start,5);
+  Speed:  (TT1_Speed,4);
+  WtrCl:  (TT1_WtrCl,3);
+  ActStp: (TT1_ActStp,3);
+  Vent:   (TT1_VentVlv,3);
+  VentOp: (TT1_VentOp,4);
+  I:      (TT1_I,6)    mA;
+  V:      (TT1_V,6)    V;
+  W:      (TT1_W,6)    W;
+  T:      (TT1_T,6)    C;
+  Drive:  (TT1_drvf,6) Hz;
+  Speed:  (TT1_spd,6)  Hz;
+  Status: (TT1_Status,6);
+  Stale:  (TT_stale,3);
+}
+
+PC {
+  HBox { +-; Title: PC; -+ };
+  CPU: (CPU_Pct,3) %;
+  Disk: (Disk,5) %;
+  Mem:  (freemem,7) MB;
+}
+
+Status {
+  HBox { +-; Title: Status; -+ };
+  SWStat: (SWStat,3);
+  >(flttime,9)<;
+  MFCtr: (MFCtr,5);
+}
+
+{ HBox {
+    |; [TwisTorr]; |; {
+      [PC];
+      [Status];
+    }; | }
+}

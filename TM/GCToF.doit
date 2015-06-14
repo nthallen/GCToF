@@ -1,0 +1,4 @@
+batchfile interact
+display GCToFdisp
+client GCToFclt
+memo

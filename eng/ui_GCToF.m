@@ -1,0 +1,20 @@
+function ui_GCToF
+f = ne_dialg('Wennberg GC ToF',1);
+f = ne_dialg(f, 'add', 0, 1, 'gGCToFhk', 'HK' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFhkcpu', 'CPU' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFhkd', 'Disk' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFhkfreemem', 'freemem' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFhksws', 'SW Stat' );
+f = ne_dialg(f, 'newcol');
+f = ne_dialg(f, 'add', 0, 1, 'gGCToFtt', 'Twis Torr' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFtti', 'I' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFttt', 'T' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFttv', 'V' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFttw', 'W' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFtts', 'Speed' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFttstatus', 'Status' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFttstale', 'Stale' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFttflags', 'flags' );
+f = ne_listdirs(f, 'GCTof_Data_Dir', 6);
+f = ne_dialg(f, 'newcol');
+ne_dialg(f, 'resize');

@@ -110,7 +110,11 @@ bool command_request::init(uint8_t device, uint16_t window, bool read,
         nl_error(4, "Invalid cmd_type in command_request::init");
     }
   }
-  this->device = device;
+  if (device < 0 || device >= N_TWISTORR_DRIVES) {
+    nl_error(2, "Device number %d out of range", device);
+    return true;
+  }
+  this->device = TwisTorr::TT_DevNo[device];
   this->window = window;
   this->read = read;
   req_buf[0] = 0x02;

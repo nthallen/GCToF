@@ -7,9 +7,7 @@
   #include <stdint.h>
   extern char *agilent_path;
 
-  #ifndef N_TWISTORR_DRIVES
-    #define N_TWISTORR_DRIVES 1
-  #endif
+  #define N_TWISTORR_DRIVES 1
   
   /*
    * flags:
@@ -83,7 +81,7 @@
         int ProcessData(int flag);
         Timeout *GetTimeout();
         void submit_req(command_request *req);
-        static const unsigned TT_DevNo[N_TWISTORR_DRIVES] = {1};
+        static const unsigned TT_DevNo[N_TWISTORR_DRIVES];
       private:
         void update_termios();
         static const unsigned TT_bufsize = 50;

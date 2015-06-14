@@ -1,0 +1,39 @@
+%{
+  #include "Agilent.h"
+  #define TTselect(x,y) TwisTorr.drive[x].y
+%}
+TM "Receive" TwisTorr 1;
+
+TM typedef float TT_mAmps { text "%6.1f"; }
+TM typedef float TT_Volts { text "%6.1f"; }
+TM typedef float TT_Watts { text "%6.1f"; }
+TM typedef float TT_Hz { text "%6.1f"; }
+TM typedef float TT_Celcius { text "%6.1f"; }
+TM typedef float TT_Status_t { text "%6.1f"; }
+TM typedef unsigned char TT_flag_t { text "%02x"; }
+TM typedef unsigned char TT_stale_t { text "%3u"; }
+
+TM 1 Hz TT_stale_t TT_stale;
+TM 1 Hz TT_mAmps TT1_I;
+TM 1 Hz TT_Volts TT1_V;
+TM 1 Hz TT_Watts TT1_W;
+TM 1 Hz TT_Hz TT1_drvf;
+TM 1 Hz TT_Hz TT1_spd;
+TM 1 Hz TT_Celcius TT1_T;
+TM 1 Hz TT_Status_t TT1_Status;
+TM 1 Hz TT_flag_t TT1_flags;
+
+Group TwisTorr_grp (TT1_I, TT1_V, TT1_W, TT1_drvf, TT1_spd,
+    TT1_T, TT1_Status, TT1_flags) {
+  TT1_I = TTselect(0,pump_current);
+  TT1_V = TTselect(0,pump_voltage);
+  TT1_W = TTselect(0,pump_power);
+  TT1_drvf = TTselect(0,driving_freq);
+  TT1_spd = TTselect(0,rotation_speed);
+  TT1_T = TTselect(0,pump_temperature);
+  TT1_Status = TTselect(0,pump_status);
+  TT1_flags = TTselect(0,flags);
+  TT_stale = TwisTorr_obj->stale(255);
+  TwisTorr_obj->synch();
+}
+

@@ -6,6 +6,8 @@
 
 char *agilent_path;
 
+const unsigned TwisTorr::TT_DevNo[N_TWISTORR_DRIVES] = {1};
+
 void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
   for (unsigned drv = 0; drv < N_TWISTORR_DRIVES; ++drv) {
     unsigned devno = TwisTorr::TT_DevNo[drv];

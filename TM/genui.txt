@@ -1,0 +1,25 @@
+HEADER Wennberg GC ToF
+MNEMONIC GCToF
+HOMEDIR GCTof_Data_Dir
+ROWS 8
+  1 CPU_Pct HK CPU
+  1 Disk    HK Disk
+  1 freemem HK freemem
+  1 SWStat  HK SWStat
+# 1 MFCtr
+# 1 Synch
+  1 TT1_I   TwisTorr I
+  1 TT1_T   TwisTorr T
+  1 TT1_V   TwisTorr V
+  1 TT1_W   TwisTorr W
+  1 TT1_drvf TwisTorr Speed
+  1 TT1_spd TwisTorr Speed
+  1 TT1_Status TwisTorr Status
+  1 TT_stale TwisTorr Stale
+# 1 TT1_flags
+  1 TT1_Start:TT1_flags:0 TwisTorr flags
+  1 TT1_Speed:TT1_flags:1 TwisTorr flags
+  1 TT1_WtrCl:TT1_flags:2 TwisTorr flags
+  1 TT1_ActStp:TT1_flags:3 TwisTorr flags
+  1 TT1_VentVlv:TT1_flags:4 TwisTorr flags
+  1 TT1_VentOp:TT1_flags:5 TwisTorr flags

@@ -1,0 +1,26 @@
+%{
+  #define TTselect(x,y) TwisTorr.drive[x].y
+  #define TT_Start_text(x) ((x)?"Start":"Stop ")
+  #define TT_Speed_text(x) ((x)?"Low ":"High")
+  #define TT_YN_text(x) ((x)?"Yes":"No ")
+  #define TT_OnOff_text(x) ((x)?"On ":"Off")
+  #define TT_VentOp_text(x) ((x)?"Cmd ":"Auto")
+%}
+TM typedef unsigned char TT_Start_t { text "%5d" TT_Start_text(); }
+TM typedef unsigned char TT_Speed_t { text "%4d" TT_Speed_text(); }
+TM typedef unsigned char TT_YN_t { text "%3d" TT_YN_text(); }
+TM typedef unsigned char TT_OnOff_t { text "%3d" TT_OnOff_text(); }
+TM typedef unsigned char TT_VentOp_t { text "%4d" TT_VentOp_text(); }
+
+TT_Start_t TT1_Start; Invalidate TT1_Start;
+  { TT1_Start = (TT1_flags >> 0) & 1; Validate TT1_Start; }
+TT_Speed_t TT1_Speed; Invalidate TT1_Speed;
+  { TT1_Speed = (TT1_flags >> 1) & 1; Validate TT1_Speed; }
+TT_YN_t TT1_WtrCl; Invalidate TT1_WtrCl;
+  { TT1_WtrCl = (TT1_flags >> 2) & 1; Validate TT1_WtrCl; }
+TT_YN_t TT1_ActStp; Invalidate TT1_ActStp;
+  { TT1_ActStp = (TT1_flags >> 3) & 1; Validate TT1_ActStp; }
+TT_OnOff_t TT1_VentVlv; Invalidate TT1_VentVlv;
+  { TT1_VentVlv = (TT1_flags >> 4) & 1; Validate TT1_VentVlv; }
+TT_VentOp_t TT1_VentOp; Invalidate TT1_VentOp;
+  { TT1_VentOp = (TT1_flags >> 5) & 1; Validate TT1_VentOp; }
