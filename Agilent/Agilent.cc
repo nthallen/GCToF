@@ -29,6 +29,7 @@ void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
+  nl_error( 0, "Starting V0.1" );
   { Selector Loop;
     TwisTorr_t TT_TM;
     TwisTorr TT(agilent_path);
@@ -40,4 +41,5 @@ int main(int argc, char **argv) {
     Loop.add_child(&Cmd);
     Loop.event_loop();
   }
+  nl_error( 0, "Terminating" );
 }
