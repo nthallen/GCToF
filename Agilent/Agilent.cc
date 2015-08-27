@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
     Loop.add_child(&TT);
     Loop.add_child(&TM);
     Loop.add_child(&Cmd);
-    nl_error(DBG_MSG(1), "Entering event_loop()");
+    nl_error(MSG_DBG(1), "Entering event_loop()");
     Loop.event_loop();
   }
   nl_error( 0, "Terminating" );
