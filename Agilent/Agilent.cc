@@ -33,13 +33,17 @@ void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1" );
+  nl_error( 0, "Starting V0.1.2" );
   { Selector Loop;
     TwisTorr_t TT_TM;
     TwisTorr TT(agilent_path);
+    nl_error(MSG_DBG(1), "TwisTorr Initialized");
     enqueue_polls(&TT, &TT_TM);
+    nl_error(MSG_DBG(1), "polls enqueued");
     TM_Selectee TM("TwisTorr", &TT_TM, sizeof(TT_TM));
+    nl_error(MSG_DBG(1), "TM_Selectee initialized");
     TwisTorr_cmd Cmd(&TT);
+    nl_error(MSG_DBG(1), "TwisTorr_cmd Initialized");
     Loop.add_child(&TT);
     Loop.add_child(&TM);
     Loop.add_child(&Cmd);

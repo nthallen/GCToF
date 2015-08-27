@@ -5,7 +5,7 @@
 #include "nortlib.h"
 
 TwisTorr::TwisTorr(const char *path) :
-    Ser_Sel(path, O_RDWR, TT_bufsize) {
+    Ser_Sel(path, O_RDWR|O_NONBLOCK, TT_bufsize) {
   if (path == 0) {
     nl_error(3, "No path specified for TwisTorr device");
   } else {
@@ -13,10 +13,13 @@ TwisTorr::TwisTorr(const char *path) :
   }
   pending = 0;
   cur_poll = polls.begin();
+  nl_error(MSG_DBG(1), "TwisTorr ready for setup");
   setup(9600, 8, 'n', 1, 6, 1);
+  nl_error(MSG_DBG(1), "TwisTorr ready for flush");
   flush_input();
   flags = Selector::Sel_Read | Selector::gflag(0) | Selector::gflag(1) |
           Selector::Sel_Timeout;
+  nl_error(MSG_DBG(1), "TwisTorr done flushing, ready to tcgetattr");
   if (tcgetattr(fd, &termios_s)) {
     nl_error(2, "Error from tcgetattr: %s", strerror(errno));
   }
