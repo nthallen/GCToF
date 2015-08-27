@@ -72,8 +72,10 @@ void TwisTorr::update_termios() {
 command_request *TwisTorr::new_command_req() {
   command_request *cr;
   if (cmd_free.empty()) {
+    nl_error(MSG_DBG(2), "new_command_req() via new");
     cr = new command_request;
   } else {
+    nl_error(MSG_DBG(2), "new_command_req() via cmd_free");
     cr = cmd_free[0];
     cmd_free.pop_front();
   }
