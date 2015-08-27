@@ -3,6 +3,7 @@
  */
 #include "Agilent.h"
 #include "oui.h"
+#include "nortlib.h"
 
 char *agilent_path;
 
