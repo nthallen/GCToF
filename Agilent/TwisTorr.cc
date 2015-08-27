@@ -6,6 +6,11 @@
 
 TwisTorr::TwisTorr(const char *path) :
     Ser_Sel(path, O_RDWR, TT_bufsize) {
+  if (path == 0) {
+    nl_error(3, "No path specified for TwisTorr device");
+  } else {
+    nl_error(MSG_DBG(1), "Opened %s for TwisTorr device", path);
+  }
   pending = 0;
   cur_poll = polls.begin();
   setup(9600, 8, 'n', 1, 6, 1);
@@ -138,6 +143,7 @@ int TwisTorr::ProcessData(int flag) {
       } else {
         switch (pending->process_reply(&buf[cp+pending->req_sz], nc-cp-pending->req_sz)) {
           case TT_rep_ok:
+            nl_error(MSG_DBG(1), "Reply received OK");
             report_ok();
             break;
           case TT_rep_incomplete:

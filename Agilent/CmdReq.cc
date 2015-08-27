@@ -261,6 +261,9 @@ const char *command_request::ascii_escape() {
  * @return -1 if write returns anything but req_sz. 0 otherwise.
  */
 int command_request::write(int fd) {
+  if (nl_debug_level <= MSG_DBG(1)) {
+    nl_error(MSG_DBG(1), "Sending: '%s'", ascii_escape());
+  }
   int nb = ::write(fd, req_buf, req_sz);
   return (nb != (int)req_sz) ? -1 : 0;
 }
