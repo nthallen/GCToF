@@ -95,6 +95,7 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
             nl_error(2, "Invalid data for logical window %d", window);
             return true;
         }
+        break;
       case 'N':
         if (strlen((const char *)data) != 6) {
           nl_error(2, "Invalid data length for numeric command %d", window);
@@ -133,10 +134,11 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
   req_buf[5] = read ? '0' : '1';
   // Data is already in req_buf[6+]
   int nb = 6+nb_data;
+  nl_error(MSG_DBG(2), "command_request::init #5a nb=%d", nb);
   req_buf[nb++] = 0x03;
   uint8_t crc = 0;
   nl_error(MSG_DBG(2), "command_request::init #6");
-  for (int i = 0; i < nb; ++nb) {
+  for (int i = 0; i < nb; ++i) {
     crc ^= req_buf[i];
   }
   nl_error(MSG_DBG(2), "command_request::init #7 nb=%d crc=%02X", nb, crc);
