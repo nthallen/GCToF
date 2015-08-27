@@ -76,6 +76,7 @@ void TwisTorr::enqueue_poll_float(uint8_t drive, uint16_t window, float *ptr) {
   } else {
     cr->set_fl_ptr(ptr);
     enqueue_poll(cr);
+    nl_error(MSG_DBG(1), "Enqueued poll_float drive:%d window:%d", drive, window);
   }
 }
 
@@ -87,5 +88,6 @@ void TwisTorr::enqueue_poll_bit(uint8_t drive, uint16_t window, uint8_t *ptr, ui
   } else {
     cr->set_bit_ptr(ptr, mask);
     enqueue_poll(cr);
+    nl_error(MSG_DBG(1), "Enqueued poll_bit drive:%d window:%d", drive, window);
   }
 }

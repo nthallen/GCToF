@@ -79,6 +79,11 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
     int nc;
     switch (cmd_type) {
       case 'L':
+        nc = strlen((const char *)data); 
+        if (nc != 1) {
+          nl_error(2, "Invalid data length %d for logical command %d", nc, window);
+          return true;
+        }
         switch (data[0]) {
           case '0':
           case '1':
@@ -121,6 +126,7 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
   req_buf[1] = device;
   sprintf((char *)&req_buf[2], "%03d", window);
   req_buf[5] = read ? '0' : '1';
+  // Data is already in req_buf[6+]
   int nb = 6+nb_data;
   req_buf[nb++] = 0x03;
   uint8_t crc = 0;
