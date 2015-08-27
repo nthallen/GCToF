@@ -46,7 +46,7 @@ int TwisTorr_cmd::ProcessData(int flag) {
           }
         } else {
           int i;
-          for (i = 0; buf[cp+i] != '\0' && buf[cp+i] != '\r' && buf[cp+i] != '\n'; ++i);
+          for (i = 0; cp+i < nc && buf[cp+i] != '\0' && buf[cp+i] != '\r' && buf[cp+i] != '\n'; ++i);
           buf[cp+i] = '\0';
           command_request *cr = TT->new_command_req();
           if (cr->init(drive, window, true, &buf[cp])) {
