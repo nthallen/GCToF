@@ -13,14 +13,14 @@ TwisTorr_cmd::~TwisTorr_cmd() {}
 
 int TwisTorr_cmd::ProcessData(int flag) {
   if (flag & Selector::Sel_Read) {
-    int device, window;
+    int drive, window;
     fillbuf();
     if (nc == 0) return 1;
     cp = 0;
     switch (buf[0]) {
       case 'R':
         if (not_str("R:") ||
-            not_int(device) ||
+            not_int(drive) ||
             not_str(":") ||
             not_int(window)) {
           if (cp >= nc) {
@@ -28,7 +28,7 @@ int TwisTorr_cmd::ProcessData(int flag) {
           }
         } else {
           command_request *cr = TT->new_command_req();
-          if (cr->init(device, window, true)) {
+          if (cr->init(drive, window, true)) {
             TT->free_command(cr);
           } else {
             TT->enqueue_command(cr);
@@ -37,7 +37,7 @@ int TwisTorr_cmd::ProcessData(int flag) {
         break;
       case 'W':
         if (not_str("W:") ||
-            not_int(device) ||
+            not_int(drive) ||
             not_str(":") ||
             not_int(window) ||
             not_str(":")) {
@@ -49,7 +49,7 @@ int TwisTorr_cmd::ProcessData(int flag) {
           for (i = 0; buf[cp+i] != '\0' && buf[cp+i] != '\r' && buf[cp+i] != '\n'; ++i);
           buf[cp+i] = '\0';
           command_request *cr = TT->new_command_req();
-          if (cr->init(device, window, true, &buf[cp])) {
+          if (cr->init(drive, window, true, &buf[cp])) {
             TT->free_command(cr);
           } else {
             TT->enqueue_command(cr);
@@ -68,10 +68,10 @@ int TwisTorr_cmd::ProcessData(int flag) {
   return 0;
 }
 
-void TwisTorr::enqueue_poll_float(uint8_t device, uint16_t window, float *ptr) {
+void TwisTorr::enqueue_poll_float(uint8_t drive, uint16_t window, float *ptr) {
   command_request *cr;
   cr = new_command_req();
-  if (cr->init(device, window, true)) {
+  if (cr->init(drive, window, true)) {
     free_command(cr);
   } else {
     cr->set_fl_ptr(ptr);
@@ -79,10 +79,10 @@ void TwisTorr::enqueue_poll_float(uint8_t device, uint16_t window, float *ptr) {
   }
 }
 
-void TwisTorr::enqueue_poll_bit(uint8_t device, uint16_t window, uint8_t *ptr, uint8_t mask) {
+void TwisTorr::enqueue_poll_bit(uint8_t drive, uint16_t window, uint8_t *ptr, uint8_t mask) {
   command_request *cr;
   cr = new_command_req();
-  if (cr->init(device, window, true)) {
+  if (cr->init(drive, window, true)) {
     free_command(cr);
   } else {
     cr->set_bit_ptr(ptr, mask);

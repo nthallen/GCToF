@@ -8,7 +8,7 @@
 #include "nortlib.h"
 
 command_request::command_request() {
-  device = 1;
+  device = 0;
   window = 0;
   read = false;
   fl_ptr = 0;
@@ -22,7 +22,7 @@ command_request::command_request() {
  * @return true if command is not valid. Caller should return object to
  * the free queue.
  */
-bool command_request::init(uint8_t device, uint16_t window, bool read,
+bool command_request::init(uint8_t drive, uint16_t window, bool read,
         const uint8_t *data) {
   fl_ptr = 0;
   bit_ptr = 0;
@@ -110,11 +110,11 @@ bool command_request::init(uint8_t device, uint16_t window, bool read,
         nl_error(4, "Invalid cmd_type in command_request::init");
     }
   }
-  if (device < 0 || device >= N_TWISTORR_DRIVES) {
-    nl_error(2, "Device number %d out of range", device);
+  if (drive < 0 || drive >= N_TWISTORR_DRIVES) {
+    nl_error(2, "Drive number %d out of range", drive);
     return true;
   }
-  this->device = TwisTorr::TT_DevNo[device];
+  this->device = TwisTorr::TT_DevNo[drive];
   this->window = window;
   this->read = read;
   req_buf[0] = 0x02;

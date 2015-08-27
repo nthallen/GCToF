@@ -7,6 +7,9 @@
 
 char *agilent_path;
 
+/** Maps command drive numbers in the range 0 to N_TWISTORR_DRIVES-1
+ *  to RS485 device numbers which should match the device's configuration.
+ */
 const unsigned TwisTorr::TT_DevNo[N_TWISTORR_DRIVES] = {1};
 
 void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
@@ -40,6 +43,7 @@ int main(int argc, char **argv) {
     Loop.add_child(&TT);
     Loop.add_child(&TM);
     Loop.add_child(&Cmd);
+    nl_error(DBG_MSG(1), "Entering event_loop()");
     Loop.event_loop();
   }
   nl_error( 0, "Terminating" );
