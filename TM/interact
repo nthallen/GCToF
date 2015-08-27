@@ -8,4 +8,5 @@
   Launch cmd/server GCToFsrvr
   Launch - lgr -N `mlf_find LOG`
   Launch - tmdf
+  Launch - TwisTorr -vvv -d /dev/ser3
   Launch - GCToFalgo -v
