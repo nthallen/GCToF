@@ -70,10 +70,13 @@ int TwisTorr_cmd::ProcessData(int flag) {
 
 void TwisTorr::enqueue_poll_float(uint8_t drive, uint16_t window, float *ptr) {
   command_request *cr;
+  nl_error(MSG_DBG(2), "Enqueuing poll_float drive:%d window:%d", drive, window);
   cr = new_command_req();
   if (cr->init(drive, window, true)) {
+    nl_error(MSG_DBG(2), "command_request::init failed");
     free_command(cr);
   } else {
+    nl_error(MSG_DBG(2), "command_request::init succeeded");
     cr->set_fl_ptr(ptr);
     enqueue_poll(cr);
     nl_error(MSG_DBG(1), "Enqueued poll_float drive:%d window:%d", drive, window);
