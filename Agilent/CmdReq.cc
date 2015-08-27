@@ -8,7 +8,7 @@
 #include "nortlib.h"
 
 command_request::command_request() {
-  device = 0;
+  device = 1;
   window = 0;
   read = false;
   fl_ptr = 0;
