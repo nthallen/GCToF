@@ -242,7 +242,7 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
       if (nd != 8) { // <stx>+<dvc>+###+0+#+<eot>
         error_msg = "Invalid response length for logical";
       } else if (bit_ptr) {
-        if (rep[2] == '1') {
+        if (rep[6] == '1') {
           *bit_ptr |= bit_mask;
         } else {
           *bit_ptr = (*bit_ptr) & ~bit_mask;
@@ -255,13 +255,13 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
       if (nd != 13) { // <stx>+<dvc>+###+0+######+<eot>
         error_msg = "Invalid response length for numeric";
       } else if (fl_ptr) {
-        *fl_ptr = strtof((const char *)&rep[2], NULL);
+        *fl_ptr = strtof((const char *)&rep[6], NULL);
       } else {
-        nl_error(0, "Read %d:%d N %.6s", device, window, &rep[2]);
+        nl_error(0, "Read %d:%d N %.6s", device, window, &rep[6]);
       }
       break;
     case 'A':
-      nl_error(0, "Read %d:%d A '%.*s", device, window, nd-2, &rep[2]);
+      nl_error(0, "Read %d:%d A '%.*s", device, window, nd-6, &rep[6]);
       break;
   }
   if (error_msg) return TT_rep_error;
