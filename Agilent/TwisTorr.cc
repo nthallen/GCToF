@@ -167,7 +167,7 @@ int TwisTorr::ProcessData(int flag) {
           default:
             nl_error(4, "Invalid response from process_reply");
         }
-        report_ok(); // Temporary error suppression suppression
+        if (nl_debug_level < MSG_DBG(2)) report_ok(); // Temporary error suppression suppression
       }
       free_command(pending);
       pending = 0;

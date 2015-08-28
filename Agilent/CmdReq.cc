@@ -248,7 +248,7 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
           *bit_ptr = (*bit_ptr) & ~bit_mask;
         }
       } else {
-        nl_error(0, "Read %d:%d L %c", device, window, rep[2]);
+        nl_error(0, "Read %d:%d L %c", device, window, rep[6]);
       }
       break;
     case 'N':
