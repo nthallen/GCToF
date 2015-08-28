@@ -16,6 +16,7 @@ command_request::command_request() {
   bit_mask = 0;
   active = false;
   persistent = false;
+  TO_msecs = 250;
 }
 
 /**
@@ -58,7 +59,7 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
     case 204: cmd_type = 'N'; break; // Pump temperature in C
     case 205: cmd_type = 'N'; break; // Pump status
     case 206: cmd_type = 'N'; break; // Error Code
-    case 210: cmd_type = 'N'; break; // Actual rotation speed in Hz
+    case 210: cmd_type = 'N'; TO_msecs = 1000; break; // Actual rotation speed in Hz
     case 300: cmd_type = 'N'; break; // Cycle time in minutes
     case 301: cmd_type = 'N'; break; // Cycle number
     case 302: cmd_type = 'N'; break; // Pump life in hours
