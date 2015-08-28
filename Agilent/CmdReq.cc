@@ -74,7 +74,7 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
       nl_error(2, "Invalid window: %d", window);
       return true;
   }
-  nl_error(MSG_DBG(2), "command_request::init #1");
+  // nl_error(MSG_DBG(2), "command_request::init #1");
   int nb_data = 0;
   if (!read) {
     int nc;
@@ -117,31 +117,31 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
         nl_error(4, "Invalid cmd_type in command_request::init");
     }
   }
-  nl_error(MSG_DBG(2), "command_request::init #2");
+  // nl_error(MSG_DBG(2), "command_request::init #2");
   if (drive < 0 || drive >= N_TWISTORR_DRIVES) {
     nl_error(2, "Drive number %d out of range", drive);
     return true;
   }
-  nl_error(MSG_DBG(2), "command_request::init #3");
+  // nl_error(MSG_DBG(2), "command_request::init #3");
   this->device = TwisTorr::TT_DevNo[drive];
   this->window = window;
   this->read = read;
   req_buf[0] = 0x02;
-  req_buf[1] = device;
-  nl_error(MSG_DBG(2), "command_request::init #4");
+  req_buf[1] = 0x80 + device;
+  // nl_error(MSG_DBG(2), "command_request::init #4");
   sprintf((char *)&req_buf[2], "%03d", window);
-  nl_error(MSG_DBG(2), "command_request::init #5");
+  // nl_error(MSG_DBG(2), "command_request::init #5");
   req_buf[5] = read ? '0' : '1';
   // Data is already in req_buf[6+]
   int nb = 6+nb_data;
-  nl_error(MSG_DBG(2), "command_request::init #5a nb=%d", nb);
+  // nl_error(MSG_DBG(2), "command_request::init #5a nb=%d", nb);
   req_buf[nb++] = 0x03;
   uint8_t crc = 0;
-  nl_error(MSG_DBG(2), "command_request::init #6");
-  for (int i = 0; i < nb; ++i) {
+  // nl_error(MSG_DBG(2), "command_request::init #6");
+  for (int i = 1; i < nb; ++i) {
     crc ^= req_buf[i];
   }
-  nl_error(MSG_DBG(2), "command_request::init #7 nb=%d crc=%02X", nb, crc);
+  // nl_error(MSG_DBG(2), "command_request::init #7 nb=%d crc=%02X", nb, crc);
   for (int i = 0; i <= 1; ++i) {
     uint8_t c = crc & 0xF;
     crc >>= 4;
@@ -152,13 +152,13 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
     }
     req_buf[nb+1-i] = c;
   }
-  nl_error(MSG_DBG(2), "command_request::init #8");
+  // nl_error(MSG_DBG(2), "command_request::init #8");
   nb += 2;
   req_buf[nb] = '\0';
-  nl_error(MSG_DBG(2), "command_request::init #9");
+  // nl_error(MSG_DBG(2), "command_request::init #9");
   req_sz = nb;
   rep_sz = 6; // This can be improved
-  nl_error(MSG_DBG(2), "command_request::init #10: req_sz=%d", req_sz);
+  // nl_error(MSG_DBG(2), "command_request::init #10: req_sz=%d", req_sz);
   return false;
 }
 
