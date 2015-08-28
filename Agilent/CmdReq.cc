@@ -177,9 +177,9 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
   unsigned i;
   for (i = 2; i < nb && rep[i] != 0x03; ++i);
   if (i+3 > nb) return TT_rep_incomplete;
-  unsigned nd = i+1;
+  unsigned nd = i+1; // nd is number of characters not counting crc
   uint8_t crc = 0;
-  for (i = 0; i < nd; ++i) {
+  for (i = 1; i < nd; ++i) {
     crc ^= rep[i];
   }
   uint8_t crc_recd = 0;
@@ -238,7 +238,7 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
   // Now compare the field length to request type
   switch (cmd_type) {
     case 'L':
-      if (nd != 4) {
+      if (nd != 8) { // <stx>+<dvc>+###+0+#+<eot>
         error_msg = "Invalid response length for logical";
       } else if (bit_ptr) {
         if (rep[2] == '1') {
@@ -251,8 +251,8 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
       }
       break;
     case 'N':
-      if (nd != 9) {
-        error_msg = "Invalid response length for logical";
+      if (nd != 13) { // <stx>+<dvc>+###+0+######+<eot>
+        error_msg = "Invalid response length for numeric";
       } else if (fl_ptr) {
         *fl_ptr = strtof((const char *)&rep[2], NULL);
       } else {
