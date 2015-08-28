@@ -167,6 +167,7 @@ int TwisTorr::ProcessData(int flag) {
           default:
             nl_error(4, "Invalid response from process_reply");
         }
+        report_ok(); // Temporary error suppression suppression
       }
       free_command(pending);
       pending = 0;
@@ -191,6 +192,6 @@ void TwisTorr::submit_req(command_request *req) {
   pending = req;
   if (req->write(fd))
     report_err("Write error");
-  TO.Set(0, 250);
+  TO.Set(0, pending->TO_msecs);
   update_termios();
 }

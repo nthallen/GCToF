@@ -58,6 +58,7 @@
         static const unsigned int max_cmd_bytes = 23;
         uint8_t req_buf[max_cmd_bytes];
         const char *error_msg;
+        long TO_msecs;
       private:
         uint8_t device;
         uint16_t window;
