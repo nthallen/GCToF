@@ -26,14 +26,14 @@ void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
     TT->enqueue_poll_bit(drv, 1, &(TT_TM->drive[drv].flags), 0x02);
     TT->enqueue_poll_bit(drv, 106, &(TT_TM->drive[drv].flags), 0x04);
     TT->enqueue_poll_bit(drv, 107, &(TT_TM->drive[drv].flags), 0x08);
-    // TT->enqueue_poll_bit(drv, 122, &(TT_TM->drive[drv].flags), 0x10);
+    TT->enqueue_poll_bit(drv, 122, &(TT_TM->drive[drv].flags), 0x10);
     TT->enqueue_poll_bit(drv, 125, &(TT_TM->drive[drv].flags), 0x20);
   }
 }
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1.19" );
+  nl_error( 0, "Starting V0.1.20" );
   { Selector Loop;
     TwisTorr_t TT_TM;
     TwisTorr TT(agilent_path);
