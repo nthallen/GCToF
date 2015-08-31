@@ -4,7 +4,7 @@ csv GCToFeng_1 14
   2 Disk 
   3 SWStat 
   4 TT1_I 
-  5 TT1_Status 
+  5 TT1_Status %.0lf
   6 TT1_T 
   7 TT1_V 
   8 TT1_W 
