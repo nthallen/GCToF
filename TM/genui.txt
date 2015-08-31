@@ -13,13 +13,13 @@ ROWS 8
   1 TT1_V   TwisTorr V
   1 TT1_W   TwisTorr W
   1 TT1_drvf TwisTorr Speed
-  1 TT1_spd TwisTorr Speed
+  1 TT1_spd TwisTorr Speed %.2lf
   1 TT1_Status TwisTorr Status
   1 TT_stale TwisTorr Stale
 # 1 TT1_flags
-  1 TT1_Start:TT1_flags:0 TwisTorr flags
-  1 TT1_Speed:TT1_flags:1 TwisTorr flags
-  1 TT1_WtrCl:TT1_flags:2 TwisTorr flags
-  1 TT1_ActStp:TT1_flags:3 TwisTorr flags
-  1 TT1_VentVlv:TT1_flags:4 TwisTorr flags
-  1 TT1_VentOp:TT1_flags:5 TwisTorr flags
+  1 TT1_Start:TT1_flags:0 TwisTorr flags %.0lf
+  1 TT1_Speed:TT1_flags:1 TwisTorr flags %.0lf
+  1 TT1_WtrCl:TT1_flags:2 TwisTorr flags %.0lf
+  1 TT1_ActStp:TT1_flags:3 TwisTorr flags %.0lf
+  1 TT1_VentVlv:TT1_flags:4 TwisTorr flags %.0lf
+  1 TT1_VentOp:TT1_flags:5 TwisTorr flags %.0lf

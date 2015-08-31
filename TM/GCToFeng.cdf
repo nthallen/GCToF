@@ -9,7 +9,7 @@ csv GCToFeng_1 14
   7 TT1_V 
   8 TT1_W 
   9 TT1_drvf 
-  10 TT1_flags 
-  11 TT1_spd 
+  10 TT1_flags %.0lf
+  11 TT1_spd %.2lf
   12 TT_stale 
   13 freemem 
