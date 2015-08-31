@@ -17,6 +17,7 @@ command_request::command_request() {
   active = false;
   persistent = false;
   TO_msecs = 250;
+  CmdRestrictions = CR_none;
 }
 
 /**
@@ -33,14 +34,20 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
     case 0: cmd_type = 'L'; break; // Start/Stop
     case 1: cmd_type = 'L'; break; // Low Speed
     case 8: cmd_type = 'L'; break; // Serial=1,Remote=0
-    case 100: cmd_type = 'A'; break; // Soft Start NO=0, YES=1, Auto=2 (only in stop)
+    case 100:
+      cmd_type = 'A';
+      CmdRestrictions = CR_write_in_stop;
+      break; // Soft Start NO=0, YES=1, Auto=2 (only in stop)
     case 101: cmd_type = 'N'; break; // Set Point type, 0-4
     case 102: cmd_type = 'N'; break; // Set Point Threshold
     case 103: cmd_type = 'N'; break; // Set Point Delay
     case 104: cmd_type = 'L'; break; // Set Pointsignal activation type
     case 105: cmd_type = 'N'; break; // Set Point hysteresis
     case 106: cmd_type = 'L'; break; // Water Cooling
-    case 107: cmd_type = 'L'; break; // Active Stop (only in stop)
+    case 107:
+      cmd_type = 'L';
+      CmdRestrictions = CR_write_in_stop;
+      break; // Active Stop (only in stop)
     case 108: cmd_type = 'N'; break; // Baud Rate
     case 109: cmd_type = 'L'; break; // Pump life/cycle time/cycle number reset
     case 110: cmd_type = 'L'; break; // Interlock type
@@ -59,7 +66,10 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
     case 204: cmd_type = 'N'; break; // Pump temperature in C
     case 205: cmd_type = 'N'; break; // Pump status
     case 206: cmd_type = 'N'; break; // Error Code
-    case 210: cmd_type = 'N'; TO_msecs = 1000; break; // Actual rotation speed in Hz
+    case 210:
+      cmd_type = 'N';
+      CmdRestrictions = CR_read_in_start;
+      break; // Actual rotation speed in Hz
     case 300: cmd_type = 'N'; break; // Cycle time in minutes
     case 301: cmd_type = 'N'; break; // Cycle number
     case 302: cmd_type = 'N'; break; // Pump life in hours
@@ -124,6 +134,7 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
     return true;
   }
   // nl_error(MSG_DBG(2), "command_request::init #3");
+  this->drive = drive;
   this->device = TwisTorr::TT_DevNo[drive];
   this->window = window;
   this->read = read;
@@ -308,3 +319,14 @@ void command_request::set_bit_ptr(uint8_t *ptr, uint8_t mask) {
   }
 }
 
+void command_request::default_read_action() {
+  switch (cmd_type) {
+    case 'N':
+      if (fl_ptr) {
+        *fl_ptr = 0.;
+      }
+      break;
+    default:
+      break;
+  }
+}

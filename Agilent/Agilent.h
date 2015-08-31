@@ -26,6 +26,7 @@
     float pump_temperature; // window 204 (0-70, what resolution?)
     float pump_status; // window 205 (0-6)
     float rotation_speed; // window 210 (100-963/1010)
+    float error_status; // window 206
     unsigned char flags;
     unsigned char fill[3]; // For alignment
   } TwisTorr_TM_t;
@@ -40,6 +41,7 @@
     #include <deque>
 
     enum TT_rep_status_t { TT_rep_ok, TT_rep_incomplete, TT_rep_error };
+    enum CmdRestrictions_t { CR_none, CR_write_in_stop, CR_read_in_start };
     
     // Command Request Object
     class command_request {
@@ -52,6 +54,7 @@
         int write(int fd);
         void set_fl_ptr(float *fl_ptr);
         void set_bit_ptr(uint8_t *bit_ptr, uint8_t bit_mask);
+        void default_read_action();
         bool active;
         bool persistent;
         unsigned req_sz, rep_sz;
@@ -59,10 +62,12 @@
         uint8_t req_buf[max_cmd_bytes];
         const char *error_msg;
         long TO_msecs;
-      private:
+        CmdRestrictions_t CmdRestrictions;
+        uint8_t drive;
         uint8_t device;
         uint16_t window;
         bool read;
+      private:
         float *fl_ptr;
         uint8_t *bit_ptr;
         uint8_t bit_mask;
@@ -71,7 +76,7 @@
     
     class TwisTorr : public Ser_Sel {
       public:
-        TwisTorr(const char *path);
+        TwisTorr(const char *path, TwisTorr_t *TT_TM);
         ~TwisTorr();
         command_request *new_command_req();
         void enqueue_command(command_request *);
@@ -87,6 +92,7 @@
         void update_termios();
         static const unsigned TT_bufsize = 50;
         static const unsigned cmd_gflag = 1;
+        TwisTorr_t *TT_TM_p;
         std::deque<command_request *> cmds;
         std::deque<command_request *> cmd_free;
         std::deque<command_request *> polls;

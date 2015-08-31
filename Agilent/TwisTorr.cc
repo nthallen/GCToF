@@ -4,13 +4,14 @@
 #include "Agilent.h"
 #include "nortlib.h"
 
-TwisTorr::TwisTorr(const char *path) :
+TwisTorr::TwisTorr(const char *path, TwisTorr_t *TT_TM) :
     Ser_Sel(path, O_RDWR|O_NONBLOCK, TT_bufsize) {
   if (path == 0) {
     nl_error(3, "No path specified for TwisTorr device");
   } else {
     nl_error(MSG_DBG(1), "Opened %s for TwisTorr device", path);
   }
+  TT_TM_p = TT_TM;
   pending = 0;
   cur_poll = polls.begin();
   nl_error(MSG_DBG(1), "TwisTorr ready for setup");
@@ -189,6 +190,23 @@ int TwisTorr::ProcessData(int flag) {
 }
 
 void TwisTorr::submit_req(command_request *req) {
+  switch (req->CmdRestrictions) {
+    case CR_none: break;
+    case CR_write_in_stop:
+      if ((!req->read) && (TT_TM_p->drive[req->drive].flags & 1)) {
+        nl_error(2, "Drive %d Window %d not allowed when started",
+          req->drive, req->window);
+        free_command(req);
+        return;
+      }
+      break;
+    case CR_read_in_start:
+      if (req->read && !(TT_TM_p->drive[req->drive].flags & 1)) {
+        req->default_read_action();
+        free_command(req);
+        return;
+      }
+  }
   pending = req;
   if (req->write(fd))
     report_err("Write error");
