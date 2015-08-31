@@ -3,7 +3,7 @@
   #define TTselect(x,y) TwisTorr.drive[x].y
   const char *TT_Status_text(signed short stat) {
     const char *rv = "********";
-    switch {
+    switch (stat) {
       case 0: rv = "Stop    "; break;
       case 1: rv = "WtIntlck"; break;
       case 2: rv = "Starting"; break;
