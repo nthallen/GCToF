@@ -29,6 +29,8 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
   fl_ptr = 0;
   bit_ptr = 0;
   active = false;
+  TO_msecs = 0;
+  CmdRestrictions = CR_none;
   persistent = false;
   switch (window) {
     case 0: cmd_type = 'L'; break; // Start/Stop
@@ -170,7 +172,10 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
   // nl_error(MSG_DBG(2), "command_request::init #9");
   req_sz = nb;
   rep_sz = 6; // This can be improved
-  // nl_error(MSG_DBG(2), "command_request::init #10: req_sz=%d", req_sz);
+  if (CmdRestrictions != CR_none) {
+    nl_error(MSG_DBG(2), "CR::init drive:%d window:%d restricted: %d",
+      drive, window, CmdRestrictions);
+  }
   return false;
 }
 

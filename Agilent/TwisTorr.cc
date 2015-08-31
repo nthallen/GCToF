@@ -206,6 +206,9 @@ void TwisTorr::submit_req(command_request *req) {
         free_command(req);
         return;
       }
+      break;
+    default:
+      nl_error(4, "Invalid CmdRestrictions: %d\n", req->CmdRestrictions);
   }
   pending = req;
   if (req->write(fd))
