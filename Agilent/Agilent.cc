@@ -21,7 +21,7 @@ void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
     TT->enqueue_poll_float(drv, 203, &(TT_TM->drive[drv].driving_freq)); // Hz
     TT->enqueue_poll_float(drv, 204, &(TT_TM->drive[drv].pump_temperature)); // C
     TT->enqueue_poll_float(drv, 205, &(TT_TM->drive[drv].pump_status)); // bit-mapped
-    // TT->enqueue_poll_float(drv, 210, &(TT_TM->drive[drv].rotation_speed));
+    TT->enqueue_poll_float(drv, 210, &(TT_TM->drive[drv].rotation_speed));
     TT->enqueue_poll_bit(drv, 0, &(TT_TM->drive[drv].flags), 0x01);
     TT->enqueue_poll_bit(drv, 1, &(TT_TM->drive[drv].flags), 0x02);
     TT->enqueue_poll_bit(drv, 106, &(TT_TM->drive[drv].flags), 0x04);
