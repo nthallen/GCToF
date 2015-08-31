@@ -29,7 +29,7 @@ bool command_request::init(uint8_t drive, uint16_t window, bool read,
   fl_ptr = 0;
   bit_ptr = 0;
   active = false;
-  TO_msecs = 0;
+  TO_msecs = 250;
   CmdRestrictions = CR_none;
   persistent = false;
   switch (window) {
