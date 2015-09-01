@@ -23,3 +23,13 @@ ROWS 8
   1 TT1_ActStp:TT1_flags:3 TwisTorr flags %.0lf
   1 TT1_VentVlv:TT1_flags:4 TwisTorr flags %.0lf
   1 TT1_VentOp:TT1_flags:5 TwisTorr flags %.0lf
+  1 TT1_NoConn:TT1_ErrStat:0 TT_Errors errors %.0lf
+  1 TT1_PumpOT:TT1_ErrStat:1 TT_Errors errors %.0lf
+  1 TT1_CtrlOT:TT1_ErrStat:2 TT_Errors errors %.0lf
+  1 TT1_PwrFail:TT1_ErrStat:3 TT_Errors errors %.0lf
+  1 TT1_AuxFail:TT1_ErrStat:4 TT_Errors errors %.0lf
+  1 TT1_OverVTT1_ErrStat:5 TT_Errors errors %.0lf
+  1 TT1_Short:TT1_ErrStat:6 TT_Errors errors %.0lf
+  1 TT1_OverLoad:TT1_ErrStat:7 TT_Errors errors %.0lf
+  1 TT1_LowBatt:TT1_ErrStat:9 TT_Errors errors %.0lf
+  1 TT1_BadTime:TT1_ErrStat:10 TT_Errors errors %.0lf
