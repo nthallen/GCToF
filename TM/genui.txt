@@ -23,13 +23,63 @@ ROWS 8
   1 TT1_ActStp:TT1_flags:3 TwisTorr flags %.0lf
   1 TT1_VentVlv:TT1_flags:4 TwisTorr flags %.0lf
   1 TT1_VentOp:TT1_flags:5 TwisTorr flags %.0lf
-  1 TT1_NoConn:TT1_ErrStat:0 TT_Errors errors %.0lf
-  1 TT1_PumpOT:TT1_ErrStat:1 TT_Errors errors %.0lf
-  1 TT1_CtrlOT:TT1_ErrStat:2 TT_Errors errors %.0lf
-  1 TT1_PwrFail:TT1_ErrStat:3 TT_Errors errors %.0lf
-  1 TT1_AuxFail:TT1_ErrStat:4 TT_Errors errors %.0lf
-  1 TT1_OverVTT1_ErrStat:5 TT_Errors errors %.0lf
-  1 TT1_Short:TT1_ErrStat:6 TT_Errors errors %.0lf
-  1 TT1_OverLoad:TT1_ErrStat:7 TT_Errors errors %.0lf
-  1 TT1_LowBatt:TT1_ErrStat:9 TT_Errors errors %.0lf
-  1 TT1_BadTime:TT1_ErrStat:10 TT_Errors errors %.0lf
+  1 TT1_NoConn:TT1_ErrStat:0 TT1_Errors errors %.0lf
+  1 TT1_PumpOT:TT1_ErrStat:1 TT1_Errors errors %.0lf
+  1 TT1_CtrlOT:TT1_ErrStat:2 TT1_Errors errors %.0lf
+  1 TT1_PwrFail:TT1_ErrStat:3 TT1_Errors errors %.0lf
+  1 TT1_AuxFail:TT1_ErrStat:4 TT1_Errors errors %.0lf
+  1 TT1_OverVTT1_ErrStat:5 TT1_Errors errors %.0lf
+  1 TT1_Short:TT1_ErrStat:6 TT1_Errors errors %.0lf
+  1 TT1_OverLoad:TT1_ErrStat:7 TT1_Errors errors %.0lf
+  1 TT1_LowBatt:TT1_ErrStat:9 TT1_Errors errors %.0lf
+  1 TT1_BadTime:TT1_ErrStat:10 TT1_Errors errors %.0lf
+  
+  1 TT2_I   TwisTorr I
+  1 TT2_T   TwisTorr T
+  1 TT2_V   TwisTorr V
+  1 TT2_W   TwisTorr W
+  1 TT2_drvf TwisTorr Speed
+  1 TT2_spd TwisTorr Speed %.2lf
+  1 TT2_Status TwisTorr Status %.0lf
+# 1 TT2_flags
+  1 TT2_Start:TT2_flags:0 TwisTorr flags %.0lf
+  1 TT2_Speed:TT2_flags:1 TwisTorr flags %.0lf
+  1 TT2_WtrCl:TT2_flags:2 TwisTorr flags %.0lf
+  1 TT2_ActStp:TT2_flags:3 TwisTorr flags %.0lf
+  1 TT2_VentVlv:TT2_flags:4 TwisTorr flags %.0lf
+  1 TT2_VentOp:TT2_flags:5 TwisTorr flags %.0lf
+  1 TT2_NoConn:TT2_ErrStat:0 TT2_Errors errors %.0lf
+  1 TT2_PumpOT:TT2_ErrStat:1 TT2_Errors errors %.0lf
+  1 TT2_CtrlOT:TT2_ErrStat:2 TT2_Errors errors %.0lf
+  1 TT2_PwrFail:TT2_ErrStat:3 TT2_Errors errors %.0lf
+  1 TT2_AuxFail:TT2_ErrStat:4 TT2_Errors errors %.0lf
+  1 TT2_OverVTT2_ErrStat:5 TT2_Errors errors %.0lf
+  1 TT2_Short:TT2_ErrStat:6 TT2_Errors errors %.0lf
+  1 TT2_OverLoad:TT2_ErrStat:7 TT2_Errors errors %.0lf
+  1 TT2_LowBatt:TT2_ErrStat:9 TT2_Errors errors %.0lf
+  1 TT2_BadTime:TT2_ErrStat:10 TT2_Errors errors %.0lf
+
+  1 TT3_I   TwisTorr I
+  1 TT3_T   TwisTorr T
+  1 TT3_V   TwisTorr V
+  1 TT3_W   TwisTorr W
+  1 TT3_drvf TwisTorr Speed
+  1 TT3_spd TwisTorr Speed %.2lf
+  1 TT3_Status TwisTorr Status %.0lf
+# 1 TT3_flags
+  1 TT3_Start:TT3_flags:0 TwisTorr flags %.0lf
+  1 TT3_Speed:TT3_flags:1 TwisTorr flags %.0lf
+  1 TT3_WtrCl:TT3_flags:2 TwisTorr flags %.0lf
+  1 TT3_ActStp:TT3_flags:3 TwisTorr flags %.0lf
+  1 TT3_VentVlv:TT3_flags:4 TwisTorr flags %.0lf
+  1 TT3_VentOp:TT3_flags:5 TwisTorr flags %.0lf
+  1 TT3_NoConn:TT3_ErrStat:0 TT3_Errors errors %.0lf
+  1 TT3_PumpOT:TT3_ErrStat:1 TT3_Errors errors %.0lf
+  1 TT3_CtrlOT:TT3_ErrStat:2 TT3_Errors errors %.0lf
+  1 TT3_PwrFail:TT3_ErrStat:3 TT3_Errors errors %.0lf
+  1 TT3_AuxFail:TT3_ErrStat:4 TT3_Errors errors %.0lf
+  1 TT3_OverVTT3_ErrStat:5 TT3_Errors errors %.0lf
+  1 TT3_Short:TT3_ErrStat:6 TT3_Errors errors %.0lf
+  1 TT3_OverLoad:TT3_ErrStat:7 TT3_Errors errors %.0lf
+  1 TT3_LowBatt:TT3_ErrStat:9 TT3_Errors errors %.0lf
+  1 TT3_BadTime:TT3_ErrStat:10 TT3_Errors errors %.0lf
