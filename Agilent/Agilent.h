@@ -6,8 +6,9 @@
   /* Definitions for Selector/Selectee classes for Agilent TwisTorr Driver */
   #include <stdint.h>
   extern char *agilent_path;
+  extern uint8_t agilent_absent;
 
-  #define N_TWISTORR_DRIVES 1
+  #define N_TWISTORR_DRIVES 3
   
   /*
    * flags:
@@ -17,6 +18,7 @@
    *   8: window 107 active stop
    *  10: window 122 vent valve on/off
    *  20: window 123 vent valve operation
+   *  80: Not responding
    */
   typedef struct __attribute__((__packed__)) {
     float pump_current; // window 200 (mA dc)
@@ -93,6 +95,8 @@
         static const unsigned TT_bufsize = 50;
         static const unsigned cmd_gflag = 1;
         TwisTorr_t *TT_TM_p;
+        Timeout backoff_TO[N_TWISTORR_DRIVES];
+        uint16_t backoff_secs[N_TWISTORR_DRIVES];
         std::deque<command_request *> cmds;
         std::deque<command_request *> cmd_free;
         std::deque<command_request *> polls;

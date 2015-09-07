@@ -1,20 +1,20 @@
 TwisTorr {
   HBox { +-; Title: TwisTorr; -+ };
-  ""          "1";
-  ""      (TT1_Start,5);
-  Speed:  (TT1_Speed,4);
-  WtrCl:  (TT1_WtrCl,3);
-  ActStp: (TT1_ActStp,3);
-  Vent:   (TT1_VentVlv,6);
-  VentOp: (TT1_VentOp,4);
-  I:      (TT1_I,6)    mA;
-  V:      (TT1_V,3)    V;
-  W:      (TT1_W,3)    W;
-  T:      (TT1_T,3)    C;
-  Drive:  (TT1_drvf,5) Hz;
-  Speed:  (TT1_spd,5)  Hz;
-  Status: (TT1_Status,8);
-  Errors: (TT1_ErrStat,3);
+  ""          "1"      "2"     "3";
+  ""      (TT1_Start,5) (TT2_Start,5) (TT3_Start,5);
+  Speed:  (TT1_Speed,4) (TT2_Speed,4) (TT3_Speed,4);
+  WtrCl:  (TT1_WtrCl,3) (TT2_WtrCl,3) (TT3_WtrCl,3);
+  ActStp: (TT1_ActStp,3) (TT2_ActStp,3) (TT3_ActStp,3);
+  Vent:   (TT1_VentVlv,6) (TT2_VentVlv,6) (TT3_VentVlv,6);
+  VentOp: (TT1_VentOp,4) (TT2_VentOp,4) (TT3_VentOp,4);
+  I:      (TT1_I,6) (TT2_I,6) (TT3_I,6)    mA;
+  V:      (TT1_V,3) (TT2_V,3) (TT3_V,3)    V;
+  W:      (TT1_W,3) (TT2_W,3) (TT3_W,3)    W;
+  T:      (TT1_T,3) (TT2_T,3) (TT3_T,3)    C;
+  Drive:  (TT1_drvf,5) (TT2_drvf,5) (TT3_drvf,5) Hz;
+  Speed:  (TT1_spd,5) (TT2_spd,5) (TT3_spd,5)  Hz;
+  Status: (TT1_Status,8) (TT2_Status,8) (TT3_Status,8);
+  Errors: (TT1_ErrStat,3) (TT2_ErrStat,3) (TT3_ErrStat,3);
   Stale:  (TT_stale,3);
 }
 

@@ -29,6 +29,7 @@ TM typedef unsigned char TT_stale_t { text "%3u"; }
 TM typedef unsigned short TT_ErrStat_t { text "%03x"; }
 
 TM 1 Hz TT_stale_t TT_stale;
+
 TM 1 Hz TT_Amps TT1_I;
 TM 1 Hz TT_Volts TT1_V;
 TM 1 Hz TT_Watts TT1_W;
@@ -39,8 +40,33 @@ TM 1 Hz TT_Status_t TT1_Status;
 TM 1 Hz TT_flag_t TT1_flags;
 TM 1 Hz TT_ErrStat_t TT1_ErrStat;
 
+TM 1 Hz TT_Amps TT2_I;
+TM 1 Hz TT_Volts TT2_V;
+TM 1 Hz TT_Watts TT2_W;
+TM 1 Hz TT_Hz TT2_drvf;
+TM 1 Hz TT_Hz TT2_spd;
+TM 1 Hz TT_Celcius TT2_T;
+TM 1 Hz TT_Status_t TT2_Status;
+TM 1 Hz TT_flag_t TT2_flags;
+TM 1 Hz TT_ErrStat_t TT2_ErrStat;
+
+TM 1 Hz TT_Amps TT3_I;
+TM 1 Hz TT_Volts TT3_V;
+TM 1 Hz TT_Watts TT3_W;
+TM 1 Hz TT_Hz TT3_drvf;
+TM 1 Hz TT_Hz TT3_spd;
+TM 1 Hz TT_Celcius TT3_T;
+TM 1 Hz TT_Status_t TT3_Status;
+TM 1 Hz TT_flag_t TT3_flags;
+TM 1 Hz TT_ErrStat_t TT3_ErrStat;
+
 Group TwisTorr_grp (TT1_I, TT1_V, TT1_W, TT1_drvf, TT1_spd,
-    TT1_T, TT1_Status, TT1_flags, TT1_ErrStat) {
+    TT1_T, TT1_Status, TT1_flags, TT1_ErrStat,
+    TT2_I, TT2_V, TT2_W, TT2_drvf, TT2_spd,
+    TT2_T, TT2_Status, TT2_flags, TT2_ErrStat,
+    TT3_I, TT3_V, TT3_W, TT3_drvf, TT3_spd,
+    TT3_T, TT3_Status, TT3_flags, TT3_ErrStat,
+    TT_stale) {
   TT1_I = TTselect(0,pump_current);
   TT1_V = TTselect(0,pump_voltage);
   TT1_W = TTselect(0,pump_power);
@@ -50,6 +76,27 @@ Group TwisTorr_grp (TT1_I, TT1_V, TT1_W, TT1_drvf, TT1_spd,
   TT1_Status = TTselect(0,pump_status);
   TT1_flags = TTselect(0,flags);
   TT1_ErrStat = TTselect(0,error_status);
+
+  TT2_I = TTselect(0,pump_current);
+  TT2_V = TTselect(0,pump_voltage);
+  TT2_W = TTselect(0,pump_power);
+  TT2_drvf = TTselect(0,driving_freq);
+  TT2_spd = TTselect(0,rotation_speed);
+  TT2_T = TTselect(0,pump_temperature);
+  TT2_Status = TTselect(0,pump_status);
+  TT2_flags = TTselect(0,flags);
+  TT2_ErrStat = TTselect(0,error_status);
+
+  TT3_I = TTselect(0,pump_current);
+  TT3_V = TTselect(0,pump_voltage);
+  TT3_W = TTselect(0,pump_power);
+  TT3_drvf = TTselect(0,driving_freq);
+  TT3_spd = TTselect(0,rotation_speed);
+  TT3_T = TTselect(0,pump_temperature);
+  TT3_Status = TTselect(0,pump_status);
+  TT3_flags = TTselect(0,flags);
+  TT3_ErrStat = TTselect(0,error_status);
+  
   TT_stale = TwisTorr_obj->stale(255);
   TwisTorr_obj->synch();
 }

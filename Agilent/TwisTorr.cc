@@ -24,6 +24,11 @@ TwisTorr::TwisTorr(const char *path, TwisTorr_t *TT_TM) :
   if (tcgetattr(fd, &termios_s)) {
     nl_error(2, "Error from tcgetattr: %s", strerror(errno));
   }
+  for (unsigned drv = 0; drv < N_TWISTORR_DRIVES; ++drv) {
+    if ((agilent_absent >> drv) & 0x1) {
+      backoff_secs[drv] = 60;
+    }
+  }
 }
 
 
@@ -151,12 +156,26 @@ int TwisTorr::ProcessData(int flag) {
           case TT_rep_ok:
             nl_error(MSG_DBG(1), "Reply received OK");
             report_ok();
+            if (backoff_secs[pending->drive]) {
+              backoff_secs[pending->drive] = 0;
+              TT_TM_p->drive[pending->drive].flags &= ~0x80;
+              backoff_TO[req->drive].Clear();
+            }
             break;
           case TT_rep_incomplete:
-            if (flag & Selector::Sel_Timeout)
-              report_err("Timeout from TwisTorr request: %s",
-                pending->ascii_escape());
-            else {
+            if (flag & Selector::Sel_Timeout) {
+              uint16_t bs = backoff_secs[pending->drive];
+              if (bs) {
+                bs = bs > 30 ? 60 : bs*2;
+              } else {
+                report_err("Timeout from TwisTorr request: %s",
+                  pending->ascii_escape());
+                bs = 1;
+                TT_TM_p->drive[pending->drive].flags |= 0x80;
+              }
+              backoff_secs[pending->drive] = bs;
+              backoff_TO[pending->drive].Set(bs, 0);
+            } else {
               // Could Update min for rep_sz - nc
               update_termios();
               return 0;
@@ -190,6 +209,10 @@ int TwisTorr::ProcessData(int flag) {
 }
 
 void TwisTorr::submit_req(command_request *req) {
+  if (backoff_secs[req->drive] && !backoff_TO[req->drive].Expired()) {
+    free_command(req);
+    return;
+  }
   switch (req->CmdRestrictions) {
     case CR_none: break;
     case CR_write_in_stop:
