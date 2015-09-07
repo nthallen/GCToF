@@ -24,3 +24,29 @@ TT_ClOp_t TT1_VentVlv; Invalidate TT1_VentVlv;
   { TT1_VentVlv = (TT1_flags >> 4) & 1; Validate TT1_VentVlv; }
 TT_VentOp_t TT1_VentOp; Invalidate TT1_VentOp;
   { TT1_VentOp = (TT1_flags >> 5) & 1; Validate TT1_VentOp; }
+
+TT_Start_t TT2_Start; Invalidate TT2_Start;
+  { TT2_Start = (TT2_flags >> 0) & 1; Validate TT2_Start; }
+TT_Speed_t TT2_Speed; Invalidate TT2_Speed;
+  { TT2_Speed = (TT2_flags >> 1) & 1; Validate TT2_Speed; }
+TT_YN_t TT2_WtrCl; Invalidate TT2_WtrCl;
+  { TT2_WtrCl = (TT2_flags >> 2) & 1; Validate TT2_WtrCl; }
+TT_YN_t TT2_ActStp; Invalidate TT2_ActStp;
+  { TT2_ActStp = (TT2_flags >> 3) & 1; Validate TT2_ActStp; }
+TT_ClOp_t TT2_VentVlv; Invalidate TT2_VentVlv;
+  { TT2_VentVlv = (TT2_flags >> 4) & 1; Validate TT2_VentVlv; }
+TT_VentOp_t TT2_VentOp; Invalidate TT2_VentOp;
+  { TT2_VentOp = (TT2_flags >> 5) & 1; Validate TT2_VentOp; }
+
+TT_Start_t TT3_Start; Invalidate TT3_Start;
+  { TT3_Start = (TT3_flags >> 0) & 1; Validate TT3_Start; }
+TT_Speed_t TT3_Speed; Invalidate TT3_Speed;
+  { TT3_Speed = (TT3_flags >> 1) & 1; Validate TT3_Speed; }
+TT_YN_t TT3_WtrCl; Invalidate TT3_WtrCl;
+  { TT3_WtrCl = (TT3_flags >> 2) & 1; Validate TT3_WtrCl; }
+TT_YN_t TT3_ActStp; Invalidate TT3_ActStp;
+  { TT3_ActStp = (TT3_flags >> 3) & 1; Validate TT3_ActStp; }
+TT_ClOp_t TT3_VentVlv; Invalidate TT3_VentVlv;
+  { TT3_VentVlv = (TT3_flags >> 4) & 1; Validate TT3_VentVlv; }
+TT_VentOp_t TT3_VentOp; Invalidate TT3_VentOp;
+  { TT3_VentOp = (TT3_flags >> 5) & 1; Validate TT3_VentOp; }
