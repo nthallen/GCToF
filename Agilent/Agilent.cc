@@ -11,7 +11,7 @@ uint8_t agilent_absent;
 /** Maps command drive numbers in the range 0 to N_TWISTORR_DRIVES-1
  *  to RS485 device numbers which should match the device's configuration.
  */
-const unsigned TwisTorr::TT_DevNo[N_TWISTORR_DRIVES] = {1};
+const unsigned TwisTorr::TT_DevNo[N_TWISTORR_DRIVES] = {1, 2, 3};
 
 void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
   for (unsigned drv = 0; drv < N_TWISTORR_DRIVES; ++drv) {
