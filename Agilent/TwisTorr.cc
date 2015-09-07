@@ -159,7 +159,7 @@ int TwisTorr::ProcessData(int flag) {
             if (backoff_secs[pending->drive]) {
               backoff_secs[pending->drive] = 0;
               TT_TM_p->drive[pending->drive].flags &= ~0x80;
-              backoff_TO[req->drive].Clear();
+              backoff_TO[pending->drive].Clear();
             }
             break;
           case TT_rep_incomplete:
