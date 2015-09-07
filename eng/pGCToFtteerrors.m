@@ -1,6 +1,6 @@
 function pGCToFtteerrors(varargin);
 % pGCToFtteerrors( [...] );
-% TT Errors errors
+% TT1 Errors errors
 h = ne_dstat({
   'TT1_NoConn', 'TT1_ErrStat', 0; ...
 	'TT1_PumpOT', 'TT1_ErrStat', 1; ...
