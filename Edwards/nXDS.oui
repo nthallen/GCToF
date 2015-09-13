@@ -1,0 +1,23 @@
+<package> nXDS
+<include> "nXDS.h"
+<include> msg
+<follow> msg
+
+<opts> "d:"
+<sort>
+	-d <serial device>
+  -n <drive number> Do not read or write to specifed drive
+<switch>
+  case 'd':
+    agilent_path = optarg;
+    break;
+  case 'n':
+    uint8_t drv = atoi(optarg);
+    if (drv < N_NXDS_DRIVES) {
+      agilent_absent |= 1 << drv;
+    }
+    break;
+
+<package> msghdr_default
+<var>
+  char *msg_hdr_default = "nXDS";
