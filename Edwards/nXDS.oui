@@ -9,12 +9,13 @@
   -n <drive number> Do not read or write to specifed drive
 <switch>
   case 'd':
-    agilent_path = optarg;
+    nxds_path = optarg;
     break;
   case 'n':
-    uint8_t drv = atoi(optarg);
-    if (drv < N_NXDS_DRIVES) {
-      agilent_absent |= 1 << drv;
+    { uint8_t drv = atoi(optarg);
+      if (drv < N_NXDS_DRIVES) {
+        nxds_absent |= 1 << drv;
+      }
     }
     break;
 

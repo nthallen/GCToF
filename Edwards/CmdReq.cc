@@ -69,19 +69,19 @@ bool command_request::init(uint8_t drive, uint8_t req_type,
   this->address = address;
   this->read = read;
   if (read) {
-    req_sz = sprintf(req_buf, "#%02d:%02d%c%c%03d\r", device, master_device,
-      req_qual, req_type, address);
+    req_sz = sprintf((char *)req_buf, "#%02d:%02d%c%c%03d\r", device,
+      master_device, req_qual, req_type, address);
   } else {
-    req_sz = sprintf(req_buf, "#%02d:%02d%c%c%03d %d\r", device, master_device,
-      req_qual, req_type, address, value);
+    req_sz = sprintf((char *)req_buf, "#%02d:%02d%c%c%03d %d\r",
+      device, master_device, req_qual, req_type, address, value);
   }
   return false;
 }
 
 // nX_rep_ok, nX_rep_incomplete, nX_rep_error
 nX_rep_status_t nXDS::process_reply() {
-  int src, dest, rep_addr, rep_value;
-  if (nb < 12) return nX_rep_incomplete;
+  int src, dest, rep_addr;
+  if (nc < 12) return nX_rep_incomplete;
   if (not_str("#") ||
       not_int(dest) ||
       not_str(":") ||
@@ -92,7 +92,7 @@ nX_rep_status_t nXDS::process_reply() {
     report_err("Response from wrong device");
     return nX_rep_error;
   }
-  if (dest != master_device) {
+  if (dest != command_request::master_device) {
     report_err("Response not addressed to master device");
     return nX_rep_error;
   }
@@ -113,7 +113,7 @@ nX_rep_status_t nXDS::process_reply() {
       report_err("Expected rep_qual '*' for req_type 'C'");
       return nX_rep_error;
     }
-    if (req_qual != '=') {
+    if (rep_qual != '=') {
       report_err("Expected rep_qual '=' for read request");
       return nX_rep_error;
     }
@@ -133,7 +133,7 @@ nX_rep_status_t nXDS::process_reply() {
       return (cp >= nc) ? nX_rep_incomplete : nX_rep_error;
     }
     if (cmd_rep != 0) {
-      msg(2, "Command %c%d returned error status %d",
+      nl_error(2, "Command %c%d returned error status %d",
         pending->req_type, pending->address, cmd_rep);
       return nX_rep_error;
     }

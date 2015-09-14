@@ -3,6 +3,7 @@
  */
 #include "nXDS.h"
 #include "nortlib.h"
+#include "nl_assert.h"
 
 nXDS_cmd::nXDS_cmd(nXDS *nX_in)
     : Ser_Sel(tm_dev_name("cmd/nXDS"), O_RDONLY, 40) {
@@ -17,7 +18,6 @@ nXDS_cmd::~nXDS_cmd() {}
 int nXDS_cmd::ProcessData(int flag) {
   if (flag & Selector::Sel_Read) {
     int drive, addr, value = 0;
-    uint8_t cmd_qual, exp_qual, cmd_type;
     fillbuf();
     if (nc == 0) return 1;
     cp = 0;
@@ -30,7 +30,7 @@ int nXDS_cmd::ProcessData(int flag) {
         report_err("Expected drive:addr:value");
     } else {
       command_request *cr = nX->new_command_req();
-      if (cr->init(drive, 'C', address, false, value)) {
+      if (cr->init(drive, 'C', addr, false, value)) {
         nX->free_command(cr);
       } else {
         nX->enqueue_command(cr);
@@ -42,7 +42,7 @@ int nXDS_cmd::ProcessData(int flag) {
 }
 
 void nXDS::enqueue_poll(uint8_t drive, uint8_t qualifier, uint16_t address) {
-  assert(drive < N_NXDS_DRIVES);
+  nl_assert(drive < N_NXDS_DRIVES);
   command_request *cr;
   cr = new_command_req();
   if (cr->init(drive, qualifier, address, true)) {
@@ -52,7 +52,7 @@ void nXDS::enqueue_poll(uint8_t drive, uint8_t qualifier, uint16_t address) {
   }
 }
 
-void nXDS::enqueue_request(unit8_t drive, uint8_t qualifier, uint16_t address,
+void nXDS::enqueue_request(uint8_t drive, uint8_t qualifier, uint16_t address,
         bool read, uint16_t value) {
   command_request *cr = new_command_req();
   if (cr->init(drive, qualifier, address, read, value)) {
