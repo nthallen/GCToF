@@ -3,15 +3,15 @@ CPPFLAGS= -I /usr/local/include
 CXXFLAGS= -Wall -g
 LIBS=-ltmpp -ltm -lnort
 
-SRC = Agilent.cc TwisTorr.cc TwisTorr_cmd.cc CmdReq.cc TwisTorroui.c
+SRC = nXDS_main.cc nXDS.cc nXDS_cmd.cc CmdReq.cc nXDSoui.c
 OBJ = ${addsuffix .o, ${basename $(SRC) } } 
-TGT = TwisTorr
+TGT = nXDS
 
 $(TGT) : $(OBJ)
 	$(LINK.cc) -o $(TGT) $(OBJ) $(LIBS)
-	usemsg $(TGT) TwisTorroui.c
-TwisTorroui.c : TwisTorr.oui
-	oui -o TwisTorroui.c TwisTorr.oui
+	usemsg $(TGT) nXDSoui.c
+nXDSoui.c : nXDS.oui
+	oui -o nXDSoui.c nXDS.oui
 .PHONY : clean
 clean :
-	rm -f *.o TwisTorroui.c TwisTorr
+	rm -f *.o nXDSoui.c nXDS

@@ -31,8 +31,8 @@
    */
   typedef struct __attribute__((__packed__)) {
     uint16_t link_voltage; // 809: 0-5000 x 0.1V
-    sint16_t motor_current; // 809: +/- 300 x 0.1A
-    sint16_t motor_power; // 809: +/- 15000 x 0.1W
+    int16_t motor_current; // 809: +/- 300 x 0.1A
+    int16_t motor_power; // 809: +/- 15000 x 0.1W
     uint16_t status; // 802: see above
     uint8_t pump_temp; // 808: 0-150 C
     uint8_t controller_temp; // 808: 0-150 C
@@ -55,8 +55,8 @@
     class command_request {
       public:
         command_request();
-        bool init(uint8_t drive, unit8_t qualifier, uint16_t address, bool read, uint16_t value = 0);
-        nX_rep_status_t process_reply(uint8_t *rep, unsigned nb);
+        bool init(uint8_t drive, uint8_t qualifier, uint16_t address,
+          bool read, uint16_t value = 0);
         const char *ascii_escape();
         int write(int fd);
         bool active;
@@ -72,6 +72,8 @@
         uint8_t req_type;
         uint16_t address;
         uint16_t value;
+        bool read;
+        static const int master_device = 55;
       private:
     };
     
@@ -82,9 +84,10 @@
         command_request *new_command_req();
         void enqueue_command(command_request *);
         void enqueue_poll(command_request *);
-        void enqueue_poll(uint8_t drive, uint16_t address);
-        void enqueue_request(unit8_t drive, uint8_t qualifier,
+        void enqueue_poll(uint8_t drive, uint8_t qualifier, uint16_t address);
+        void enqueue_request(uint8_t drive, uint8_t qualifier,
           uint16_t address, bool read, uint16_t value = 0);
+        nX_rep_status_t process_reply();
         void free_command(command_request *);
         int ProcessData(int flag);
         Timeout *GetTimeout();

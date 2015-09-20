@@ -25,7 +25,7 @@ nXDS::nXDS(const char *path, nXDS_t *nX_TM) :
     nl_error(2, "Error from tcgetattr: %s", strerror(errno));
   }
   for (unsigned drv = 0; drv < N_NXDS_DRIVES; ++drv) {
-    if ((agilent_absent >> drv) & 0x1) {
+    if ((nxds_absent >> drv) & 0x1) {
       backoff_secs[drv] = 60;
     }
   }
@@ -159,7 +159,7 @@ int nXDS::ProcessData(int flag) {
             if (backoff_secs[pending->drive]) {
               backoff_secs[pending->drive] = 0;
               nX_TM_p->drive[pending->drive].status &= ~0x0001;
-              backoff_TO[req->drive].Clear();
+              backoff_TO[pending->drive].Clear();
             }
             break;
           case nX_rep_incomplete:

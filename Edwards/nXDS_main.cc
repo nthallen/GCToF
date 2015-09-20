@@ -16,9 +16,9 @@ const unsigned nXDS::nX_DevNo[N_NXDS_DRIVES] = {1,2};
 void enqueue_polls(nXDS *nX, nXDS_t *nX_TM) {
   for (unsigned drv = 0; drv < N_NXDS_DRIVES; ++drv) {
     if (!(nxds_absent & (1<<drv))) {
-      nX->enqueue_poll(drv, 'V', 808, nX_TM);
-      nX->enqueue_poll(drv, 'V', 809, nX_TM);
-      nX->enqueue_poll(drv, 'V', 802, nX_TM);
+      nX->enqueue_poll(drv, 'V', 808);
+      nX->enqueue_poll(drv, 'V', 809);
+      nX->enqueue_poll(drv, 'V', 802);
       nX->enqueue_request(drv, 'S', 801, true);
       nX->enqueue_request(drv, 'V', 826, true);
     }
