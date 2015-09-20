@@ -29,11 +29,19 @@ int nXDS_cmd::ProcessData(int flag) {
       if (cp >= nc)
         report_err("Expected drive:addr:value");
     } else {
-      command_request *cr = nX->new_command_req();
-      if (cr->init(drive, 'C', address, false, value)) {
-        nX->free_command(cr);
-      } else {
-        nX->enqueue_command(cr);
+      switch (address) {
+        case 802:
+        case 803:
+        case 805:
+          command_request *cr = nX->new_command_req();
+          if (cr->init(drive, 'C', address, false, value)) {
+            nX->free_command(cr);
+          } else {
+            nX->enqueue_command(cr);
+          }
+          break;
+        default:
+          nl_error(1, "Invalid command address: %d", addr);
       }
     }
     consume(nc);

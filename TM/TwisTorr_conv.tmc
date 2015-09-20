@@ -1,5 +1,4 @@
 %{
-  #define TTselect(x,y) TwisTorr.drive[x].y
   #define TT_Start_text(x) ((x)?"Start":"Stop ")
   #define TT_Speed_text(x) ((x)?"Low ":"High")
   #define TT_YN_text(x) ((x)?"Yes":"No ")

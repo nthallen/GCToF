@@ -1,0 +1,65 @@
+%{
+  #define nX_FAIL_OK_text(x) ((x)?"FAIL":"OK  ")
+  const char *nX_speed(x) {
+    switch (x & 0xF) {
+      case 0: return "-------";
+      case 1: return "decel  ";
+      case 2: return "accel  ";
+      case 3: return "#d/a   ";
+      case 4: return "standby";
+      case 5: return "stdby/d";
+      case 6: return "stdby/a";
+      case 7: return "#s/d/a ";
+      case 8: return "full   ";
+      case 9: return "full/d ";
+      case 10: return "full/a ";
+      case 11: return "#f/d/a "
+      case 12: return "#f/s   ";
+      case 13: return "#f/s/d ";
+      case 14: return "#f/s/d ";
+      case 15: return "#f/s/da";
+      default: return "*******";
+    }
+  }
+  const char *nX_above(x) {
+    switch (x & 0x3) {
+      case 0: return "-------";
+      case 1: return "AbvRamp";
+      case 2: return "Abv O/L";
+      case 3: return "AbvR/OL";
+      default: return "*******";
+    }
+  }
+  const char *nX_fault(x) {
+    if (x & 0x1) return "Over V ";
+    if (x & 0x2) return "Over I ";
+    if (x & 0x4) return "Over T ";
+    if (x & 0x8) return "Under T";
+    if (x & 0x10) return "Pwr Flt";
+    if (x & 0x20) return "O/L T/O";
+    if (x 7 0x40) return "Acc T/O";
+    return "-------";
+  }
+%}
+TM typedef unsigned char nX_FAIL_OK_t { text "%4d" nX_FAIL_OK_text(); }
+TM typedef unsigned char nX_Speed_t { text "%7d" nX_speed(); }
+TM typedef unsigned char nX_Above_t { text "%7d" nX_above(); }
+TM typedef unsigned char nX_Fault_t { text "%7d" nX_fault(); }
+
+nX_FAIL_OK_t nX0Resp; Invalidate nX0Resp;
+  { nX0Resp = (nX0Stat >> 0) & 1; Validate nX0Resp; }
+nX_Speed_t nX0Speed; Invalidate nX0Speed;
+  { nX0Speed = (nX0Stat >> 1) & 0xF; Validate nX0Speed; }
+nX_Above_t nX0Above; Invalidate nX0Above;
+  { nX0Above = (nX0Stat >> 5) & 0x3; Validate nX0Above; };
+nX_Fault_t nX0Fault; Invalidate nX0Fault;
+  { nX0Fault = (nX0Stat >> 9) & 0x7F; Validate nX0Fault; };
+
+nX_FAIL_OK_t nX1Resp; Invalidate nX1Resp;
+  { nX1Resp = (nX1Stat >> 0) & 1; Validate nX1Resp; }
+nX_Speed_t nX1Speed; Invalidate nX1Speed;
+  { nX1Speed = (nX1Stat >> 1) & 0xF; Validate nX1Speed; }
+nX_Above_t nX1Above; Invalidate nX1Above;
+  { nX1Above = (nX1Stat >> 5) & 0x3; Validate nX1Above; };
+nX_Fault_t nX1Fault; Invalidate nX1Fault;
+  { nX1Fault = (nX1Stat >> 9) & 0x7F; Validate nX1Fault; };
