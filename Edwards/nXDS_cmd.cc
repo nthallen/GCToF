@@ -29,15 +29,16 @@ int nXDS_cmd::ProcessData(int flag) {
       if (cp >= nc)
         report_err("Expected drive:addr:value");
     } else {
-      switch (address) {
+      switch (addr) {
         case 802:
         case 803:
         case 805:
-          command_request *cr = nX->new_command_req();
-          if (cr->init(drive, 'C', address, false, value)) {
-            nX->free_command(cr);
-          } else {
-            nX->enqueue_command(cr);
+          { command_request *cr = nX->new_command_req();
+            if (cr->init(drive, 'C', addr, false, value)) {
+              nX->free_command(cr);
+            } else {
+              nX->enqueue_command(cr);
+            }
           }
           break;
         default:

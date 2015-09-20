@@ -1,4 +1,4 @@
-csv GCToFeng_1 33
+csv GCToFeng_1 42
   0 TGCToFeng_1 %.3lf
   1 CPU_Pct 
   2 Disk 
@@ -32,3 +32,12 @@ csv GCToFeng_1 33
   30 TT3_spd %.2lf
   31 TT_stale 
   32 freemem 
+  33 nX0CtrlrT 
+  34 nX0LinkV 
+  35 nX0MtrF 
+  36 nX0MtrI 
+  37 nX0MtrW 
+  38 nX0PumpT 
+  39 nX0Stat %.0lf
+  40 nX1Stat %.0lf
+  41 nX_stale 

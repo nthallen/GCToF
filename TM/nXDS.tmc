@@ -1,4 +1,5 @@
 %{
+  #define NXDS_HIDE_INTERNALS 1
   #include "nXDS.h"
   #define nXselect(x,y) nXDS.drive[x].y
 %}
@@ -33,7 +34,7 @@ Group nXDS_grp (nX_stale, nX0LinkV, nX0MtrI, nX0MtrW, nX0Stat,
       nX0PumpT, nX0CtrlrT, nX0MtrF, nX1LinkV, nX1MtrI, nX1MtrW, nX1Stat,
       nX1PumpT, nX1CtrlrT, nX1MtrF) {
   nX0LinkV = nXselect(0,link_voltage);
-  nX0MtrI; = nXselect(0,motor_current);
+  nX0MtrI = nXselect(0,motor_current);
   nX0MtrW = nXselect(0,motor_power);
   nX0Stat = nXselect(0,status);
   nX0PumpT = nXselect(0,pump_temp);
@@ -41,7 +42,7 @@ Group nXDS_grp (nX_stale, nX0LinkV, nX0MtrI, nX0MtrW, nX0Stat,
   nX0MtrF = nXselect(0,motor_freq);
       
   nX1LinkV = nXselect(1,link_voltage);
-  nX1MtrI; = nXselect(1,motor_current);
+  nX1MtrI = nXselect(1,motor_current);
   nX1MtrW = nXselect(1,motor_power);
   nX1Stat = nXselect(1,status);
   nX1PumpT = nXselect(1,pump_temp);

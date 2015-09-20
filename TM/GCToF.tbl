@@ -19,7 +19,7 @@ TwisTorr {
 }
 
 nXDS {
-  HBox { +-; Title nXDS; -+ };
+  HBox { +-; Title: nXDS; -+ };
   ""            >A<   >B<;
   I:           (nX0MtrI,6)   (nX1MtrI,6) A;
   V:           (nX0LinkV,5)  (nX1LinkV,5) V;

@@ -30,7 +30,7 @@ GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
 %%
-CPPFLAGS += -I ../Agilent
+CPPFLAGS += -I ../Agilent -I ../Edwards
 GCToFeng.cdf : genui.txt
 	genui -d ../eng -c genui.txt
 ../Agilent/TwisTorr :

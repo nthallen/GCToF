@@ -44,6 +44,7 @@
     nXDS_TM_t drive[N_NXDS_DRIVES];
   } nXDS_t;
 
+  #ifndef NXDS_HIDE_INTERNALS
   #ifdef __cplusplus
     #include "SerSelector.h"
     #include <queue>
@@ -119,4 +120,5 @@
     };
 
   #endif // __cplusplus
+  #endif // NXDS_HIDE_INTERNALS
 #endif // NXDS_H_INCLUDED
