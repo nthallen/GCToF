@@ -48,7 +48,7 @@ Status {
 }
 
 { HBox {
-    |; [TwisTorr]; |; {
+    |; [TwisTorr]; |; [nXDS]; |; {
       [PC];
       [Status];
     }; | }
