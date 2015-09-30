@@ -27,6 +27,10 @@ TwisTorr::TwisTorr(const char *path, TwisTorr_t *TT_TM) :
   for (unsigned drv = 0; drv < N_TWISTORR_DRIVES; ++drv) {
     if ((agilent_absent >> drv) & 0x1) {
       backoff_secs[drv] = 60;
+      TT_TM_p->drive[drv].flags |= 0x80;
+    } else {
+      backoff_secs[drv] = 0;
+      TT_TM_p->drive[drv].flags &= ~0x80;
     }
   }
 }

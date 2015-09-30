@@ -35,9 +35,19 @@ void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1.25" );
+  nl_error( 0, "Starting V0.1.26" );
   { Selector Loop;
     TwisTorr_t TT_TM;
+    for (unsigned drv = 0; drv < N_TWISTORR_DRIVES; ++drv) {
+      TT_TM.drive[drv].pump_current = 0;
+      TT_TM.drive[drv].pump_power = 0;
+      TT_TM.drive[drv].driving_freq = 0;
+      TT_TM.drive[drv].pump_temperature = 0;
+      TT_TM.drive[drv].pump_status = 0;
+      TT_TM.drive[drv].rotation_speed = 0;
+      TT_TM.drive[drv].error_status = 0;
+      TT_TM.drive[drv].flags = 0;
+    }
     TwisTorr TT(agilent_path, &TT_TM);
     enqueue_polls(&TT, &TT_TM);
     TM_Selectee TM("TwisTorr", &TT_TM, sizeof(TT_TM));
