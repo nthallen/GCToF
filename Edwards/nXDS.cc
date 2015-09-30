@@ -26,7 +26,12 @@ nXDS::nXDS(const char *path, nXDS_t *nX_TM) :
   }
   for (unsigned drv = 0; drv < N_NXDS_DRIVES; ++drv) {
     if ((nxds_absent >> drv) & 0x1) {
+      nl_error(0, "Marking drive %d (device %d) as absent", drv, nX_DevNo[drv]);
       backoff_secs[drv] = 60;
+      nX_TM->drive[drv].status |= 0x0001;
+    } else {
+      backoff_secs[drv] = 0;
+      nX_TM->drive[drv].status &= ~0x0001;
     }
   }
 }
@@ -152,6 +157,7 @@ int nXDS::ProcessData(int flag) {
           return 0;
         }
       } else {
+        cp += pending->req_sz;
         switch (process_reply()) {
           case nX_rep_ok:
             nl_error(MSG_DBG(1), "Reply received OK");

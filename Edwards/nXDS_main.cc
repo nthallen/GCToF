@@ -27,9 +27,18 @@ void enqueue_polls(nXDS *nX, nXDS_t *nX_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1.0" );
+  nl_error( 0, "Starting V0.1.1" );
   { Selector Loop;
     nXDS_t nX_TM;
+    for (unsigned drv = 0; drv < N_NXDS_DRIVES; ++drv) {
+      nX_TM.drive[drv].link_voltage = 0;
+      nX_TM.drive[drv].motor_current = 0;
+      nX_TM.drive[drv].motor_power = 0;
+      nX_TM.drive[drv].status = 0;
+      nX_TM.drive[drv].pump_temp = 0;
+      nX_TM.drive[drv].controller_temp = 0;
+      nX_TM.drive[drv].motor_freq = 0;
+    }
     nXDS nX(nxds_path, &nX_TM);
     enqueue_polls(&nX, &nX_TM);
     TM_Selectee TM("nXDS", &nX_TM, sizeof(nX_TM));
