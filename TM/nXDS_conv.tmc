@@ -1,22 +1,22 @@
 %{
-  #define nX_FAIL_OK_text(x) ((x)?"FAIL":"OK  ")
+  #define nX_FAIL_OK_text(x) ((x)?"FAIL":"  OK")
   const char *nX_speed(unsigned char x) {
     switch (x & 0xF) {
       case 0: return "-------";
-      case 1: return "decel  ";
-      case 2: return "accel  ";
-      case 3: return "#d/a   ";
+      case 1: return "  decel";
+      case 2: return "  accel";
+      case 3: return "   #d/a";
       case 4: return "standby";
       case 5: return "stdby/d";
       case 6: return "stdby/a";
-      case 7: return "#s/d/a ";
-      case 8: return "full   ";
-      case 9: return "full/d ";
-      case 10: return "full/a ";
-      case 11: return "#f/d/a ";
-      case 12: return "#f/s   ";
-      case 13: return "#f/s/d ";
-      case 14: return "#f/s/d ";
+      case 7: return " #s/d/a";
+      case 8: return "   full";
+      case 9: return " full/d";
+      case 10: return " full/a";
+      case 11: return " #f/d/a";
+      case 12: return "   #f/s";
+      case 13: return " #f/s/d";
+      case 14: return " #f/s/d";
       case 15: return "#f/s/da";
       default: return "*******";
     }
@@ -31,9 +31,9 @@
     }
   }
   const char *nX_fault(unsigned char x) {
-    if (x & 0x1) return "Over V ";
-    if (x & 0x2) return "Over I ";
-    if (x & 0x4) return "Over T ";
+    if (x & 0x1) return " Over V";
+    if (x & 0x2) return " Over I";
+    if (x & 0x4) return " Over T";
     if (x & 0x8) return "Under T";
     if (x & 0x10) return "Pwr Flt";
     if (x & 0x20) return "O/L T/O";

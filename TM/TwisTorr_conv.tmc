@@ -1,15 +1,17 @@
 %{
-  #define TT_Start_text(x) ((x)?"Start":"Stop ")
-  #define TT_Speed_text(x) ((x)?"Low ":"High")
-  #define TT_YN_text(x) ((x)?"Yes":"No ")
-  #define TT_ClOp_text(x) ((x)?"Closed":"Open  ")
-  #define TT_VentOp_text(x) ((x)?"Cmd ":"Auto")
+  #define TT_Start_text(x) ((x)?"Start":" Stop")
+  #define TT_Speed_text(x) ((x)?" Low":"High")
+  #define TT_YN_text(x) ((x)?"Yes":" No")
+  #define TT_ClOp_text(x) ((x)?"Closed":"  Open")
+  #define TT_VentOp_text(x) ((x)?" Cmd":"Auto")
+  #define TT_Resp_text(x) ((x)?"Fail":"  OK")
 %}
 TM typedef unsigned char TT_Start_t { text "%5d" TT_Start_text(); }
 TM typedef unsigned char TT_Speed_t { text "%4d" TT_Speed_text(); }
 TM typedef unsigned char TT_YN_t { text "%3d" TT_YN_text(); }
 TM typedef unsigned char TT_ClOp_t { text "%3d" TT_ClOp_text(); }
 TM typedef unsigned char TT_VentOp_t { text "%4d" TT_VentOp_text(); }
+TM typedef unsigned char TT_Resp_t { text "%4d" TT_Resp_text(); }
 
 TT_Start_t TT1_Start; Invalidate TT1_Start;
   { TT1_Start = (TT1_flags >> 0) & 1; Validate TT1_Start; }
@@ -23,6 +25,8 @@ TT_ClOp_t TT1_VentVlv; Invalidate TT1_VentVlv;
   { TT1_VentVlv = (TT1_flags >> 4) & 1; Validate TT1_VentVlv; }
 TT_VentOp_t TT1_VentOp; Invalidate TT1_VentOp;
   { TT1_VentOp = (TT1_flags >> 5) & 1; Validate TT1_VentOp; }
+TT_Resp_t TT1_Resp; Invalidate TT1_Resp;
+  { TT1_Resp = (TT1_flags >> 7) & 1; Validate TT1_Resp; }
 
 TT_Start_t TT2_Start; Invalidate TT2_Start;
   { TT2_Start = (TT2_flags >> 0) & 1; Validate TT2_Start; }
@@ -36,6 +40,8 @@ TT_ClOp_t TT2_VentVlv; Invalidate TT2_VentVlv;
   { TT2_VentVlv = (TT2_flags >> 4) & 1; Validate TT2_VentVlv; }
 TT_VentOp_t TT2_VentOp; Invalidate TT2_VentOp;
   { TT2_VentOp = (TT2_flags >> 5) & 1; Validate TT2_VentOp; }
+TT_Resp_t TT2_Resp; Invalidate TT2_Resp;
+  { TT2_Resp = (TT2_flags >> 7) & 1; Validate TT2_Resp; }
 
 TT_Start_t TT3_Start; Invalidate TT3_Start;
   { TT3_Start = (TT3_flags >> 0) & 1; Validate TT3_Start; }
@@ -49,3 +55,5 @@ TT_ClOp_t TT3_VentVlv; Invalidate TT3_VentVlv;
   { TT3_VentVlv = (TT3_flags >> 4) & 1; Validate TT3_VentVlv; }
 TT_VentOp_t TT3_VentOp; Invalidate TT3_VentOp;
   { TT3_VentOp = (TT3_flags >> 5) & 1; Validate TT3_VentOp; }
+TT_Resp_t TT3_Resp; Invalidate TT3_Resp;
+  { TT3_Resp = (TT3_flags >> 7) & 1; Validate TT3_Resp; }

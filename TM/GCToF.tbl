@@ -14,6 +14,7 @@ TwisTorr {
   Drive:  (TT1_drvf,5) (TT2_drvf,5) (TT3_drvf,5) Hz;
   Speed:  (TT1_spd,5) (TT2_spd,5) (TT3_spd,5)  Hz;
   Status: (TT1_Status,8) (TT2_Status,8) (TT3_Status,8);
+  Resp:   (TT1_Resp,4)    (TT2_Resp,4)    (TT3_Resp,4);
   Errors: (TT1_ErrStat,3) (TT2_ErrStat,3) (TT3_ErrStat,3);
   Stale:  (TT_stale,3);
 }

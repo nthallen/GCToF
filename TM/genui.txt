@@ -23,6 +23,7 @@ ROWS 8
   1 TT1_ActStp:TT1_flags:3 TwisTorr flags %.0lf
   1 TT1_VentVlv:TT1_flags:4 TwisTorr flags %.0lf
   1 TT1_VentOp:TT1_flags:5 TwisTorr flags %.0lf
+  1 TT1_Resp:TT1_flags:7 TwisTorr flags %.0lf
   1 TT1_NoConn:TT1_ErrStat:0 TT1_Errors errors %.0lf
   1 TT1_PumpOT:TT1_ErrStat:1 TT1_Errors errors %.0lf
   1 TT1_CtrlOT:TT1_ErrStat:2 TT1_Errors errors %.0lf
@@ -48,6 +49,7 @@ ROWS 8
   1 TT2_ActStp:TT2_flags:3 TwisTorr flags %.0lf
   1 TT2_VentVlv:TT2_flags:4 TwisTorr flags %.0lf
   1 TT2_VentOp:TT2_flags:5 TwisTorr flags %.0lf
+  1 TT2_Resp:TT2_flags:7 TwisTorr flags %.0lf
   1 TT2_NoConn:TT2_ErrStat:0 TT2_Errors errors %.0lf
   1 TT2_PumpOT:TT2_ErrStat:1 TT2_Errors errors %.0lf
   1 TT2_CtrlOT:TT2_ErrStat:2 TT2_Errors errors %.0lf
@@ -73,6 +75,7 @@ ROWS 8
   1 TT3_ActStp:TT3_flags:3 TwisTorr flags %.0lf
   1 TT3_VentVlv:TT3_flags:4 TwisTorr flags %.0lf
   1 TT3_VentOp:TT3_flags:5 TwisTorr flags %.0lf
+  1 TT3_Resp:TT3_flags:7 TwisTorr flags %.0lf
   1 TT3_NoConn:TT3_ErrStat:0 TT3_Errors errors %.0lf
   1 TT3_PumpOT:TT3_ErrStat:1 TT3_Errors errors %.0lf
   1 TT3_CtrlOT:TT3_ErrStat:2 TT3_Errors errors %.0lf
