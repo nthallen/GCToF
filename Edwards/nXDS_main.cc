@@ -27,7 +27,7 @@ void enqueue_polls(nXDS *nX, nXDS_t *nX_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1.1" );
+  nl_error( 0, "Starting V0.1.2" );
   { Selector Loop;
     nXDS_t nX_TM;
     for (unsigned drv = 0; drv < N_NXDS_DRIVES; ++drv) {
@@ -43,9 +43,11 @@ int main(int argc, char **argv) {
     enqueue_polls(&nX, &nX_TM);
     TM_Selectee TM("nXDS", &nX_TM, sizeof(nX_TM));
     nXDS_cmd Cmd(&nX);
+    nl_error(MSG_DBG(2), "Finished constructors");
     Loop.add_child(&nX);
     Loop.add_child(&TM);
     Loop.add_child(&Cmd);
+    nl_error(MSG_DBG(2), "Entering event_loop");
     Loop.event_loop();
   }
   nl_error( 0, "Terminating" );

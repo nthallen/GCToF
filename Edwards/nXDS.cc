@@ -135,7 +135,7 @@ int nXDS::ProcessData(int flag) {
       /* This loop checks for the echo at buf[cp], advancing cp if it
        * does not match.
        */
-      for (cp = 0; cp + pending->req_sz + pending->rep_sz < nc; ++cp) {
+      for (cp = 0; cp + pending->req_sz < nc; ++cp) {
         unsigned i;
         for (i = 0; i < pending->req_sz; ++i) {
           if (buf[cp+i] != pending->req_buf[i])
@@ -152,7 +152,7 @@ int nXDS::ProcessData(int flag) {
           report_err("Timeout on echo from nXDS request: %s",
             pending->ascii_escape());
         } else {
-          consume(cp);
+          consume(cp); // cp points to start of echo. Does not consume echo
           update_termios();
           return 0;
         }

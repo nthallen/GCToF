@@ -81,12 +81,12 @@ bool command_request::init(uint8_t drive, uint8_t req_type,
 // nX_rep_ok, nX_rep_incomplete, nX_rep_error
 nX_rep_status_t nXDS::process_reply() {
   int src, dest, rep_addr;
-  if (nc < 12) return nX_rep_incomplete;
+  if (nc-cp < 14) return nX_rep_incomplete;
   if (not_str("#") ||
       not_int(dest) ||
       not_str(":") ||
       not_int(src)) {
-    return nX_rep_error;
+    return (cp < nc) ? nX_rep_error : nX_rep_incomplete;
   }
   if (src != pending->device) {
     report_err("Response from wrong device");
@@ -96,6 +96,8 @@ nX_rep_status_t nXDS::process_reply() {
     report_err("Response not addressed to master device");
     return nX_rep_error;
   }
+  if (nc-cp < 2)
+    return nX_rep_incomplete;
   uint8_t rep_qual = buf[cp++];
   uint8_t rep_type = buf[cp++];
   if (rep_type != pending->req_type) {
@@ -119,7 +121,7 @@ nX_rep_status_t nXDS::process_reply() {
     }
   }
   if (not_int(rep_addr) || not_str(" ")) {
-    return nX_rep_error;
+    return (cp<nc) ? nX_rep_error : nX_rep_incomplete;
   }
   if (rep_addr != pending->address) {
     report_err("Reply address does not match request");

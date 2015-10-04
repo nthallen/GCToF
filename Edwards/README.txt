@@ -29,13 +29,21 @@ This directory holds a driver for Edwards nXDS Scroll Pump.
 
   Command confirmation come as " #" after repeating the command number. Details listed on page 15. 0 is no error
 
-  Commands:
+  Commands: (In the examples I assume I am addressing device 01. I am using device #55 for the master)
 
-    * Start pump: !C802 1
-    * Stop pump: !C802 0
-    * Full Speed: !C803 0
-    * Standby Speed: !C803 1
-    * Set Standby Speed: !C805 ##
+    * Start pump: "#01:55!C802 1\r" Reply: "#55:01*C802 r\r" where r is return code
+    * Stop pump: "#01:55!C802 0\r" Reply: "#55:01*C802 r\r"
+    * Full Speed: "#01:55!C803 0\r" Reply: "#55:01*C803 r\r"
+    * Standby Speed: "#01:55!C803 1\r" Reply: "#55:01*C803 r\r"
+    * Set Standby Speed: "#01:55!C805 ##\r" "#55:01*C805 r\r"
+    
+  Return Codes (r):
+    0: No error
+    1: Invalid command for object ID
+    2: Invalid query/command
+    3: Missing parameter
+    4: Parameter out of range
+    5: Invalid command in current state
 
   Readbacks:
 
