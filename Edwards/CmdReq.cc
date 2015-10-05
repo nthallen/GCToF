@@ -68,6 +68,7 @@ bool command_request::init(uint8_t drive, uint8_t req_type,
   this->device = nXDS::nX_DevNo[drive];
   this->address = address;
   this->read = read;
+  this->req_type = req_type;
   if (read) {
     req_sz = sprintf((char *)req_buf, "#%02d:%02d%c%c%03d\r", device,
       master_device, req_qual, req_type, address);
