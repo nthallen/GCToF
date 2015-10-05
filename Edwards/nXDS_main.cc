@@ -40,13 +40,13 @@ int main(int argc, char **argv) {
       nX_TM.drive[drv].motor_freq = 0;
     }
     nXDS nX(nxds_path, &nX_TM);
-    enqueue_polls(&nX, &nX_TM);
     TM_Selectee TM("nXDS", &nX_TM, sizeof(nX_TM));
     nXDS_cmd Cmd(&nX);
     nl_error(MSG_DBG(2), "Finished constructors");
     Loop.add_child(&nX);
     Loop.add_child(&TM);
     Loop.add_child(&Cmd);
+    enqueue_polls(&nX, &nX_TM);
     nl_error(MSG_DBG(2), "Entering event_loop");
     Loop.event_loop();
   }
