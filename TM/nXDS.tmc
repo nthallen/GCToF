@@ -18,7 +18,6 @@ TM 1 Hz nX_Volts nX0LinkV;
 TM 1 Hz nx_Amps nX0MtrI;
 TM 1 Hz nX_Watts nX0MtrW;
 TM 1 Hz nX_Status_t nX0Stat;
-TM 1 Hz nX_Celcius nX0PumpT;
 TM 1 Hz nX_Celcius nX0CtrlrT;
 TM 1 Hz nX_Hz nX0MtrF;
 
@@ -26,18 +25,16 @@ TM 1 Hz nX_Volts nX1LinkV;
 TM 1 Hz nx_Amps nX1MtrI;
 TM 1 Hz nX_Watts nX1MtrW;
 TM 1 Hz nX_Status_t nX1Stat;
-TM 1 Hz nX_Celcius nX1PumpT;
 TM 1 Hz nX_Celcius nX1CtrlrT;
 TM 1 Hz nX_Hz nX1MtrF;
 
 Group nXDS_grp (nX_stale, nX0LinkV, nX0MtrI, nX0MtrW, nX0Stat,
-      nX0PumpT, nX0CtrlrT, nX0MtrF, nX1LinkV, nX1MtrI, nX1MtrW, nX1Stat,
-      nX1PumpT, nX1CtrlrT, nX1MtrF) {
+      nX0CtrlrT, nX0MtrF, nX1LinkV, nX1MtrI, nX1MtrW, nX1Stat,
+      nX1CtrlrT, nX1MtrF) {
   nX0LinkV = nXselect(0,link_voltage);
   nX0MtrI = nXselect(0,motor_current);
   nX0MtrW = nXselect(0,motor_power);
   nX0Stat = nXselect(0,status);
-  nX0PumpT = nXselect(0,pump_temp);
   nX0CtrlrT = nXselect(0,controller_temp);
   nX0MtrF = nXselect(0,motor_freq);
       
@@ -45,7 +42,6 @@ Group nXDS_grp (nX_stale, nX0LinkV, nX0MtrI, nX0MtrW, nX0Stat,
   nX1MtrI = nXselect(1,motor_current);
   nX1MtrW = nXselect(1,motor_power);
   nX1Stat = nXselect(1,status);
-  nX1PumpT = nXselect(1,pump_temp);
   nX1CtrlrT = nXselect(1,controller_temp);
   nX1MtrF = nXselect(1,motor_freq);
       

@@ -150,7 +150,12 @@ nX_rep_status_t nXDS::process_reply() {
             not_int(vals[1])) {
           return (cp >= nc) ? nX_rep_incomplete : nX_rep_error;
         }
-        nX_TM_p->drive[pending->drive].pump_temp = vals[0];
+        // nX_TM_p->drive[pending->drive].pump_temp = vals[0];
+        if (vals[1] == -200) {
+          if (nX_TM_p->drive[pending->drive].controller_temp != 255)
+            nl_error(2, "controller temp reportedly not implemented");
+          vals[1] = 255;
+        }
         nX_TM_p->drive[pending->drive].controller_temp = vals[1];
         break;
       case 809: //dddd;[-+]ddd;[-+]ddddd Link voltage, motor current/power

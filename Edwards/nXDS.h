@@ -34,7 +34,7 @@
     int16_t motor_current; // 809: +/- 300 x 0.1A
     int16_t motor_power; // 809: +/- 15000 x 0.1W
     uint16_t status; // 802: see above
-    uint8_t pump_temp; // 808: 0-150 C
+    //uint8_t pump_temp; // 808: 0-150 C
     uint8_t controller_temp; // 808: 0-150 C
     uint8_t motor_freq; // 802: 0-255 Hz
     uint8_t fill; // for alignment
@@ -92,7 +92,7 @@
         void free_command(command_request *);
         int ProcessData(int flag);
         Timeout *GetTimeout();
-        void submit_req(command_request *req);
+        bool submit_req(command_request *req);
         static const unsigned nX_DevNo[N_NXDS_DRIVES];
       private:
         void update_termios();

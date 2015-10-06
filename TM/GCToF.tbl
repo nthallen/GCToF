@@ -26,7 +26,6 @@ nXDS {
   V:           (nX0LinkV,5)  (nX1LinkV,5) V;
   W:           (nX0MtrW,5)   (nX1MtrW,5) W;
   Freq:        (nX0MtrF,3)   (nX1MtrF,3) Hz;
-  Pump:        (nX0PumpT,3)  (nX1PumpT,3) C;
   Ctrl:        (nX0CtrlrT,3) (nX1CtrlrT,3) C;
   Speed:       (nX0Speed,7)  (nX1Speed,7);
   ""           (nX0Above,7)  (nX1Above,7);

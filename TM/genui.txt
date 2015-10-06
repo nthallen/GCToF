@@ -90,7 +90,6 @@ ROWS 8
   1 nX0LinkV nXDS V
   1 nX0MtrI nXDS I
   1 nX0MtrW nXDS W
-  1 nX0PumpT nXDS T
   1 nX0CtrlrT nXDS T
   1 nX0MtrF nXDS Freq
   1 nX_stale nXDS Stale
@@ -111,6 +110,12 @@ ROWS 8
   1 nX0_PwrStgFlt:nX0Stat:13 nXDS0 Stat %.0lf
   1 nX0_OLTO:nX0Stat:14 nXDS0 Stat %.0lf
   1 nX0_AccTO:nX0Stat:15 nXDS0 Stat %.0lf
+
+  1 nX1LinkV nXDS V
+  1 nX1MtrI nXDS I
+  1 nX1MtrW nXDS W
+  1 nX1CtrlrT nXDS T
+  1 nX1MtrF nXDS Freq
 
   1 nX1_Resp:nX1Stat:0 nXDS1 Stat %.0lf
   1 nX1_Dec:nX1Stat:1 nXDS1 Stat %.0lf

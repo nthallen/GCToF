@@ -203,24 +203,29 @@ int nXDS::ProcessData(int flag) {
       consume(nc);
     }
   }
-  if (!pending && !cmds.empty()) {
-    submit_req(cmds[0]);
+  while (!pending && !cmds.empty()) {
+    command_request *cr = cmds[0];
     cmds.pop_front();
+    if (submit_req(cr)) break;
   }
-  if (!pending && cur_poll != polls.end()) {
-    submit_req(*cur_poll++);
+  while (!pending && cur_poll != polls.end()) {
+    if (submit_req(*cur_poll++)) break;
   }
   return 0;
 }
 
-void nXDS::submit_req(command_request *req) {
+/**
+ * @return true if command was submitted
+ */
+bool nXDS::submit_req(command_request *req) {
   if (backoff_secs[req->drive] && !backoff_TO[req->drive].Expired()) {
     free_command(req);
-    return;
+    return false;
   }
   pending = req;
   if (req->write(fd))
     report_err("Write error");
   TO.Set(0, pending->TO_msecs);
   update_termios();
+  return true;
 }
