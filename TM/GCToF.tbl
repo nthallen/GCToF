@@ -1,6 +1,6 @@
 TwisTorr {
   HBox { +-; Title: TwisTorr; -+ };
-  ""          "1"      "2"     "3";
+  ""          >"1"<      >"2"<     >"3"<;
   ""      (TT1_Start,5) (TT2_Start,5) (TT3_Start,5);
   Speed:  (TT1_Speed,4) (TT2_Speed,4) (TT3_Speed,4);
   WtrCl:  (TT1_WtrCl,3) (TT2_WtrCl,3) (TT3_WtrCl,3);
@@ -22,6 +22,7 @@ TwisTorr {
 nXDS {
   HBox { +-; Title: nXDS; -+ };
   ""            >A<   >B<;
+  Power:       (nX0Power,3)  (nX1Power,3);
   I:           (nX0MtrI,6)   (nX1MtrI,6) A;
   V:           (nX0LinkV,5)  (nX1LinkV,5) V;
   W:           (nX0MtrW,5)   (nX1MtrW,5) W;
