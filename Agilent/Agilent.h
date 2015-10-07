@@ -88,7 +88,7 @@
         void free_command(command_request *);
         int ProcessData(int flag);
         Timeout *GetTimeout();
-        void submit_req(command_request *req);
+        bool submit_req(command_request *req);
         static const unsigned TT_DevNo[N_TWISTORR_DRIVES];
       private:
         void update_termios();

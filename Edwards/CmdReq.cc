@@ -13,6 +13,8 @@ command_request::command_request() {
   active = false;
   persistent = false;
   TO_msecs = 250;
+  rep_sz = 14; // The minimal #ss:dd*C802 0\r
+  CmdRestrictions = CR_none;
 }
 
 /**
@@ -26,11 +28,18 @@ bool command_request::init(uint8_t drive, uint8_t req_type,
   persistent = false;
   req_qual = 0;
   switch (address) {
-    case 801: req_qual = '?'; break;
+    case 801:
+      req_qual = '?';
+      rep_sz = 30;
+      break;
     case 802: // Start/Stop
       switch (req_type) {
         case 'C': req_qual = '!'; break;
-        case 'V': req_qual = '?'; break;
+        case 'V':
+          req_qual = '?';
+          rep_sz = 35;
+          CmdRestrictions = CR_read_in_start;
+          break;
       }
       break;
     case 803: // Standby Speed
@@ -139,6 +148,8 @@ nX_rep_status_t nXDS::process_reply() {
       nl_error(2, "Command %c%d returned error status %d",
         pending->req_type, pending->address, cmd_rep);
       return nX_rep_error;
+    } else if (pending->address == 802) {
+      nX_TM_p->drive[pending->drive].pump_on = pending->value;
     }
   } else {
     int vals[3];
@@ -189,7 +200,15 @@ nX_rep_status_t nXDS::process_reply() {
         nX_TM_p->drive[pending->drive].status |= ((vals[3]&0x003E)<<8) | (vals[3]&0xC000);
         break;
       case 801: // PumpType;Dxxxxxxx Y;ddd ID: treat as a string
-        nl_error(0, "Drive %d ID: %s", pending->drive, &buf[cp]);
+        { int i;
+          for (i = 0; cp + i < nc && buf[cp+i] != '\r'; ++i);
+          if (cp+i < nc) {
+            buf[cp+i] = '\0';
+            nl_error(0, "Drive %d ID: %s", pending->drive, &buf[cp]);
+          } else {
+            return nX_rep_incomplete;
+          }
+        }
         break;
       case 826: // hhhh Service Status
         if (not_hex(hvals[0])) {

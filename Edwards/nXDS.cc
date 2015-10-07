@@ -66,7 +66,7 @@ nXDS::~nXDS() {
  */
 void nXDS::update_termios() {
   // int cur_min = pending->req_sz + pending->min - nc;
-  int cur_min = pending->req_sz + 12 - nc;
+  int cur_min = pending->req_sz + pending->rep_sz - nc;
   if (cur_min < 1) cur_min = 1;
   if (cur_min != termios_s.c_cc[VMIN]
       // || pending->time != termios_s.c_cc[VTIME]
@@ -221,6 +221,18 @@ bool nXDS::submit_req(command_request *req) {
   if (backoff_secs[req->drive] && !backoff_TO[req->drive].Expired()) {
     free_command(req);
     return false;
+  }
+  switch (req->CmdRestrictions) {
+    case CR_none: break;
+    case CR_read_in_start: // Can only read when started
+      if (!nX_TM_p->drive[req->drive].pump_on) {
+        free_command(req);
+        return false;
+      }
+      break;
+    case CR_write_in_stop: // Can only write when stopped
+    default:
+      nl_error(4, "Invalid CmdRestrictions: %d\n", req->CmdRestrictions);
   }
   pending = req;
   if (req->write(fd))

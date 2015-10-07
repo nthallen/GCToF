@@ -35,9 +35,11 @@ int main(int argc, char **argv) {
       nX_TM.drive[drv].motor_current = 0;
       nX_TM.drive[drv].motor_power = 0;
       nX_TM.drive[drv].status = 0;
-      nX_TM.drive[drv].pump_temp = 0;
+      //nX_TM.drive[drv].pump_temp = 0;
       nX_TM.drive[drv].controller_temp = 0;
       nX_TM.drive[drv].motor_freq = 0;
+      nX_TM.drive[drv].pump_on = 0;
+      nX_TM.drive[drv].fill = 0;
     }
     nXDS nX(nxds_path, &nX_TM);
     TM_Selectee TM("nXDS", &nX_TM, sizeof(nX_TM));

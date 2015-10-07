@@ -202,20 +202,24 @@ int TwisTorr::ProcessData(int flag) {
       consume(nc);
     }
   }
-  if (!pending && !cmds.empty()) {
-    submit_req(cmds[0]);
+  while (!pending && !cmds.empty()) {
+    command_request *cr = cmds[0];
     cmds.pop_front();
+    if (submit_req(cr)) break;
   }
-  if (!pending && cur_poll != polls.end()) {
-    submit_req(*cur_poll++);
+  while (!pending && cur_poll != polls.end()) {
+    if (submit_req(*cur_poll++)) break;
   }
   return 0;
 }
 
-void TwisTorr::submit_req(command_request *req) {
+/**
+ * @return true if command was submitted
+ */
+bool TwisTorr::submit_req(command_request *req) {
   if (backoff_secs[req->drive] && !backoff_TO[req->drive].Expired()) {
     free_command(req);
-    return;
+    return false;
   }
   switch (req->CmdRestrictions) {
     case CR_none: break;
@@ -224,14 +228,14 @@ void TwisTorr::submit_req(command_request *req) {
         nl_error(2, "Drive %d Window %d not allowed when started",
           req->drive, req->window);
         free_command(req);
-        return;
+        return false;
       }
       break;
     case CR_read_in_start:
       if (req->read && !(TT_TM_p->drive[req->drive].flags & 1)) {
         req->default_read_action();
         free_command(req);
-        return;
+        return false;
       }
       break;
     default:
@@ -242,4 +246,5 @@ void TwisTorr::submit_req(command_request *req) {
     report_err("Write error");
   TO.Set(0, pending->TO_msecs);
   update_termios();
+  return true;
 }

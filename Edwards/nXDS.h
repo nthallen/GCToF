@@ -37,6 +37,7 @@
     //uint8_t pump_temp; // 808: 0-150 C
     uint8_t controller_temp; // 808: 0-150 C
     uint8_t motor_freq; // 802: 0-255 Hz
+    uint8_t pump_on; // non-zero if commanded on
     uint8_t fill; // for alignment
   } nXDS_TM_t;
   
@@ -51,6 +52,7 @@
     #include <deque>
 
     enum nX_rep_status_t { nX_rep_ok, nX_rep_incomplete, nX_rep_error };
+    enum CmdRestrictions_t { CR_none, CR_write_in_stop, CR_read_in_start };
     
     // Command Request Object
     class command_request {
@@ -67,6 +69,7 @@
         uint8_t req_buf[max_cmd_bytes];
         const char *error_msg;
         long TO_msecs;
+        CmdRestrictions_t CmdRestrictions;
         uint8_t drive;
         uint8_t device;
         uint8_t req_qual;

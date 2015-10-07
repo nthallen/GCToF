@@ -47,10 +47,15 @@ This directory holds a driver for Edwards nXDS Scroll Pump.
 
   Readbacks:
 
-    * Pump and controller temp: ?V808
+    * Pump and controller temp: ?V808 "#01:55?V808\r"
     * Link voltage, motor current /power: ?V809
     * Motor Frequency: ?V802  (includes system status)
-    * Identification
+        "#01:55?V802\r#55:01=V802 dd;0000;0000;0000;0000\r
+        request: 12 chars
+        response:
+    * Identification ?S801 "#01:55?S801\r#55:01=S801 nXDS;D37479651A;30" 43 chars total
+        request: 12 chars
+        response: 30 chars
     * Service Status (just at startup)
 
 Command Server Interface
