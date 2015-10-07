@@ -25,7 +25,7 @@ TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS
 
-GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc GCToF.tbl
+GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc GCToF.tbl nXDS.tbl
 GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
