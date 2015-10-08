@@ -2,7 +2,7 @@
   #define NXDS_HIDE_INTERNALS 1
   #include "nXDS.h"
   #define nXselect(x,y) nXDS.drive[x].y
-  #define nX_On_Off_text(x&1) (x)?" On":"Off"
+  #define nX_On_Off_text(x) (x&1)?" On":"Off"
 %}
 TM "Receive" nXDS 1;
 
