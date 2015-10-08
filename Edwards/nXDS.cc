@@ -173,6 +173,9 @@ int nXDS::ProcessData(int flag) {
               uint16_t bs = backoff_secs[pending->drive];
               if (bs) {
                 bs = bs > 30 ? 60 : bs*2;
+              } else if (pending->address == 802 && pending->req_type == 'V') {
+                nX_TM_p->drive[pending->drive].pump_on |= 2;
+                break; // Don't touch backoff
               } else {
                 report_err("Timeout from nXDS request: %s",
                   pending->ascii_escape());

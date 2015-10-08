@@ -38,7 +38,8 @@ bool command_request::init(uint8_t drive, uint8_t req_type,
         case 'V':
           req_qual = '?';
           rep_sz = 35;
-          CmdRestrictions = CR_read_in_start;
+          TO_msecs = 500;
+          // CmdRestrictions = CR_read_in_start;
           break;
       }
       break;
@@ -149,7 +150,11 @@ nX_rep_status_t nXDS::process_reply() {
         pending->req_type, pending->address, cmd_rep);
       return nX_rep_error;
     } else if (pending->address == 802) {
-      nX_TM_p->drive[pending->drive].pump_on = pending->value;
+      if (pending->value) {
+        nX_TM_p->drive[pending->drive].pump_on |= 1;
+      } else {
+        nX_TM_p->drive[pending->drive].pump_on &= ~1;
+      }
     }
   } else {
     int vals[3];
@@ -198,6 +203,7 @@ nX_rep_status_t nXDS::process_reply() {
         nX_TM_p->drive[pending->drive].status |= (vals[0]&0x003F)<<1;
         nX_TM_p->drive[pending->drive].status |= (vals[1]&0x00C0)<<1;
         nX_TM_p->drive[pending->drive].status |= ((vals[3]&0x003E)<<8) | (vals[3]&0xC000);
+        nX_TM_p->drive[pending->drive].pump_on &= ~2;
         break;
       case 801: // PumpType;Dxxxxxxx Y;ddd ID: treat as a string
         { int i;
