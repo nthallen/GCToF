@@ -1,5 +1,6 @@
 %{
   #define nX_FAIL_OK_text(x) ((x)?"FAIL":"  OK")
+  #define nX_OK_FAIL_text(x) ((x)?"  OK":"FAIL")
   const char *nX_speed(unsigned char x) {
     switch (x & 0xF) {
       case 0: return "-------";
@@ -40,11 +41,14 @@
     if (x & 0x40) return "Acc T/O";
     return "-------";
   }
+  #define nX_On_Off_text(x) (x)?" On":"Off"
 %}
 TM typedef unsigned char nX_FAIL_OK_t { text "%4d" nX_FAIL_OK_text(); }
+TM typedef unsigned char nX_OK_FAIL_t { text "%4d" nX_OK_FAIL_text(); }
 TM typedef unsigned char nX_Speed_t { text "%7d" nX_speed(); }
 TM typedef unsigned char nX_Above_t { text "%7d" nX_above(); }
 TM typedef unsigned char nX_Fault_t { text "%7d" nX_fault(); }
+TM typedef unsigned char nX_On_Off_t { text "%3u" nX_On_Off_text(); }
 
 nX_FAIL_OK_t nX0Resp; Invalidate nX0Resp;
   { nX0Resp = (nX0Stat >> 0) & 1; Validate nX0Resp; }
@@ -54,6 +58,10 @@ nX_Above_t nX0Above; Invalidate nX0Above;
   { nX0Above = (nX0Stat >> 5) & 0x3; Validate nX0Above; }
 nX_Fault_t nX0Fault; Invalidate nX0Fault;
   { nX0Fault = (nX0Stat >> 9) & 0x7F; Validate nX0Fault; }
+nX_On_Off_t nX0_Power; Invalidate nX0_Power;
+  { nX0_Power = (nX0Power >> 0) & 1; Validate nX0_Power; }
+nX_OK_FAIL_t nX0V802; Invalidate nX0V802;
+  { nX0V802 = (nX0Power >> 1) & 1; Validate nX0V802; }
 
 nX_FAIL_OK_t nX1Resp; Invalidate nX1Resp;
   { nX1Resp = (nX1Stat >> 0) & 1; Validate nX1Resp; }
@@ -63,3 +71,7 @@ nX_Above_t nX1Above; Invalidate nX1Above;
   { nX1Above = (nX1Stat >> 5) & 0x3; Validate nX1Above; }
 nX_Fault_t nX1Fault; Invalidate nX1Fault;
   { nX1Fault = (nX1Stat >> 9) & 0x7F; Validate nX1Fault; }
+nX_On_Off_t nX1_Power; Invalidate nX1_Power;
+  { nX1_Power = (nX1Power >> 0) & 1; Validate nX1_Power; }
+nX_OK_FAIL_t nX1V802; Invalidate nX1V802;
+  { nX1V802 = (nX1Power >> 1) & 1; Validate nX1V802; }

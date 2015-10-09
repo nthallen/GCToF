@@ -2,7 +2,6 @@
   #define NXDS_HIDE_INTERNALS 1
   #include "nXDS.h"
   #define nXselect(x,y) nXDS.drive[x].y
-  #define nX_On_Off_text(x) (x&1)?" On":"Off"
 %}
 TM "Receive" nXDS 1;
 
@@ -13,7 +12,7 @@ TM typedef unsigned char nX_Hz { text "%3d"; }
 TM typedef unsigned char nX_Celcius { text "%3d"; }
 TM typedef unsigned short nX_Status_t { text "%8d" nX_Status_text(); }
 TM typedef unsigned char nX_stale_t { text "%3u"; }
-TM typedef unsigned char nX_On_Off_t { text "%3u" nX_On_Off_text(); }
+TM typedef unsigned char nX_Stat_t { text "%3u"; }
 
 TM 1 Hz nX_stale_t nX_stale;
 TM 1 Hz nX_Volts nX0LinkV;
@@ -22,7 +21,7 @@ TM 1 Hz nX_Watts nX0MtrW;
 TM 1 Hz nX_Status_t nX0Stat;
 TM 1 Hz nX_Celcius nX0CtrlrT;
 TM 1 Hz nX_Hz nX0MtrF;
-TM 1 Hz nX_On_Off_t nX0Power;
+TM 1 Hz nX_Stat_t nX0Power;
 
 TM 1 Hz nX_Volts nX1LinkV;
 TM 1 Hz nx_Amps nX1MtrI;
@@ -30,7 +29,7 @@ TM 1 Hz nX_Watts nX1MtrW;
 TM 1 Hz nX_Status_t nX1Stat;
 TM 1 Hz nX_Celcius nX1CtrlrT;
 TM 1 Hz nX_Hz nX1MtrF;
-TM 1 Hz nX_On_Off_t nX1Power;
+TM 1 Hz nX_Stat_t nX1Power;
 
 Group nXDS_grp (nX_stale, nX0LinkV, nX0MtrI, nX0MtrW, nX0Stat,
       nX0CtrlrT, nX0MtrF, nX0Power, nX1LinkV, nX1MtrI, nX1MtrW,

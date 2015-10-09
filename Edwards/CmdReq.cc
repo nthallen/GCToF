@@ -79,6 +79,7 @@ bool command_request::init(uint8_t drive, uint8_t req_type,
   this->address = address;
   this->read = read;
   this->req_type = req_type;
+  this->value = value;
   if (read) {
     req_sz = sprintf((char *)req_buf, "#%02d:%02d%c%c%03d\r", device,
       master_device, req_qual, req_type, address);
@@ -202,8 +203,10 @@ nX_rep_status_t nXDS::process_reply() {
         nX_TM_p->drive[pending->drive].status &= ~0xFFFE;
         nX_TM_p->drive[pending->drive].status |= (vals[0]&0x003F)<<1;
         nX_TM_p->drive[pending->drive].status |= (vals[1]&0x00C0)<<1;
-        nX_TM_p->drive[pending->drive].status |= ((vals[3]&0x003E)<<8) | (vals[3]&0xC000);
-        nX_TM_p->drive[pending->drive].pump_on &= ~2;
+        nX_TM_p->drive[pending->drive].status |=
+          ((vals[3]&0x003E)<<8) | (vals[3]&0xC000);
+        nX_TM_p->drive[pending->drive].pump_on |= 2;
+        nl_error(MSG_DBG(2), "Received '%s'", ascii_escape((const char *)buf));
         break;
       case 801: // PumpType;Dxxxxxxx Y;ddd ID: treat as a string
         { int i;

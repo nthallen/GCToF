@@ -1,7 +1,8 @@
 nXDS {
   HBox { +-; Title: nXDS; -+ };
   ""            >A<   >B<;
-  Power:       (nX0Power,3)  (nX1Power,3);
+  Power:       (nX0_Power,3) (nX1_Power,3);
+  V802:        (nX0V802,4)   (nX0V802,4);
   I:           (nX0MtrI,6)   (nX1MtrI,6) A;
   V:           (nX0LinkV,5)  (nX1LinkV,5) V;
   W:           (nX0MtrW,5)   (nX1MtrW,5) W;
