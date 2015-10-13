@@ -204,7 +204,7 @@ int nXDS::ProcessData(int flag) {
       post_reply_delay = true;
       TO.Set(0,50);
     } else if (post_reply_delay && (flag & Selector::Sel_Timeout)) {
-      nl_error(MSG_DGB(2), "Post-reply delay cleared");
+      nl_error(MSG_DBG(2), "Post-reply delay cleared");
       post_reply_delay = false;
       TO.Clear();
     } else {
