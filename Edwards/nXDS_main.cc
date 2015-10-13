@@ -27,7 +27,7 @@ void enqueue_polls(nXDS *nX, nXDS_t *nX_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1.6" );
+  nl_error( 0, "Starting V0.1.7" );
   { Selector Loop;
     nXDS_t nX_TM;
     for (unsigned drv = 0; drv < N_NXDS_DRIVES; ++drv) {

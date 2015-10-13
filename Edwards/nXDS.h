@@ -111,6 +111,7 @@
         command_request *pending;
         termios termios_s;
         Timeout TO;
+        bool post_reply_delay;
     };
     
     class nXDS_cmd : public Ser_Sel {

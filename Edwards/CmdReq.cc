@@ -201,10 +201,10 @@ nX_rep_status_t nXDS::process_reply() {
         }
         nX_TM_p->drive[pending->drive].motor_freq = vals[0];
         nX_TM_p->drive[pending->drive].status &= ~0xFFFE;
-        nX_TM_p->drive[pending->drive].status |= (vals[0]&0x003F)<<1;
-        nX_TM_p->drive[pending->drive].status |= (vals[1]&0x00C0)<<1;
+        nX_TM_p->drive[pending->drive].status |= (hvals[0]&0x003F)<<1;
+        nX_TM_p->drive[pending->drive].status |= (hvals[1]&0x00C0)<<1;
         nX_TM_p->drive[pending->drive].status |=
-          ((vals[3]&0x003E)<<8) | (vals[3]&0xC000);
+          ((hvals[3]&0x003E)<<8) | (hvals[3]&0xC000);
         nX_TM_p->drive[pending->drive].pump_on |= 2;
         nl_error(MSG_DBG(2), "Received '%s'", ascii_escape((const char *)buf));
         break;

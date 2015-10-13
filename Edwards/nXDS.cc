@@ -199,19 +199,23 @@ int nXDS::ProcessData(int flag) {
       }
       free_command(pending);
       pending = 0;
-      TO.Clear();
       consume(nc);
+      post_reply_delay = true;
+      TO.Set(0,50);
+    } else if (post_reply_delay && (flag & Selector::Sel_Timeout)) {
+      post_reply_delay = false;
+      TO.Clear();
     } else {
       report_err("Unexpected data from nXDS");
       consume(nc);
     }
   }
-  while (!pending && !cmds.empty()) {
+  while (!post_reply_delay && !pending && !cmds.empty()) {
     command_request *cr = cmds[0];
     cmds.pop_front();
     if (submit_req(cr)) break;
   }
-  while (!pending && cur_poll != polls.end()) {
+  while (!post_reply_delay && !pending && cur_poll != polls.end()) {
     if (submit_req(*cur_poll++)) break;
   }
   return 0;
