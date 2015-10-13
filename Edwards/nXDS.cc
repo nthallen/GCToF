@@ -130,7 +130,7 @@ int nXDS::ProcessData(int flag) {
       cur_poll = polls.begin();
     /* else complain? */
   }
-  if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
+  if ((flag & Selector::Sel_Read) || TO.Expired()) {
     fillbuf();
     if (pending) {
       /* This loop checks for the echo at buf[cp], advancing cp if it
@@ -149,7 +149,7 @@ int nXDS::ProcessData(int flag) {
       // Now we either have the request at buf[cp] or we
       // don't have enough characters.
       if (cp + pending->req_sz > nc) {
-        if (flag & Selector::Sel_Timeout) {
+        if (TO.Expired()) {
           report_err("Timeout on echo from nXDS request: %s",
             pending->ascii_escape());
         } else {
@@ -170,7 +170,7 @@ int nXDS::ProcessData(int flag) {
             }
             break;
           case nX_rep_incomplete:
-            if (flag & Selector::Sel_Timeout) {
+            if (TO.Expired()) {
               uint16_t bs = backoff_secs[pending->drive];
               if (bs) {
                 bs = bs > 30 ? 60 : bs*2;
@@ -203,7 +203,7 @@ int nXDS::ProcessData(int flag) {
       consume(nc);
       post_reply_delay = true;
       TO.Set(0,50);
-    } else if (post_reply_delay && (flag & Selector::Sel_Timeout)) {
+    } else if (post_reply_delay && TO.Expired()) {
       nl_error(MSG_DBG(2), "Post-reply delay cleared");
       post_reply_delay = false;
       TO.Clear();
