@@ -13,6 +13,7 @@ nXDS::nXDS(const char *path, nXDS_t *nX_TM) :
   }
   nX_TM_p = nX_TM;
   pending = 0;
+  post_reply_delay = false;
   cur_poll = polls.begin();
   nl_error(MSG_DBG(1), "nXDS ready for setup");
   setup(9600, 8, 'n', 1, 12, 1);
@@ -203,6 +204,7 @@ int nXDS::ProcessData(int flag) {
       post_reply_delay = true;
       TO.Set(0,50);
     } else if (post_reply_delay && (flag & Selector::Sel_Timeout)) {
+      nl_error(MSG_DGB(2), "Post-reply delay cleared");
       post_reply_delay = false;
       TO.Clear();
     } else {
