@@ -130,7 +130,7 @@ int nXDS::ProcessData(int flag) {
       cur_poll = polls.begin();
     /* else complain? */
   }
-  if ((flag & Selector::Sel_Read) || TO.Expired()) {
+  if ((flag & (Selector::Sel_Read|Selector::Sel_Timeout)) || TO.Expired()) {
     fillbuf();
     if (pending) {
       /* This loop checks for the echo at buf[cp], advancing cp if it
@@ -203,7 +203,8 @@ int nXDS::ProcessData(int flag) {
       consume(nc);
       post_reply_delay = true;
       TO.Set(0,50);
-    } else if (post_reply_delay && TO.Expired()) {
+    } else if (post_reply_delay &&
+        ((flag & Selector::Sel_Timeout) || TO.Expired())) {
       nl_error(MSG_DBG(2), "Post-reply delay cleared");
       post_reply_delay = false;
       TO.Clear();
