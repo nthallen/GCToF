@@ -114,7 +114,7 @@ void nXDS::free_command(command_request *creq) {
 }
 
 Timeout *nXDS::GetTimeout() {
-  return pending ? &TO : 0;
+  return (pending || post_reply_delay) ? &TO : 0;
 }
 
 /**
