@@ -207,6 +207,8 @@ nX_rep_status_t nXDS::process_reply() {
           ((hvals[3]&0x003E)<<8) | (hvals[3]&0xC000);
         nX_TM_p->drive[pending->drive].pump_on |= 2;
         nl_error(MSG_DBG(2), "Received '%s'", ascii_escape((const char *)buf));
+        nl_error(MSG_DBG(2), "parsed '%d;%04x;%04x;%04x;%04x'",
+          vals[0], hvals[0], hvals[1], hvals[2], hvals[3]);
         break;
       case 801: // PumpType;Dxxxxxxx Y;ddd ID: treat as a string
         { int i;

@@ -69,3 +69,23 @@ Command Server Interface
       0:803:1  # drive 0 to standby speed
       0:803:0  # drive 0 to full speed
       1:805:70 # Set drive 1 standby speed to 70% of full speed
+
+Driver status word:
+  This is a uint16_t value pulled from various places:
+    Bit 0: Set to 1 when the start command is issued. 0 when stop is issued.
+    Bit 1: System status register 1 bit 0: Deceleration
+    Bit 2: System status register 1 bit 1: Acceleration/running
+    Bit 3: System status register 1 bit 2: Standby active
+    Bit 4: System status register 1 bit 3: Above normal speed
+    Bit 5: System status register 1 bit 4: Operating above the ramp speed threshold
+    Bit 6: System status register 1 bit 5: Operating above the overload speed threshold
+    Bit 7: System status register 2 bit 6: Warning condition
+    Bit 8: System status register 2 bit 7: Fault condition
+    Bit 9: Fault register bit 1: Over voltage trip
+    Bit 10: Fault register bit 2: Over current trip
+    Bit 11: Fault register bit 3: Over temperature trip
+    Bit 12: Fault register bit 4: Under temperature trip
+    Bit 13: Fault register bit 5: Power stage fault
+    Bit 14: Fault register bit 14: Overload time out
+    Bit 15: Fault register bit 15: Acceleration time out
+    
