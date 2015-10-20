@@ -77,25 +77,25 @@ Group TwisTorr_grp (TT1_I, TT1_V, TT1_W, TT1_drvf, TT1_spd,
   TT1_flags = TTselect(0,flags);
   TT1_ErrStat = TTselect(0,error_status);
 
-  TT2_I = TTselect(0,pump_current);
-  TT2_V = TTselect(0,pump_voltage);
-  TT2_W = TTselect(0,pump_power);
-  TT2_drvf = TTselect(0,driving_freq);
-  TT2_spd = TTselect(0,rotation_speed);
-  TT2_T = TTselect(0,pump_temperature);
-  TT2_Status = TTselect(0,pump_status);
-  TT2_flags = TTselect(0,flags);
-  TT2_ErrStat = TTselect(0,error_status);
+  TT2_I = TTselect(1,pump_current);
+  TT2_V = TTselect(1,pump_voltage);
+  TT2_W = TTselect(1,pump_power);
+  TT2_drvf = TTselect(1,driving_freq);
+  TT2_spd = TTselect(1,rotation_speed);
+  TT2_T = TTselect(1,pump_temperature);
+  TT2_Status = TTselect(1,pump_status);
+  TT2_flags = TTselect(1,flags);
+  TT2_ErrStat = TTselect(1,error_status);
 
-  TT3_I = TTselect(0,pump_current);
-  TT3_V = TTselect(0,pump_voltage);
-  TT3_W = TTselect(0,pump_power);
-  TT3_drvf = TTselect(0,driving_freq);
-  TT3_spd = TTselect(0,rotation_speed);
-  TT3_T = TTselect(0,pump_temperature);
-  TT3_Status = TTselect(0,pump_status);
-  TT3_flags = TTselect(0,flags);
-  TT3_ErrStat = TTselect(0,error_status);
+  TT3_I = TTselect(2,pump_current);
+  TT3_V = TTselect(2,pump_voltage);
+  TT3_W = TTselect(2,pump_power);
+  TT3_drvf = TTselect(2,driving_freq);
+  TT3_spd = TTselect(2,rotation_speed);
+  TT3_T = TTselect(2,pump_temperature);
+  TT3_Status = TTselect(2,pump_status);
+  TT3_flags = TTselect(2,flags);
+  TT3_ErrStat = TTselect(2,error_status);
   
   TT_stale = TwisTorr_obj->stale(255);
   TwisTorr_obj->synch();
