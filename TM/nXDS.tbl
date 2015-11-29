@@ -14,6 +14,28 @@ nXDS {
   (nX_stale,3) (nX0Resp,4)   (nX1Resp,4);
 }
 
+zaber {
+  HBox { +-; Zaber; -+ };
+  Position: (Z1pos,7) (Z2pos,7);
+  Voltage:  (Z1V,4) (Z2V,4) V;
+ #Status: (Z1S,9) (Z2S,9);
+  Stale:  (Z1stale,3) (Z2stale,3);
+}
+
+Horiba {
+  HBox{ +-; Title: "Horiba"; -+ };
+  ""       Set     Flow;
+  Dilution: >HBox{(DilFlowSP,5); (DilFlowSP_Stat,1)}
+            >HBox{(DilFlow,5); (DilFlow_Stat,1)} sccm;
+  IonSrc:   >HBox{(IonSrcFlowSP,5); (IonSrcFlowSP_Stat,1)}
+            >HBox{(IonSrcFlow,5); (IonSrcFlow_Stat,1)} sccm;
+  Fluorine: >HBox{(FFlowSP,5); (FFlowSP_Stat,1)}
+            >HBox{(FFlow,5); (FFlow_Stat,1)} sccm;
+  Pressure: >HBox{(HoribaPSP,6); (HoribaPSP_Stat,1)}
+            >HBox{(HoribaP,6); (HoribaP_Stat,1)} mbar;
+  { Cmd: (HCmd_Stat,2) HGlue 0+1 Stale: (Horiba_Stale,3) }
+}
+
 Status {
   -;
   >(flttime,9)<;
@@ -21,6 +43,8 @@ Status {
 }
 
 { HBox {
-    |; { [nXDS];
+    |; [nXDS]; |; {
+         [zaber];
+         [Horiba];
          [Status]; }; |; }
 }

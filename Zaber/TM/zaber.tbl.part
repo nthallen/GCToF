@@ -1,0 +1,7 @@
+zaber {
+  HBox { +-; Zaber; -+ };
+  Position: (Z1pos,7) (Z2pos,7);
+  Voltage:  (Z1V,4) (Z2V,4) V;
+ #Status: (Z1S,9) (Z2S,9);
+  Stale:  (Z1stale,3) (Z2stale,3);
+}

@@ -6,34 +6,47 @@ tmcbase = /usr/local/share/huarp/flttime.tmc
 tmcbase = base.tmc
 tmcbase = TwisTorr.tmc
 tmcbase = nXDS.tmc
+tmcbase = zaber.tmc
+tmcbase = Horiba.tmc
+tmcbase = IG.tmc
 
 cmdbase = /usr/local/share/huarp/root.cmd
 cmdbase = /usr/local/share/huarp/getcon.cmd
 cmdbase = TwisTorr.cmd
 cmdbase = nXDS.cmd
+cmdbase = zaber.cmd
+cmdbase = Horiba.cmd
 
 colbase = /usr/local/share/huarp/tmdf_col.tmc
 colbase = /usr/local/share/huarp/cpu_usage_col.tmc
 colbase = /usr/local/share/huarp/freemem_col.tmc
 colbase = TwisTorr_col.tmc
 colbase = nXDS_col.tmc
+colbase = Horiba_col.tmc
 
 swsbase = GCToF.sws
 
 SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
-DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS
+DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
+DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber
 
-GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc GCToF.tbl nXDS.tbl
+GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl nXDS.tbl
 GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
 %%
-CPPFLAGS += -I ../Agilent -I ../Edwards
+CPPFLAGS += -I ../Agilent -I ../Horiba -I ../IonGauge -I ../Zaber
 GCToFeng.cdf : genui.txt
 	genui -d ../eng -c genui.txt
 ../Agilent/TwisTorr :
 	cd ../Agilent && make
 ../Edwards/nXDS :
 	cd ../Edwards && make
+../Horiba/horiba :
+	cd ../Horiba && make
+../IonGauge/IonGauge
+	cd ../IonGauge && make
+../Zaber/zaber
+	cd ../Zaber && make
