@@ -1,11 +1,13 @@
-# Makefile Generated Tue Oct 06 21:31:23 EDT 2015
+# Makefile Generated Sun Nov 29 11:42:50 EST 2015
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
-SRC=types.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc SWData.h
-SRC+=TwisTorr_conv.tmc nXDS_conv.tmc GCToF.tbl nXDS.tbl GCToF.tma
-SRC+=GCToF.sws GCToFeng.cdf GCToF.doit TwisTorr.cmd nXDS.cmd
-SRC+=SWData.cmd TwisTorr_col.tmc nXDS_col.tmc SWData_col.tmc
+SRC=types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc
+SRC+=IG.tmc SWData.tmc SWData.h TwisTorr_conv.tmc nXDS_conv.tmc
+SRC+=Horiba_conv.tmc GCToF.tbl nXDS.tbl GCToF.tma GCToF.sws
+SRC+=GCToFeng.cdf GCToF.doit TwisTorr.cmd nXDS.cmd zaber.cmd
+SRC+=Horiba.cmd SWData.cmd TwisTorr_col.tmc nXDS_col.tmc
+SRC+=Horiba_col.tmc SWData_col.tmc
 TOOL=GCToF.spec Makefile
 SCRIPT=interact
 OBJ=SWData.cmd SWData.h SWData.tmc SWData_col.tmc GCToFtbl.tmc
@@ -21,26 +23,27 @@ OBJ+=GCToFsrvroui.c GCToFsrvroui.o GCToFcol.cc GCToF.pcm tm.dac
 OBJ+=GCToFcoloui.c GCToFcoloui.o GCToFcol.o
 TGT=GCToFdisp GCToFdispnc GCToFalgo GCToFengext doit GCToFclt
 TGT+=GCToFcltnc GCToFsrvr GCToFcol
-DISTRIB=../Agilent/TwisTorr ../Edwards/nXDS GCToF.pcm tm.dac
+DISTRIB=../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
+DISTRIB+=../IonGauge/IonGauge ../Zaber/zaber GCToF.pcm tm.dac
 IDISTRIB=Experiment.config VERSION doit
 SRCDIST=GCToF.tbl nXDS.tbl GCToF.tma types.tmc
 SRCDIST+=/usr/local/share/huarp/tmdf.tmc
 SRCDIST+=/usr/local/share/huarp/cpu_usage.tmc
 SRCDIST+=/usr/local/share/huarp/freemem.tmc
 SRCDIST+=/usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc
-SRCDIST+=nXDS.tmc SWData.tmc SWData.h
+SRCDIST+=nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc SWData.h
 TMCBASE=types.tmc /usr/local/share/huarp/tmdf.tmc
 TMCBASE+=/usr/local/share/huarp/cpu_usage.tmc
 TMCBASE+=/usr/local/share/huarp/freemem.tmc
 TMCBASE+=/usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc
-TMCBASE+=nXDS.tmc SWData.tmc SWData.h
+TMCBASE+=nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc SWData.h
 CMDBASE=/usr/local/share/huarp/root.cmd
 CMDBASE+=/usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd
-CMDBASE+=SWData.cmd
+CMDBASE+=zaber.cmd Horiba.cmd SWData.cmd
 COLBASE=/usr/local/share/huarp/tmdf_col.tmc
 COLBASE+=/usr/local/share/huarp/cpu_usage_col.tmc
 COLBASE+=/usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc
-COLBASE+=nXDS_col.tmc SWData_col.tmc
+COLBASE+=nXDS_col.tmc Horiba_col.tmc SWData_col.tmc
 SWSBASE=GCToF.sws
 QCLIBASE=
 PHTGT=GCToFtbl.tmc nXDStbl.tmc
@@ -105,16 +108,16 @@ GCToFcol : GCToFcol.o GCToFcoloui.o
 	$(PROMOTE) GCToFcol
 GCToFtbl.tmc : GCToF.tbl
 nXDStbl.tmc : nXDS.tbl
-GCToFdisp.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc GCToFtbl.tmc nXDStbl.tmc
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc GCToFtbl.tmc nXDStbl.tmc
+GCToFdisp.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtbl.tmc nXDStbl.tmc
+	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtbl.tmc nXDStbl.tmc
 GCToFdispoui.c : $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFdispoui.o : GCToFdispoui.c SWData.h
 GCToFdisp.o : GCToFdisp.cc SWData.h
 GCToFtblnc.tmc : GCToF.tbl
 nXDStblnc.tmc : nXDS.tbl
-GCToFdispnc.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc
+GCToFdispnc.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc
+	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc
 GCToFdispncoui.c : $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFdispncoui.o : GCToFdispncoui.c SWData.h
@@ -124,8 +127,8 @@ GCToFsws.tma : GCToF.sws
 GCToFalgoa.tmc : GCToF.tma GCToFsws.tma GCToFsrvr
 	$(SERVER) ./GCToFsrvr
 	$(TMCALGO) -V "`./GCToFsrvr -R`" GCToF.tma GCToFsws.tma
-GCToFalgo.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc GCToFalgoa.tmc
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc GCToFalgoa.tmc
+GCToFalgo.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc GCToFalgoa.tmc
+	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc GCToFalgoa.tmc
 GCToFalgooui.c : $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFalgooui.o : GCToFalgooui.c SWData.h
@@ -134,8 +137,8 @@ GCToFengextcdf.oui : GCToFeng.cdf
 	$(EDF2OUI) GCToFeng.cdf
 GCToFengext.tmc : GCToFeng.cdf
 	$(EDF2EXT) GCToFeng.cdf
-GCToFengext.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc GCToFengext.tmc
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc GCToFengext.tmc
+GCToFengext.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc GCToFengext.tmc
+	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc GCToFengext.tmc
 GCToFengextoui.c : GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFengextoui.o : GCToFengextoui.c SWData.h
@@ -143,8 +146,8 @@ GCToFengext.o : GCToFengext.cc SWData.h
 doit.dep : GCToF.doit
 	mkdoit3 -M -o doit  GCToF.doit
 -include doit.dep
-GCToFcmd.cc : /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd SWData.cmd
-	$(CMDGEN) -d GCToFcmd.dat /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd SWData.cmd
+GCToFcmd.cc : /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd zaber.cmd Horiba.cmd SWData.cmd
+	$(CMDGEN) -d GCToFcmd.dat /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd zaber.cmd Horiba.cmd SWData.cmd
 GCToFclt.o : GCToFcmd.cc
 	$(COMPILE.clt) GCToFcmd.cc
 GCToFcltoui.c : $(OUIDIR)/kbdclt.oui $(OUIDIR)/msg.oui
@@ -160,8 +163,8 @@ GCToFsrvr.o : GCToFcmd.cc
 GCToFsrvroui.c : $(OUIDIR)/cis.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/cis.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 GCToFsrvroui.o : GCToFsrvroui.c
-GCToFcol.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc nXDS_col.tmc SWData_col.tmc
-	$(TMC.col) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc SWData.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc nXDS_col.tmc SWData_col.tmc
+GCToFcol.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc nXDS_col.tmc Horiba_col.tmc SWData_col.tmc
+	$(TMC.col) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc SWData.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc nXDS_col.tmc Horiba_col.tmc SWData_col.tmc
 GCToFcoloui.c : $(OUIDIR)/collect.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/collect.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 GCToFcoloui.o : GCToFcoloui.c SWData.h
@@ -175,10 +178,16 @@ clean : tidy
 	rm -f $(TARGET)
 .cvsignore : Makefile
 	@for i in $(OBJECT) $(TARGET); do echo "$$i"; done >.cvsignore
-CPPFLAGS += -I ../Agilent -I ../Edwards
+CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
 GCToFeng.cdf : genui.txt
 	genui -d ../eng -c genui.txt
 ../Agilent/TwisTorr :
 	cd ../Agilent && make
 ../Edwards/nXDS :
 	cd ../Edwards && make
+../Horiba/horiba :
+	cd ../Horiba && make
+../IonGauge/IonGauge :
+	cd ../IonGauge && make
+../Zaber/zaber :
+	cd ../Zaber && make

@@ -37,7 +37,7 @@ GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
 %%
-CPPFLAGS += -I ../Agilent -I ../Horiba -I ../IonGauge -I ../Zaber
+CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
 GCToFeng.cdf : genui.txt
 	genui -d ../eng -c genui.txt
 ../Agilent/TwisTorr :
@@ -46,7 +46,7 @@ GCToFeng.cdf : genui.txt
 	cd ../Edwards && make
 ../Horiba/horiba :
 	cd ../Horiba && make
-../IonGauge/IonGauge
+../IonGauge/IonGauge :
 	cd ../IonGauge && make
-../Zaber/zaber
+../Zaber/zaber :
 	cd ../Zaber && make

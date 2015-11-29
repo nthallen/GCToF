@@ -18,9 +18,8 @@ TM typedef unsigned short Zaber_volt_t {
 	1000, 999,
 	1001, 999
   }
-TM typedef unsigned char Zaber_status_t {
-  text "%9d"; }
-TM typedef unsigned char UCHAR { text "%3u"; }
+TM typedef unsigned char Zaber_status_t { text "%9d"; }
+/* TM typedef unsigned char UCHAR { text "%3u"; } */
 
 TM 1 Hz Zaber_pos_t Z1pos, Z2pos;
 TM 1 Hz Zaber_volt_t Z1V, Z2V;
