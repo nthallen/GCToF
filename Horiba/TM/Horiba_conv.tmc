@@ -1,6 +1,10 @@
 %{
   #include "horiba.h"
+
+  #define BitStar_text(x) ((x)?" ":"*")
 %}
+TM typedef unsigned char BitStar { text "%1d" BitStar_text(); }
+
 BitStar DilFlowSP_Stat; invalidate DilFlowSP_Stat;
   { DilFlowSP_Stat = (HoribaS & DILFLOWSP_S) ? 1 : 0;
     Validate DilFlowSP_Stat; }
