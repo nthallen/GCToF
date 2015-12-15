@@ -76,7 +76,33 @@ CONFIGURATION for GCToF:
   Route PPS signal to DCD on /dev/ser1
   Run devc-serpci to pick up Top Cliff UARTs. (currently /dev/ser11)
   Create soft-link for ntpd, gpsd:
-    ln -sP /dev/ser11 /dev/gps1
+    # ln -sP /dev/ser11 /dev/gps1
   Run pps to monitor /dev/ser1, provide /dev/pps1
+    # pps
   Run gpsd to monitor /dev/gps1, /dev/pps1, generate JSON stream
+    # gpsd /dev/gps1 /dev/pps1
   Run ntpd to listen to gpsd stream, /dev/pps1
+
+ntp.conf
+https://www.freebsd.org/cgi/man.cgi?query=ntp.conf&sektion=5
+  # by default act only as a basic NTP client
+  restrict -4 default nomodify nopeer noquery notrap
+  restrict -6 default nomodify nopeer noquery notrap
+  
+  # allow NTP messages from the loopback address, useful for debugging
+  restrict 127.0.0.1
+  restrict ::1
+  # Explicitly allow messages from peers as necessary
+
+  # Sync to gpsd's JSON interface tied to /dev/gps1
+  server 127.127.46.1 mode 1
+  # fudge time1 should be set to cover prop delay of data
+  # from the chip through the JSON output
+  # Presumably can calibrate relative to PPS
+  fudge 127.127.46.1 time1 0.0
+
+  # Get PPS info directly from /dev/pps1
+  server 127.127.22.1
+
+  # Drift File
+  driftfile /etc/ntp/ntp.drift
