@@ -123,7 +123,7 @@ int Sonic::ProcessData(int flag) {
         report_ok();
       } else {
         /* partial record */
-        int i;
+        unsigned i;
         for (i = nb_rec-1; i > 0; --i) {
           if ( buf[i] == 0xAA && buf[i-1] == 0x55 ) {
             report_err("Partial record");

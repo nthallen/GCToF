@@ -11,7 +11,7 @@ TM 10 Hz SoundSpd Sonic1_C;
 TM 10 Hz UCHAR Sonic1_N;
 TM 10 Hz UCHAR Sonic1_S;
 
-Group Sonic (Sonic1_U, Sonic1_V, Sonic1_W, Sonic1_C, Sonic1_N, Sonic1_S) {
+Group Sonic1 (Sonic1_U, Sonic1_V, Sonic1_W, Sonic1_C, Sonic1_N, Sonic1_S) {
   Sonic1_U = SonicData1.U;
   Sonic1_V = SonicData1.V;
   Sonic1_W = SonicData1.W;
@@ -31,7 +31,7 @@ TM 10 Hz SoundSpd Sonic2_C;
 TM 10 Hz UCHAR Sonic2_N;
 TM 10 Hz UCHAR Sonic2_S;
 
-Group Sonic (Sonic2_U, Sonic2_V, Sonic2_W, Sonic2_C, Sonic2_N, Sonic2_S) {
+Group Sonic2 (Sonic2_U, Sonic2_V, Sonic2_W, Sonic2_C, Sonic2_N, Sonic2_S) {
   Sonic2_U = SonicData2.U;
   Sonic2_V = SonicData2.V;
   Sonic2_W = SonicData2.W;

@@ -63,9 +63,21 @@ csv GCToFeng_1 64
   61 nX1Power %.0lf
   62 nX1Stat %.0lf
   63 nX_stale 
-csv GCToFeng_10 5
+csv GCToFeng_10 17
   0 TGCToFeng_10 %.3lf
   1 Hex_P 
   2 IG_stale 
   3 IG_stat 
-  4 ToF_P 
+  4 Sonic1_C 
+  5 Sonic1_N 
+  6 Sonic1_S 
+  7 Sonic1_U 
+  8 Sonic1_V 
+  9 Sonic1_W 
+  10 Sonic2_C 
+  11 Sonic2_N 
+  12 Sonic2_S 
+  13 Sonic2_U 
+  14 Sonic2_V 
+  15 Sonic2_W 
+  16 ToF_P 
