@@ -4,12 +4,14 @@ SWData.tmc
 SWData_col.tmc
 GCToFtbl.tmc
 nXDStbl.tmc
+sonictbl.tmc
 GCToFdisp.cc
 GCToFdispoui.c
 GCToFdispoui.o
 GCToFdisp.o
 GCToFtblnc.tmc
 nXDStblnc.tmc
+sonictblnc.tmc
 GCToFdispnc.cc
 GCToFdispncoui.c
 GCToFdispncoui.o

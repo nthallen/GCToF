@@ -1,33 +1,34 @@
-# Makefile Generated Wed Jan 13 20:48:56 EST 2016
+# Makefile Generated Thu Jan 14 09:30:44 EST 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
 SRC=types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc
 SRC+=IG.tmc sonic.tmc SWData.tmc SWData.h TwisTorr_conv.tmc
-SRC+=nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl nXDS.tbl GCToF.tma
-SRC+=GCToF.sws GCToFeng.cdf GCToF.doit TwisTorr.cmd nXDS.cmd
-SRC+=zaber.cmd Horiba.cmd SWData.cmd TwisTorr_col.tmc nXDS_col.tmc
-SRC+=Horiba_col.tmc sonic_col.tmc SWData_col.tmc
+SRC+=nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl
+SRC+=GCToF.tma GCToF.sws GCToFeng.cdf GCToF.doit TwisTorr.cmd
+SRC+=nXDS.cmd zaber.cmd Horiba.cmd SWData.cmd TwisTorr_col.tmc
+SRC+=nXDS_col.tmc Horiba_col.tmc sonic_col.tmc SWData_col.tmc
 TOOL=GCToF.spec Makefile
 SCRIPT=interact
 OBJ=SWData.cmd SWData.h SWData.tmc SWData_col.tmc GCToFtbl.tmc
-OBJ+=nXDStbl.tmc GCToFdisp.cc GCToFdispoui.c GCToFdispoui.o
-OBJ+=GCToFdisp.o GCToFtblnc.tmc nXDStblnc.tmc GCToFdispnc.cc
-OBJ+=GCToFdispncoui.c GCToFdispncoui.o GCToFdispnc.o GCToFsws.tma
-OBJ+=GCToFalgoa.tmc GCToFalgo.cc GCToFalgooui.c GCToFalgooui.o
-OBJ+=GCToFalgo.o GCToFengextcdf.oui GCToFengext.tmc GCToFengext.cc
-OBJ+=GCToFengextoui.c GCToFengextoui.o GCToFengext.o doit.dep
-OBJ+=GCToFcmd.cc GCToFcmd.dat GCToFclt.o GCToFcltoui.c GCToFcltoui.o
-OBJ+=GCToFcltnc.o GCToFcltncoui.c GCToFcltncoui.o GCToFsrvr.o
-OBJ+=GCToFsrvroui.c GCToFsrvroui.o GCToFcol.cc GCToF.pcm tm.dac
-OBJ+=GCToFcoloui.c GCToFcoloui.o GCToFcol.o
+OBJ+=nXDStbl.tmc sonictbl.tmc GCToFdisp.cc GCToFdispoui.c
+OBJ+=GCToFdispoui.o GCToFdisp.o GCToFtblnc.tmc nXDStblnc.tmc
+OBJ+=sonictblnc.tmc GCToFdispnc.cc GCToFdispncoui.c GCToFdispncoui.o
+OBJ+=GCToFdispnc.o GCToFsws.tma GCToFalgoa.tmc GCToFalgo.cc
+OBJ+=GCToFalgooui.c GCToFalgooui.o GCToFalgo.o GCToFengextcdf.oui
+OBJ+=GCToFengext.tmc GCToFengext.cc GCToFengextoui.c GCToFengextoui.o
+OBJ+=GCToFengext.o doit.dep GCToFcmd.cc GCToFcmd.dat GCToFclt.o
+OBJ+=GCToFcltoui.c GCToFcltoui.o GCToFcltnc.o GCToFcltncoui.c
+OBJ+=GCToFcltncoui.o GCToFsrvr.o GCToFsrvroui.c GCToFsrvroui.o
+OBJ+=GCToFcol.cc GCToF.pcm tm.dac GCToFcoloui.c GCToFcoloui.o
+OBJ+=GCToFcol.o
 TGT=GCToFdisp GCToFdispnc GCToFalgo GCToFengext doit GCToFclt
 TGT+=GCToFcltnc GCToFsrvr GCToFcol
 DISTRIB=../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
 DISTRIB+=../IonGauge/IonGauge ../Zaber/zaber ../Sonic/sonic GCToF.pcm
 DISTRIB+=tm.dac
 IDISTRIB=Experiment.config VERSION doit
-SRCDIST=GCToF.tbl nXDS.tbl GCToF.tma types.tmc
+SRCDIST=GCToF.tbl nXDS.tbl sonic.tbl GCToF.tma types.tmc
 SRCDIST+=/usr/local/share/huarp/tmdf.tmc
 SRCDIST+=/usr/local/share/huarp/cpu_usage.tmc
 SRCDIST+=/usr/local/share/huarp/freemem.tmc
@@ -49,7 +50,7 @@ COLBASE+=/usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc
 COLBASE+=nXDS_col.tmc Horiba_col.tmc sonic_col.tmc SWData_col.tmc
 SWSBASE=GCToF.sws
 QCLIBASE=
-PHTGT=GCToFtbl.tmc nXDStbl.tmc
+PHTGT=GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc
 RCS=$(SRC) $(TOOL) $(SCRIPT)
 SOURCE=$(RCS) $(NONRCS)
 OBJECT=$(OBJ) *.err
@@ -111,16 +112,18 @@ GCToFcol : GCToFcol.o GCToFcoloui.o
 	$(PROMOTE) GCToFcol
 GCToFtbl.tmc : GCToF.tbl
 nXDStbl.tmc : nXDS.tbl
-GCToFdisp.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtbl.tmc nXDStbl.tmc
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtbl.tmc nXDStbl.tmc
+sonictbl.tmc : sonic.tbl
+GCToFdisp.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc
+	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc
 GCToFdispoui.c : $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFdispoui.o : GCToFdispoui.c SWData.h
 GCToFdisp.o : GCToFdisp.cc SWData.h
 GCToFtblnc.tmc : GCToF.tbl
 nXDStblnc.tmc : nXDS.tbl
-GCToFdispnc.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc
+sonictblnc.tmc : sonic.tbl
+GCToFdispnc.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc
+	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc sonic.tmc SWData.tmc TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc
 GCToFdispncoui.c : $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFdispncoui.o : GCToFdispncoui.c SWData.h
