@@ -8,6 +8,7 @@
 #include "oui.h"
 
 static const char *device_name = "/dev/ser1";
+static const char *tm_recv_name = "SonicData";
 
 void sonic_init_options( int argc, char **argv) {
   int c;
@@ -18,6 +19,9 @@ void sonic_init_options( int argc, char **argv) {
     switch (c) {
       case 'p':
         device_name = optarg;
+        break;
+      case 't':
+        tm_recv_name = optarg;
         break;
       case '?':
         nl_error(3, "Unrecognized Option -%c", optopt);

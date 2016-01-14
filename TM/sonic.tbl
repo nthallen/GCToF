@@ -1,12 +1,13 @@
 # Sonic.tbl
 Sonic {
   HBox { Title: +-; "Sonic"; -+ };
-  U: (Sonic_U,6) "m/s";
-  V: (Sonic_V,6) "m/s";
-  W: (Sonic_W,6) "m/s";
-  C: (Sonic_C,6) "m/s";
-  N: (Sonic_N,3);
-  S: (Sonic_S,3);
+  ""  "1"         "2";
+  U: (Sonic1_U,6) (Sonic2_U,6) "m/s";
+  V: (Sonic1_V,6) (Sonic2_V,6) "m/s";
+  W: (Sonic1_W,6) (Sonic2_W,6) "m/s";
+  C: (Sonic1_C,6) (Sonic2_C,6) "m/s";
+  N: (Sonic1_N,3) (Sonic2_N,3);
+  S: (Sonic1_S,3) (Sonic2_S,3);
 }
 
 { HBox { |+; [Sonic]; |+ };

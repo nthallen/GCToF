@@ -11,7 +11,7 @@ CIMS data rate of 8 Hz.
 After considering our options, we will configure the CSAT3 for
 unprompted output at 60 Hz. This driver will read samples and average
 them, reporting the average and the number of samples averaged to
-telemetry at 8 Hz.
+telemetry at 8 Hz (or whatever rate TM specifies).
 
 QNX6 Implementation
   TM_Selectee

@@ -2,9 +2,10 @@
 <include> msg
 <follow> msg
 <include> "sonic.h"
-<opts> "p:"
+<opts> "p:t:"
 <sort>
 	-p <serial device>
+	-t <tm recv name>
 <init>
   sonic_init_options(argc, argv);
 

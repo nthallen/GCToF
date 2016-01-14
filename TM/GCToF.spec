@@ -9,6 +9,7 @@ tmcbase = nXDS.tmc
 tmcbase = zaber.tmc
 tmcbase = Horiba.tmc
 tmcbase = IG.tmc
+tmcbase = sonic.tmc
 
 cmdbase = /usr/local/share/huarp/root.cmd
 cmdbase = /usr/local/share/huarp/getcon.cmd
@@ -23,6 +24,7 @@ colbase = /usr/local/share/huarp/freemem_col.tmc
 colbase = TwisTorr_col.tmc
 colbase = nXDS_col.tmc
 colbase = Horiba_col.tmc
+colbase = sonic_col.tmc
 
 swsbase = GCToF.sws
 
@@ -30,7 +32,7 @@ SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
-DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber
+DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber ../Sonic/sonic
 
 GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl nXDS.tbl
 GCToFalgo : GCToF.tma GCToF.sws
@@ -38,6 +40,8 @@ GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
 %%
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
+CPPFLAGS += -I ../Sonic
+
 GCToFeng.cdf : genui.txt
 	genui -d ../eng -c genui.txt
 ../Agilent/TwisTorr :
@@ -50,3 +54,5 @@ GCToFeng.cdf : genui.txt
 	cd ../IonGauge && make
 ../Zaber/zaber :
 	cd ../Zaber && make
+../Sonic/sonic :
+	cd ../Sonic && make
