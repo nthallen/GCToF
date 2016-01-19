@@ -34,7 +34,8 @@ OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
 DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber ../Sonic/sonic
 
-GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl nXDS.tbl
+GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl \
+    nXDS.tbl sonic.tbl
 GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
