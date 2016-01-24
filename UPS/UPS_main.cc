@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     UPSData_t UPSData;
     // Initialize 
     UPS_ser UPS(device_path, &UPSData);
-    TM_Selectee TM("UPS", &UPSData, sizeof(UPSData));
+    TM_Selectee TM("UPS_TM", &UPSData, sizeof(UPSData));
     UPS_cmd Cmd(&UPS);
     Loop.add_child(&UPS);
     Loop.add_child(&TM);

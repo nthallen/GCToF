@@ -21,6 +21,7 @@ int UPS_ser::parse_QMOD(command_request *cr) {
         return 0;
       }
     }
+    UPS_TMp->QMOD = i;
     report_err("Invalid status from QMOD");
     return 0;
   }
