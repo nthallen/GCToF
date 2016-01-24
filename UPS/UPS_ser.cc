@@ -4,14 +4,14 @@
 #include "UPS.h"
 #include "nortlib.h"
 
-UPS_ser::UPS_ser(const char *path, UPSData_t *TMptr) :
+UPS_ser::UPS_ser(const char *path, UPS_TM_t *TMptr) :
     Ser_Sel(path, O_RDWR|O_NONBLOCK, reply_max*2) {
   if (path == 0) {
     nl_error(3, "No path specified for UPS device");
   } else {
     nl_error(MSG_DBG(1), "Opened %s for UPS device", path);
   }
-  UPS_TMp = TT_TM;
+  UPS_TMp = TMptr;
   pending = 0;
   cur_poll = polls.begin();
   nl_error(MSG_DBG(1), "UPS_ser ready for setup");
@@ -97,14 +97,14 @@ void UPS_ser::enqueue_command(command_request *creq) {
 
 void UPS_ser::enqueue_command(const char *cmdquery) {
   command_request *cr =
-    new_command_request(cmdquery, &parse_cmd, 5);
+    new_command_req(cmdquery, &UPS_ser::parse_cmd, 5);
   if (cr == 0) return;
   enqueue_command(cr);
 }
 
 void UPS_ser::enqueue_query(const char *cmdquery, unsigned reply_min) {
   command_request *cr =
-    new_command_request(cmdquery, &parse_query, reply_min);
+    new_command_req(cmdquery, &UPS_ser::parse_query, reply_min);
   if (cr == 0) return;
   enqueue_command(cr);
 }
@@ -121,7 +121,7 @@ void UPS_ser::enqueue_poll(command_request *creq) {
 void UPS_ser::enqueue_poll(const char *cmdquery, UPS_parser parser_in,
         unsigned reply_min) {
   command_request *cr =
-    new_command_request(cmdquery, parser_in, reply_min);
+    new_command_req(cmdquery, parser_in, reply_min);
   if (cr == 0) return;
   enqueue_poll(cr);
 }
@@ -162,8 +162,8 @@ int UPS_ser::ProcessData(int flag) {
     fillbuf();
     cp = 0;
     if (pending) {
-      if ((this->(*pending->parser()))(pending)) { // returns true if not done
-        if (TO->Expired()) {
+      if ((this->*(pending->parser))(pending)) { // returns true if not done
+        if (TO.Expired()) {
           report_err("Timeout on echo from UPS request: %s",
             pending->ascii_escape());
         } else {

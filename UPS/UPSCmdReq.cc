@@ -4,7 +4,7 @@
  */
 #include <string.h>
 #include <stdlib.h>
-#include "Agilent.h"
+#include "UPS.h"
 #include "nortlib.h"
 
 command_request::command_request() {
@@ -19,7 +19,7 @@ command_request::command_request() {
 bool command_request::init(const char *cmdquery, UPS_parser parser_in, unsigned reply_min) {
   active = false;
   persistent = false;
-  req_sz = snprintf(req_buf, max_cmd_bytes, "%s\r");
+  req_sz = snprintf((char *)req_buf, max_cmd_bytes, "%s\r", cmdquery);
   if (req_sz >= max_cmd_bytes) {
     nl_error(2, "cmdquery '%s' exceeds max_cmd_bytes", cmdquery);
     return true;

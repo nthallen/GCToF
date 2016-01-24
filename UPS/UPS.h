@@ -3,7 +3,13 @@
   #include <termios.h>
   #include <stdint.h>
   extern char *device_path;
-  extern void ups_init_options( int argc, char **argv);
+  #ifdef __cplusplus
+    extern "C" {
+  #endif
+      extern void ups_init_options( int argc, char **argv);
+  #ifdef __cplusplus
+    };
+  #endif
 
   typedef struct __attribute__((__packed__)) {
     uint8_t QMOD;
@@ -39,9 +45,11 @@
     class command_request {
       public:
         command_request();
-        bool init(const char *cmdquery, UPS_parser parser_in, unsigned reply_min);
+        bool init(const char *cmdquery, UPS_parser parser_in,
+          unsigned reply_min);
         const char *ascii_escape();
         int write(int fd);
+        static const unsigned int max_cmd_bytes = 20;
         uint8_t req_buf[max_cmd_bytes];
         unsigned rep_min;
         bool persistent;
@@ -53,7 +61,7 @@
     
     class UPS_ser : public Ser_Sel {
       public:
-        UPS_ser(const char *path, UPS_t *TT_TM);
+        UPS_ser(const char *path, UPS_TM_t *UPS_TM);
         ~UPS_ser();
         command_request *new_command_req(const char *cmdquery,
               UPS_parser parser_in, unsigned reply_min);
@@ -82,14 +90,15 @@
         int out_of_range(int val, const char *desc, int low, int high);
         static const unsigned tm_gflag = 0;
         static const unsigned cmd_gflag = 1;
-        UPSData_t *UPS_TMp;
+        static const int reply_max = 80;
+        UPS_TM_t *UPS_TMp;
         std::deque<command_request *> cmds;
         std::deque<command_request *> cmd_free;
         std::deque<command_request *> polls;
         std::deque<command_request *>::const_iterator cur_poll;
         command_request *pending;
         termios termios_s;
-        Timeout *TO;
+        Timeout TO;
     };
     
     class UPS_cmd : public Ser_Sel {

@@ -1,12 +1,14 @@
 /* UPS_cmd.cc
  */
 #include "UPS.h"
+#include "nortlib.h"
 
-UPS_cmd::UPS_cmd()
+UPS_cmd::UPS_cmd(UPS_ser *UPSin)
   : Ser_Sel( tm_dev_name("cmd/UPS"), O_RDONLY|O_NONBLOCK, 50 ) {
+  UPS = UPSin;
 }
 
-UPS_cmd::~UPS_cmd {}
+UPS_cmd::~UPS_cmd() {}
 
 /**
  * Process commands from command server:
@@ -63,7 +65,7 @@ int UPS_cmd::ProcessData(int flag) {
     case 'T':
       if (not_int(arg1)) break;
       buf[cp] = '\0';
-      UPS->enqueue_command(buf);
+      UPS->enqueue_command((const char *)buf);
       return 0;
     case 'S':
       if (not_int(arg1)) break;
@@ -72,7 +74,7 @@ int UPS_cmd::ProcessData(int flag) {
         if (not_int(arg2)) break;
       }
       buf[cp] = '\0';
-      UPS->enqueue_command(buf);
+      UPS->enqueue_command((const char *)buf);
       return 0;
     case 'C':
       if (cp < nc) {
@@ -80,7 +82,7 @@ int UPS_cmd::ProcessData(int flag) {
           case 'S':
           case 'T':
             buf[++cp] = '\0';
-            UPS->enqueue_command(buf);
+            UPS->enqueue_command((const char *)buf);
             return 0;
           default:
             break;
@@ -104,6 +106,6 @@ int UPS_cmd::ProcessData(int flag) {
     default:
       break;
   }
-  nl_error(2,"Invalid command: '%s'", ascii_escape(buf));
+  nl_error(2,"Invalid command: '%s'", ascii_escape((const char *)buf));
   return 0;
 }
