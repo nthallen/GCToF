@@ -5,6 +5,7 @@ SWData_col.tmc
 GCToFtbl.tmc
 nXDStbl.tmc
 sonictbl.tmc
+UPStbl.tmc
 GCToFdisp.cc
 GCToFdispoui.c
 GCToFdispoui.o
@@ -12,6 +13,7 @@ GCToFdisp.o
 GCToFtblnc.tmc
 nXDStblnc.tmc
 sonictblnc.tmc
+UPStblnc.tmc
 GCToFdispnc.cc
 GCToFdispncoui.c
 GCToFdispncoui.o

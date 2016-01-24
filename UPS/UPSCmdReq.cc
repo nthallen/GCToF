@@ -1,13 +1,13 @@
 /*
  * UPSCmdReq.cc
- * command_request object
+ * UPS_cmd_req object
  */
 #include <string.h>
 #include <stdlib.h>
 #include "UPS.h"
 #include "nortlib.h"
 
-command_request::command_request() {
+UPS_cmd_req::UPS_cmd_req() {
   active = false;
   persistent = false;
 }
@@ -16,7 +16,7 @@ command_request::command_request() {
  * @return true if command is not valid. Caller should return object to
  * the free queue.
  */
-bool command_request::init(const char *cmdquery, UPS_parser parser_in, unsigned reply_min) {
+bool UPS_cmd_req::init(const char *cmdquery, UPS_parser parser_in, unsigned reply_min) {
   active = false;
   persistent = false;
   req_sz = snprintf((char *)req_buf, max_cmd_bytes, "%s\r", cmdquery);
@@ -32,7 +32,7 @@ bool command_request::init(const char *cmdquery, UPS_parser parser_in, unsigned 
 /**
  * Invokes ascii_escape on the request buffer
  */
-const char *command_request::ascii_escape() {
+const char *UPS_cmd_req::ascii_escape() {
   return ::ascii_escape((const char *)req_buf, req_sz);
 }
 
@@ -40,7 +40,7 @@ const char *command_request::ascii_escape() {
  * Writes the request to the specified file descriptor.
  * @return -1 if write returns anything but req_sz. 0 otherwise.
  */
-int command_request::write(int fd) {
+int UPS_cmd_req::write(int fd) {
   if (nl_debug_level <= MSG_DBG(1)) {
     nl_error(MSG_DBG(1), "Sending: '%s'", ascii_escape());
   }

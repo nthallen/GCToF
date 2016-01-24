@@ -9,7 +9,7 @@
 #include "UPS.h"
 #include "nortlib.h"
 
-int UPS_ser::parse_QMOD(command_request *cr) {
+int UPS_ser::parse_QMOD(UPS_cmd_req *cr) {
   if (not_found('(')) {
     return 1;
   } else if (cp < nc) {
@@ -93,7 +93,7 @@ int UPS_ser::not_bin(uint16_t &word, int nbits) {
     TTT.T Max Temperature of the detecting pointers C
     b9-b0 (plus a1a0?)
 */
-int UPS_ser::parse_QGS(command_request *cr) {
+int UPS_ser::parse_QGS(UPS_cmd_req *cr) {
   unsigned int M, H, L, N, Q, K, V, S, X, T;
   int D;
   uint16_t ba;
@@ -128,7 +128,7 @@ int UPS_ser::parse_QGS(command_request *cr) {
   return 0;
 }
 
-int UPS_ser::parse_QWS(command_request *cr) {
+int UPS_ser::parse_QWS(UPS_cmd_req *cr) {
   uint16_t A1, A2, A3, A4;
   if (not_found('(') ||
       not_bin(A1, 16) ||
@@ -167,7 +167,7 @@ int UPS_ser::out_of_range(int val, const char *desc, int low, int high) {
  *  CCC Battery capacity (000 100)
  *  TTT Battery remain time minutes
  */
-int UPS_ser::parse_QBV(command_request *cr) {
+int UPS_ser::parse_QBV(UPS_cmd_req *cr) {
   unsigned int R;
   int N, M, C, T;
   if (not_found('(') ||
@@ -192,7 +192,7 @@ int UPS_ser::parse_QBV(command_request *cr) {
   return 0;
 }
 
-int UPS_ser::parse_QSK1(command_request *cr) {
+int UPS_ser::parse_QSK1(UPS_cmd_req *cr) {
   uint16_t N;
   if (not_found('(') || not_bin(N,1)) {
     return cp >= nc;
@@ -208,7 +208,7 @@ int UPS_ser::parse_QSK1(command_request *cr) {
 /**
  * Looking for (ACK or (NACK
  */
-int UPS_ser::parse_cmd(command_request *cr) {
+int UPS_ser::parse_cmd(UPS_cmd_req *cr) {
   if (not_found('(')) {
     return 1;
   } else {
@@ -228,7 +228,7 @@ int UPS_ser::parse_cmd(command_request *cr) {
   return 1;
 }
 
-int UPS_ser::parse_query(command_request *cr) {
+int UPS_ser::parse_query(UPS_cmd_req *cr) {
   if (not_found('(')) {
     return 1;
   } else {

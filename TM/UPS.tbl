@@ -21,3 +21,8 @@ UPS {
   Warn:  (UPS_Warn,4);
   Stale: (UPS_Stale,3);
 }
+
+{ HBox { |+; [UPS]; |+ };
+  -;
+  { (flttime,9) MFCtr: (MFCtr,5) }
+}

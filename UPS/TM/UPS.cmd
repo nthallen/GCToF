@@ -1,10 +1,11 @@
 %INTERFACE <UPS>
 
 &command
-  : UPS Test for %d (Enter time in minutes) minutes * { if_UPS.Turf("T%d\n", $4); }
-  : UPS Shutdown in %d (Enter time in minutes) * { if_UPS.Turf("S%d\n", $4); }
-  : UPS Shutdown in %d (Enter time in minutes) and
-      Restore after %d (Enter time in minutes) * { if_UPS.Turf("%S%dR%d\n", $4, $8); }
+  : UPS Test for %d (Enter time in minutes) minutes *
+      { if_UPS.Turf("T%d\n", $4); }
+  : UPS &shutdown * { if_UPS.Turf("S%d\n", $2); }
+  : UPS &shutdown and Restore after %d (Enter time in minutes) minutes *
+      { if_UPS.Turf("%S%dR%d\n", $2, $6); }
   : UPS Cancel Shutdown * { if_UPS.Turf("CS\n"); }
   : UPS Cancel Test * { if_UPS.Turf("CT\n"); }
   : UPS Socket 1 On * { if_UPS.Turf("KN\n"); }
@@ -21,4 +22,8 @@
   : UPS Query Fault status * { if_UPS.Turf("Q9\n"); }
   : UPS Quit * { if_UPS.Turf("X\n"); }
   ;
-  
+
+&shutdown <int>
+  : Shutdown in %d (Enter time in minutes) minutes { $0 = $3; }
+  ;
+

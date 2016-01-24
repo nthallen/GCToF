@@ -10,6 +10,7 @@ tmcbase = zaber.tmc
 tmcbase = Horiba.tmc
 tmcbase = IG.tmc
 tmcbase = sonic.tmc
+tmcbase = UPS.tmc
 
 cmdbase = /usr/local/share/huarp/root.cmd
 cmdbase = /usr/local/share/huarp/getcon.cmd
@@ -17,6 +18,7 @@ cmdbase = TwisTorr.cmd
 cmdbase = nXDS.cmd
 cmdbase = zaber.cmd
 cmdbase = Horiba.cmd
+cmdbase = ../UPS/TM/UPS.cmd
 
 colbase = /usr/local/share/huarp/tmdf_col.tmc
 colbase = /usr/local/share/huarp/cpu_usage_col.tmc
@@ -25,6 +27,7 @@ colbase = TwisTorr_col.tmc
 colbase = nXDS_col.tmc
 colbase = Horiba_col.tmc
 colbase = sonic_col.tmc
+colbase = UPS_col.tmc
 
 swsbase = GCToF.sws
 
@@ -33,15 +36,16 @@ TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
 DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber ../Sonic/sonic
+DISTRIB = ../UPS/ups
 
 GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl \
-    nXDS.tbl sonic.tbl
+    nXDS.tbl sonic.tbl UPS.tbl
 GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
 %%
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
-CPPFLAGS += -I ../Sonic
+CPPFLAGS += -I ../Sonic -I ../UPS
 
 GCToFeng.cdf : genui.txt
 	genui -d ../eng -c genui.txt
@@ -57,3 +61,5 @@ GCToFeng.cdf : genui.txt
 	cd ../Zaber && make
 ../Sonic/sonic :
 	cd ../Sonic && make
+../UPS/ups :
+	cd ../UPS && make

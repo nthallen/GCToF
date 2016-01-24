@@ -68,12 +68,12 @@ void UPS_ser::update_termios() {
 /**
  * @return NULL on error.
  */
-command_request *UPS_ser::new_command_req(const char *cmdquery,
+UPS_cmd_req *UPS_ser::new_command_req(const char *cmdquery,
         UPS_parser parser_in, unsigned reply_min) {
-  command_request *cr;
+  UPS_cmd_req *cr;
   if (cmd_free.empty()) {
     nl_error(MSG_DBG(2), "new_command_req() via new");
-    cr = new command_request;
+    cr = new UPS_cmd_req;
     if (cr == 0)
       nl_error(3, "Out of memory in new_command_req()");
     return 0;
@@ -89,21 +89,21 @@ command_request *UPS_ser::new_command_req(const char *cmdquery,
   return cr;
 }
 
-void UPS_ser::enqueue_command(command_request *creq) {
+void UPS_ser::enqueue_command(UPS_cmd_req *creq) {
   creq->active = true;
   cmds.push_back(creq);
   Stor->set_gflag(cmd_gflag);
 }
 
 void UPS_ser::enqueue_command(const char *cmdquery) {
-  command_request *cr =
+  UPS_cmd_req *cr =
     new_command_req(cmdquery, &UPS_ser::parse_cmd, 5);
   if (cr == 0) return;
   enqueue_command(cr);
 }
 
 void UPS_ser::enqueue_query(const char *cmdquery, unsigned reply_min) {
-  command_request *cr =
+  UPS_cmd_req *cr =
     new_command_req(cmdquery, &UPS_ser::parse_query, reply_min);
   if (cr == 0) return;
   enqueue_command(cr);
@@ -112,7 +112,7 @@ void UPS_ser::enqueue_query(const char *cmdquery, unsigned reply_min) {
 /**
  * Could be eliminated.
  */
-void UPS_ser::enqueue_poll(command_request *creq) {
+void UPS_ser::enqueue_poll(UPS_cmd_req *creq) {
   creq->active = true;
   creq->persistent = true;
   polls.push_back(creq);
@@ -120,13 +120,13 @@ void UPS_ser::enqueue_poll(command_request *creq) {
 
 void UPS_ser::enqueue_poll(const char *cmdquery, UPS_parser parser_in,
         unsigned reply_min) {
-  command_request *cr =
+  UPS_cmd_req *cr =
     new_command_req(cmdquery, parser_in, reply_min);
   if (cr == 0) return;
   enqueue_poll(cr);
 }
 
-void UPS_ser::free_command(command_request *creq) {
+void UPS_ser::free_command(UPS_cmd_req *creq) {
   creq->active = false;
   if (!creq->persistent) {
     cmd_free.push_back(creq);
@@ -181,7 +181,7 @@ int UPS_ser::ProcessData(int flag) {
     }
   }
   while (!pending && !cmds.empty()) {
-    command_request *cr = cmds[0];
+    UPS_cmd_req *cr = cmds[0];
     cmds.pop_front();
     if (submit_req(cr)) break;
   }
@@ -195,7 +195,7 @@ int UPS_ser::ProcessData(int flag) {
  * Issues the specified command to the serial device
  * @return true if command was submitted
  */
-bool UPS_ser::submit_req(command_request *req) {
+bool UPS_ser::submit_req(UPS_cmd_req *req) {
   pending = req;
   if (req->write(fd))
     report_err("Write error");
