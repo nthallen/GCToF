@@ -19,6 +19,7 @@ int UPS_ser::parse_QMOD(UPS_cmd_req *cr) {
     for (i=0; modes[i] != '\0'; ++i) {
       if (c == modes[i]) {
         UPS_TMp->QMOD = i;
+        UPS_TMp->UPS_Response |= UPSR_QMOD;
         report_ok();
         return 0;
       }
@@ -30,14 +31,21 @@ int UPS_ser::parse_QMOD(UPS_cmd_req *cr) {
   return 1;
 }
 
-// Looking for "sign" int "." int and converting to a fixed float stored as 1 int
+// Looking for int "." int and converting to a fixed float stored as 1 int
 int UPS_ser::not_fixed_1( unsigned int &val ) {
   val = 0;
   if (cp >= nc)
     return 1;
   if (!isdigit(buf[cp])) {
-    report_err("Expected digit");
-    return 1;
+    if (buf[cp] == '-') {
+      while (cp < nc && (buf[cp] == '-' || buf[cp] == '.')) {
+        val = 9999;
+        return 0;
+      }
+    } else {
+      report_err("Expected digit");
+      return 1;
+    }
   }
   while (cp < nc && isdigit(buf[cp])) {
     val = val*10 + buf[cp++] - '0';
@@ -124,6 +132,7 @@ int UPS_ser::parse_QGS(UPS_cmd_req *cr) {
   UPS_TMp->QGS_VBatN = X;
   UPS_TMp->QGS_Tmax = T;
   UPS_TMp->QGS_Status = ba;
+  UPS_TMp->UPS_Response |= UPSR_QGS;
   report_ok();
   return 0;
 }
@@ -131,21 +140,21 @@ int UPS_ser::parse_QGS(UPS_cmd_req *cr) {
 int UPS_ser::parse_QWS(UPS_cmd_req *cr) {
   uint16_t A1, A2, A3, A4;
   if (not_found('(') ||
-      not_bin(A1, 16) ||
-      not_bin(A2, 16) ||
-      not_bin(A3, 16) ||
-      not_bin(A4, 16)) {
+      not_bin(A1, 16) || // a0..a15, bit reversed
+      not_bin(A2, 16) || // a16..a31, bit reversed
+      not_bin(A3, 16) || // a32..a47, bit reversed
+      not_bin(A4, 16)) { // a48..a63, bit reversed
     return cp >= nc;
   }
   UPS_TMp->QWS =
-    (A1&1) |
-    ((A1>>1)&(1<<1)) |
-    ((A1>>3)&(0xF<<2)) |
-    ((A1>>4)&(1<<6)) |
-    ((A1>>5)&(3<<7)) |
-    ((A4<<3)&(1<<9)) |
-    ((A4>>2)&(1<<10)) |
-    (UPS_TMp->QWS & (0x1F<<11));
+    ((A1>>2)&3) |
+    ((A1>>3)&(1<<2)) |
+    ((A1>>4)&(0xF<<3)) |
+    ((A1>>6)&(1<<7)) |
+    ((A1>>7)&(1<<8)) |
+    ((A4<<7)&(3<<9)) |
+    ((A4<<2)&(1<<11));
+  UPS_TMp->UPS_Response |= UPSR_QWS;
   report_ok();
   return 0;
 }
@@ -183,6 +192,7 @@ int UPS_ser::parse_QBV(UPS_cmd_req *cr) {
   UPS_TMp->QBV_Group = M;
   UPS_TMp->QBV_Capacity = C;
   UPS_TMp->QBV_Remain_Time = T;
+  UPS_TMp->UPS_Response |= UPSR_QBV;
   if (!(out_of_range(N, "Battery Piece", 1, 20) ||
         out_of_range(M, "Battery Group", 1, 99) ||
         out_of_range(C, "Battery Capacity", 0, 100) ||
@@ -197,10 +207,11 @@ int UPS_ser::parse_QSK1(UPS_cmd_req *cr) {
   if (not_found('(') || not_bin(N,1)) {
     return cp >= nc;
   }
+  UPS_TMp->UPSR_Response |= UPSR_QSK1;
   if (N) {
-    UPS_TMp->QWS &= ~0x0800;
+    UPS_TMp->QWS &= ~UPSR_QSK1_ON;
   } else {
-    UPS_TMp->QWS |= 0x0800;
+    UPS_TMp->QWS |= UPSR_QSK1_ON;
   }
   return 0;
 }

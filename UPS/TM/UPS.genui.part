@@ -16,4 +16,5 @@
   1 UPS_Remain_Time UPS Time
   1 UPS_Status UPSstat Status
   1 UPS_Warn UPSstat Warn
-  1 UPS_Stale UPS Stale
+  1 UPS_Response UPSstat Response
+  1 UPS_Stale UPSstat Stale

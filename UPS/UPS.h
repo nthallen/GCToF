@@ -12,13 +12,11 @@
   #endif
 
   typedef struct __attribute__((__packed__)) {
-    uint8_t QMOD;
     uint16_t QGS_V_in;
     uint16_t QGS_F_in;
     uint16_t QGS_V_out;
     uint16_t QGS_F_out;
     uint16_t QGS_I_out;
-    uint8_t QGS_LoadPct;
     uint16_t QGS_VBusP;
     uint16_t QGS_VBusN;
     uint16_t QGS_VBatP;
@@ -27,11 +25,37 @@
     uint16_t QGS_Status;
     uint16_t QWS;
     uint16_t QBV_Vbat;
+    uint8_t UPS_Response;
+    uint8_t QMOD;
+    uint8_t QGS_LoadPct;
     uint8_t QBV_Piece;
     uint8_t QBV_Group;
     uint8_t QBV_Capacity;
     uint8_t QBV_Remain_Time;
   } UPS_TM_t;
+  
+  /* Bit Values for UPS_Response */
+  #define UPSR_QMOD 0x01
+  #define UPSR_QGS  0x02
+  #define UPSR_QWS  0x04
+  #define UPSR_QBV  0x08
+  #define UPSR_QSK1 0x10
+  #define UPSR_RESPONSES 0x1F
+  #define UPSR_QSK1_ON 0x20
+  
+  /* Bit Values for QWS */
+  #define QWS_a13 0x0001 // Charger alarm
+  #define QWS_a12 0x0002 // Over temperature alarm
+  #define QWS_a10 0x0004 // EPO enabled
+  #define QWS_a8  0x0008 // Overload
+  #define QWS_a7  0x0010 // Low battery
+  #define QWS_a6  0x0020 // Battery overcharged
+  #define QWS_a5  0x0040 // Input frequency unstable in bypass
+  #define QWS_a2  0x0080 // Neutral and line wires oppositely connected
+  #define QWS_a0  0x0100 // Battery disconnected
+  #define QWS_a61 0x0200 // EEPROM operation error
+  #define QWS_a60 0x0400 // Bypass unstable
+  #define QWS_a54 0x0800 // P1 cut off pre-alarm
 
   #ifdef __cplusplus
     #include "SerSelector.h"

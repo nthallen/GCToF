@@ -19,5 +19,6 @@ UPS {
   Rem:   (UPS_Remain_Time,3) min;
   Status: (UPS_Status,4);
   Warn:  (UPS_Warn,4);
+  Resp:  (UPS_Response,2);
   Stale: (UPS_Stale,3);
 }
