@@ -207,7 +207,7 @@ int UPS_ser::parse_QSK1(UPS_cmd_req *cr) {
   if (not_found('(') || not_bin(N,1)) {
     return cp >= nc;
   }
-  UPS_TMp->UPSR_Response |= UPSR_QSK1;
+  UPS_TMp->UPS_Response |= UPSR_QSK1;
   if (N) {
     UPS_TMp->QWS &= ~UPSR_QSK1_ON;
   } else {

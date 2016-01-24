@@ -1,4 +1,4 @@
-csv GCToFeng_1 82
+csv GCToFeng_1 83
   0 TGCToFeng_1 %.3lf
   1 CPU_Pct 
   2 DilFlow 
@@ -49,38 +49,39 @@ csv GCToFeng_1 82
   47 UPS_LoadPct 
   48 UPS_Piece 
   49 UPS_Remain_Time 
-  50 UPS_Stale 
-  51 UPS_Status 
-  52 UPS_Tmax 
-  53 UPS_VBatN 
-  54 UPS_VBatP 
-  55 UPS_VBusN 
-  56 UPS_VBusP 
-  57 UPS_V_in 
-  58 UPS_V_out 
-  59 UPS_Warn 
-  60 Z1V 
-  61 Z1pos 
-  62 Z1stale 
-  63 Z2V 
-  64 Z2pos 
-  65 Z2stale 
-  66 freemem 
-  67 nX0CtrlrT 
-  68 nX0LinkV 
-  69 nX0MtrF 
-  70 nX0MtrI 
-  71 nX0MtrW 
-  72 nX0Power %.0lf
-  73 nX0Stat %.0lf
-  74 nX1CtrlrT 
-  75 nX1LinkV 
-  76 nX1MtrF 
-  77 nX1MtrI 
-  78 nX1MtrW 
-  79 nX1Power %.0lf
-  80 nX1Stat %.0lf
-  81 nX_stale 
+  50 UPS_Response 
+  51 UPS_Stale 
+  52 UPS_Status 
+  53 UPS_Tmax 
+  54 UPS_VBatN 
+  55 UPS_VBatP 
+  56 UPS_VBusN 
+  57 UPS_VBusP 
+  58 UPS_V_in 
+  59 UPS_V_out 
+  60 UPS_Warn 
+  61 Z1V 
+  62 Z1pos 
+  63 Z1stale 
+  64 Z2V 
+  65 Z2pos 
+  66 Z2stale 
+  67 freemem 
+  68 nX0CtrlrT 
+  69 nX0LinkV 
+  70 nX0MtrF 
+  71 nX0MtrI 
+  72 nX0MtrW 
+  73 nX0Power %.0lf
+  74 nX0Stat %.0lf
+  75 nX1CtrlrT 
+  76 nX1LinkV 
+  77 nX1MtrF 
+  78 nX1MtrI 
+  79 nX1MtrW 
+  80 nX1Power %.0lf
+  81 nX1Stat %.0lf
+  82 nX_stale 
 csv GCToFeng_10 17
   0 TGCToFeng_10 %.3lf
   1 Hex_P 
