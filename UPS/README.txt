@@ -16,6 +16,7 @@ Record Parameters returned from following queries:
       b9b8b7b6b5b4b3b2b1b0a0a1<cr>
     (220.2 50.0 220.0 50.0 027.0 100 345.8 344.9 241.0 241.5 045.0
       100011000000<cr> [76 characters]
+    (122.4 60.0 122.2 60.0 000.0 000 169.0 169.2 082.1 ---.- 016.5 100010000001
     MMM.M Input voltage V
     HH.H Input frequency Hz
     LLL.L Output voltage V
@@ -30,8 +31,10 @@ Record Parameters returned from following queries:
     b9-b0 (plus a1a0?)
   QWS (Warning Status: 64 bits, 12 of which are defined)
     [66 characters]
+    (00000000000000000000000000000000000000000000000000000000000000000010000001
   QBV (P battery information:
     (RRR.R NN MM CCC TTT<cr> [21 characters]
+    (082.0 06 01 091 342
     RRR.R Battery Voltage V
     NN Battery piece number (01 to 20)
     MM Battery group number (01 to 99)
@@ -41,17 +44,26 @@ Record Parameters returned from following queries:
   [QSK2 -- not supported in this model]
   
   The following queries would just log results, not enter them into telemetry
-    QPI Protocol ID Inquiry
+    QPI Protocol ID Inquiry (PI01 [6 chars]
     QMD Model inquiry
-      (TTTTTTTTTTTTTTTWWWWWWW KK P/P MMM NNN RR BB.B <cr> [47 chars?]
+      (TTTTTTTTTTTTTTT WWWWWWW KK P/P MMM NNN RR BB.B <cr> [47 chars?]
+      (###########3000 ###3000 80 1/1 120 120 06 12.0<cr> [48 chars, don't know about trailing space]
     QID UPS ID inquiry (ABCDEEFFGXXXXX<cr> [16 chars]
+      (00000000000000
     QVFW Main CPU Firmware version inquiry (VERFW: <NNNNN.NN><cr> [19 chars?]
+     (VERFW:01213.00 [16 chars]
     QBYV bypass voltage range inquiry (HHH LLL <cr> [10 chars]
+      (130 085 [maybe 9]
     QBYF bypass frequency range inquiry (HH.H LL.L <cr> [11 or 12 chars]
+      (63.0 57.0
     QRI UPS Rating Information (MMM.M QQQ SSS.S RR.R<cr> [22 chars]
+      (120.0 025 072.0 60.0
     QFLAG Setting flag status inquiry [maybe 19 chars?]
+      (EpbrashclnzDovegfjm [21 chars] n,z are not documented
     QHE (HHH LLL<cr> [9 chars]
+      (130 114
     QFS Fault status 
+      (02 120.3 59.9 002.7 60.0 020 004.8 249.6 249.6 082.1 020.7 00001000
 
 Commands to issue:
   Response to all commands is either "(ACK<cr>" or "(NACK<cr>"
