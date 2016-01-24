@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   nl_error( 0, "Starting V0.1" );
   { Selector Loop;
-    UPSData_t UPSData;
+    UPS_TM_t UPSData;
     // Initialize 
     UPS_ser UPS(device_path, &UPSData);
     TM_Selectee TM("UPS", &UPSData, sizeof(UPSData));

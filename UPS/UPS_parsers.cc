@@ -5,10 +5,12 @@
  * and true when the response is incomplete. The caller will
  * handle timeouts.
  */
+#include <ctype.h>
 #include "UPS.h"
+#include "nortlib.h"
 
 int UPS_ser::parse_QMOD(command_request *cr) {
-  if (not_found('(') {
+  if (not_found('(')) {
     return 1;
   } else if (cp < nc) {
     const char modes[] = "PSYLBTFECD";
@@ -36,7 +38,7 @@ int UPS_ser::not_fixed_1( unsigned int &val ) {
     report_err("Expected digit");
     return 1;
   }
-  while (cp < nc && isdigit(buf[cp]) {
+  while (cp < nc && isdigit(buf[cp])) {
     val = val*10 + buf[cp++] - '0';
   }
   if (cp >= nc) {
@@ -91,7 +93,8 @@ int UPS_ser::not_bin(uint16_t &word, int nbits) {
     b9-b0 (plus a1a0?)
 */
 int UPS_ser::parse_QGS(command_request *cr) {
-  int M, H, L, N, Q, D, K, V, S, X, T;
+  unsigned int M, H, L, N, Q, K, V, S, X, T;
+  int D;
   uint16_t ba;
   if (not_found('(') ||
       not_fixed_1(M) ||
@@ -135,7 +138,7 @@ int UPS_ser::parse_QWS(command_request *cr) {
   }
   UPS_TMp->QWS =
     (A1&1) |
-    ((A1>>1)&(1<<1) |
+    ((A1>>1)&(1<<1)) |
     ((A1>>3)&(0xF<<2)) |
     ((A1>>4)&(1<<6)) |
     ((A1>>5)&(3<<7)) |
@@ -164,7 +167,8 @@ int UPS_ser::out_of_range(int val, const char *desc, int low, int high) {
  *  TTT Battery remain time minutes
  */
 int UPS_ser::parse_QBV(command_request *cr) {
-  int R, N, M, C, T;
+  unsigned int R;
+  int N, M, C, T;
   if (not_found('(') ||
       not_fixed_1(R) ||
       not_int(N) ||
@@ -173,11 +177,11 @@ int UPS_ser::parse_QBV(command_request *cr) {
       not_int(T)) {
     return cp >= nc;
   }
-  QBV_Vbat = R;
-  QBV_Piece = N;
-  QBV_Group = M;
-  QBV_Capacity = C;
-  QBV_Remain_Time = T;
+  UPS_TMp->QBV_Vbat = R;
+  UPS_TMp->QBV_Piece = N;
+  UPS_TMp->QBV_Group = M;
+  UPS_TMp->QBV_Capacity = C;
+  UPS_TMp->QBV_Remain_Time = T;
   if (!(out_of_range(N, "Battery Piece", 1, 20) ||
         out_of_range(M, "Battery Group", 1, 99) ||
         out_of_range(C, "Battery Capacity", 0, 100) ||
@@ -188,7 +192,7 @@ int UPS_ser::parse_QBV(command_request *cr) {
 }
 
 int UPS_ser::parse_QSK1(command_request *cr) {
-  int N;
+  uint16_t N;
   if (not_found('(') || not_bin(N,1)) {
     return cp >= nc;
   }
@@ -204,7 +208,7 @@ int UPS_ser::parse_QSK1(command_request *cr) {
  * Looking for (ACK or (NACK
  */
 int UPS_ser::parse_cmd(command_request *cr) {
-  if (not_found('(') {
+  if (not_found('(')) {
     return 1;
   } else {
     bool nack = false;
@@ -229,7 +233,7 @@ int UPS_ser::parse_query(command_request *cr) {
   } else {
     if (nc > cp && buf[nc-1] == '\r') {
       buf[nc-1] = '\0';
-      nl_error(0, "%s: %s", cr->req_buf, ascii_escape(&buf[cp]));
+      nl_error(0, "%s: %s", cr->req_buf, ascii_escape((const char *)&buf[cp]));
       return 0;
     }
   }
