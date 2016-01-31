@@ -12,6 +12,27 @@ UPS_ser::UPS_ser(const char *path, UPS_TM_t *TMptr) :
     nl_error(MSG_DBG(1), "Opened %s for UPS device", path);
   }
   UPS_TMp = TMptr;
+  UPS_TMp->QGS_V_in = 0;
+  UPS_TMp->QGS_F_in = 0;
+  UPS_TMp->QGS_V_out = 0;
+  UPS_TMp->QGS_V_out = 0;
+  UPS_TMp->QGS_I_out = 0;
+  UPS_TMp->QGS_VBusP = 0;
+  UPS_TMp->QGS_VBusN = 0;
+  UPS_TMp->QGS_VBatP = 0;
+  UPS_TMp->QGS_VBatN = 0;
+  UPS_TMp->QGS_Tmax = 0;
+  UPS_TMp->QGS_Status = 0;
+  UPS_TMp->QWS = 0;
+  UPS_TMp->QBV_Vbat = 0;
+  UPS_TMp->UPS_Response = 0;
+  UPS_TMp->QMOD = 0;
+  UPS_TMp->QGS_LoadPct = 0;
+  UPS_TMp->QBV_Piece = 0;
+  UPS_TMp->QBV_Group = 0;
+  UPS_TMp->QBV_Capacity = 0;
+  UPS_TMp->QBV_Remain_Time = 0;
+  
   pending = 0;
   cur_poll = polls.begin();
   nl_error(MSG_DBG(1), "UPS_ser ready for setup");
