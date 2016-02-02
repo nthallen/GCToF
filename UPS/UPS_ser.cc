@@ -144,6 +144,7 @@ void UPS_ser::enqueue_poll(const char *cmdquery, UPS_parser parser_in,
   UPS_cmd_req *cr =
     new_command_req(cmdquery, parser_in, reply_min);
   if (cr == 0) return;
+  nl_error(MSG_DBG(1), "Enqueuing command: '%s'", ascii_escape(cmdquery));
   enqueue_poll(cr);
 }
 
@@ -209,6 +210,9 @@ int UPS_ser::ProcessData(int flag) {
   }
   while (!pending && cur_poll != polls.end()) {
     if (submit_req(*cur_poll++)) break;
+  }
+  if (!pending) {
+    nl_error(MSG_DBG(1),"UPS_ser::Process_Data: No commands pending");
   }
   return 0;
 }
