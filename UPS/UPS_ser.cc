@@ -35,13 +35,10 @@ UPS_ser::UPS_ser(const char *path, UPS_TM_t *TMptr) :
   
   pending = 0;
   cur_poll = polls.begin();
-  nl_error(MSG_DBG(1), "UPS_ser ready for setup");
   setup(2400, 8, 'n', 1, reply_max, 1);
-  nl_error(MSG_DBG(1), "UPS_ser ready for flush");
   flush_input();
   flags = Selector::Sel_Read | Selector::gflag(tm_gflag) |
           Selector::gflag(cmd_gflag) | Selector::Sel_Timeout;
-  nl_error(MSG_DBG(1), "UPS_ser done flushing, ready to tcgetattr");
   if (tcgetattr(fd, &termios_s)) {
     nl_error(2, "Error from tcgetattr: %s", strerror(errno));
   }
@@ -68,10 +65,7 @@ UPS_ser::~UPS_ser() {
 /**
  * Adapted from SunTrack. Adjusts the VMIN termios value
  * based on the specific command. This version is incomplete.
- * It adjusts for the request size so we can skip over the RS485 echo,
- * but it does not anticipate any more than the minimal response
- * of 6 characters. We could add command-specific response size
- * as noted in the comments. We could also adjust the VTIME
+ * We could also adjust the VTIME
  * parameter, but it may be redundant, since we have the overriding
  * Selector timeout working for us.
  */
@@ -95,9 +89,10 @@ UPS_cmd_req *UPS_ser::new_command_req(const char *cmdquery,
   if (cmd_free.empty()) {
     nl_error(MSG_DBG(2), "new_command_req() via new");
     cr = new UPS_cmd_req;
-    if (cr == 0)
+    if (cr == 0) {
       nl_error(3, "Out of memory in new_command_req()");
-    return 0;
+      return 0;
+    }
   } else {
     nl_error(MSG_DBG(2), "new_command_req() via cmd_free");
     cr = cmd_free[0];
@@ -141,10 +136,13 @@ void UPS_ser::enqueue_poll(UPS_cmd_req *creq) {
 
 void UPS_ser::enqueue_poll(const char *cmdquery, UPS_parser parser_in,
         unsigned reply_min) {
+  nl_error(MSG_DBG(1), "Enqueuing poll: '%s'", ascii_escape(cmdquery));
   UPS_cmd_req *cr =
     new_command_req(cmdquery, parser_in, reply_min);
-  if (cr == 0) return;
-  nl_error(MSG_DBG(1), "Enqueuing command: '%s'", ascii_escape(cmdquery));
+  if (cr == 0) {
+    nl_error(MSG_DBG(1), "new_command_req() returned NULL");
+    return;
+  }
   enqueue_poll(cr);
 }
 
@@ -156,6 +154,7 @@ void UPS_ser::free_command(UPS_cmd_req *creq) {
 }
 
 void UPS_ser::enqueue_polls() {
+  nl_error(MSG_DBG(1), "Enqueuing polls");
   enqueue_poll("QMOD", &UPS_ser::parse_QMOD, 3);
   enqueue_poll("QGS", &UPS_ser::parse_QGS, 76);
   enqueue_poll("QWS", &UPS_ser::parse_QWS, 66);
@@ -177,8 +176,9 @@ Timeout *UPS_ser::GetTimeout() {
 int UPS_ser::ProcessData(int flag) {
   if (flag & Selector::gflag(0)) {
     UPS_TMp->UPS_Response &= ~UPSR_RESPONSES;
-    if (cur_poll == polls.end())
+    if (cur_poll == polls.end()) {
       cur_poll = polls.begin();
+    }
     /* else complain? */
   }
   if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
@@ -187,7 +187,7 @@ int UPS_ser::ProcessData(int flag) {
     if (pending) {
       if ((this->*(pending->parser))(pending)) { // returns true if not done
         if (TO.Expired()) {
-          report_err("Timeout on echo from UPS request: %s",
+          report_err("Timeout from UPS request: %s",
             pending->ascii_escape());
         } else {
           update_termios();
@@ -206,13 +206,14 @@ int UPS_ser::ProcessData(int flag) {
   while (!pending && !cmds.empty()) {
     UPS_cmd_req *cr = cmds[0];
     cmds.pop_front();
+    nl_error(MSG_DBG(0), "Issuing command '%s'", cr->ascii_escape());
     if (submit_req(cr)) break;
   }
   while (!pending && cur_poll != polls.end()) {
     if (submit_req(*cur_poll++)) break;
   }
   if (!pending) {
-    nl_error(MSG_DBG(1),"UPS_ser::Process_Data: No commands pending");
+    nl_error(MSG_DBG(2),"UPS_ser::Process_Data: No commands pending");
   }
   return 0;
 }
@@ -225,7 +226,7 @@ bool UPS_ser::submit_req(UPS_cmd_req *req) {
   pending = req;
   if (req->write(fd))
     report_err("Write error");
-  TO.Set(0, 250); // May well need to extend this, particularly for longer queries
+  TO.Set(0, 500);
   update_termios();
   return true;
 }

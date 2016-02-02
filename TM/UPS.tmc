@@ -20,7 +20,7 @@ TM typedef UPS_U8_t UPS_U8B_t { text "%02x"; }
 TM typedef unsigned short UPS_U16_1_t { text "%6.1lf"; }
 TM typedef unsigned short UPS_U16_t { text "%04x"; }
 
-TM 1 Hz UPS_U8_t UPS_Response;
+TM 1 Hz UPS_U8B_t UPS_Response;
 TM 1 Hz QMOD_t UPS_Mode;
 TM 1 Hz UPS_U16_1_t UPS_V_in;
 TM 1 Hz UPS_U16_1_t UPS_F_in;

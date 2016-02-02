@@ -36,14 +36,16 @@ int UPS_ser::not_fixed_1( unsigned int &val ) {
   val = 0;
   if (cp >= nc)
     return 1;
+  while (cp < nc && isspace(buf[cp]))
+    ++cp;
   if (!isdigit(buf[cp])) {
     if (buf[cp] == '-') {
-      while (cp < nc && (buf[cp] == '-' || buf[cp] == '.')) {
-        val = 9999;
-        return 0;
-      }
+      while (cp < nc && (buf[cp] == '-' || buf[cp] == '.'))
+	++cp;
+      val = 9999;
+      return 0;
     } else {
-      report_err("Expected digit");
+      report_err("Expected digit at columnt %d", cp);
       return 1;
     }
   }
@@ -53,11 +55,11 @@ int UPS_ser::not_fixed_1( unsigned int &val ) {
   if (cp >= nc) {
     return 1;
   } else if (buf[cp] != '.') {
-    report_err("Expected decimal");
+    report_err("Expected decimal in not_fixed_1 at column %d", cp);
     return 1;
   }
   if (!isdigit(buf[++cp])) {
-    report_err("Expected digit after decimal");
+    report_err("Expected digit after decimal in not_fixed_1 at column %d", cp);
     return 1;
   }
   val = val*10 + buf[cp++] - '0';
@@ -69,6 +71,7 @@ int UPS_ser::not_fixed_1( unsigned int &val ) {
 }
 
 int UPS_ser::not_bin(uint16_t &word, int nbits) {
+  int nbits_in = nbits;
   while (cp < nc && isspace(buf[cp])) {
     ++cp;
   }
@@ -79,7 +82,8 @@ int UPS_ser::not_bin(uint16_t &word, int nbits) {
   }
   if (nbits > 0) {
     if (cp < nc)
-      report_err("Invalid bit in not_bin");
+      report_err("Invalid bit in not_bin(%d) at column %d after %d bits",
+	nbits_in, cp, nbits_in-nbits);
     return 1;
   }
   return 0;
@@ -105,6 +109,8 @@ int UPS_ser::parse_QGS(UPS_cmd_req *cr) {
   unsigned int M, H, L, N, Q, K, V, S, X, T;
   int D;
   uint16_t ba;
+  M = H = L = N = Q = K = V = S = X = T = 0;
+  D = 0;
   if (not_found('(') ||
       not_fixed_1(M) ||
       not_fixed_1(H) ||
@@ -118,6 +124,9 @@ int UPS_ser::parse_QGS(UPS_cmd_req *cr) {
       not_fixed_1(X) ||
       not_fixed_1(T) ||
       not_bin(ba, 12)) {
+    nl_error(MSG_DBG(0),
+    	"M:%d H:%d L:%d N:%d Q:%d D:%d K:%d V:%d S:%d X:%d T:%d",
+    	M, H, L, N, Q, D, K, V, S, X, T);
     return cp >= nc;
   }
   UPS_TMp->QGS_V_in = M;

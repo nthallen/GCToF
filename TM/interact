@@ -8,8 +8,9 @@
   Launch cmd/server GCToFsrvr
   Launch - lgr -N `mlf_find LOG`
   Launch - tmdf
-  Launch - TwisTorr -vv -d /dev/ser3
-  Launch - nXDS -vvv -d /dev/ser4
+  Launch - ups -p /dev/ser2 -v
+  Launch - TwisTorr -d /dev/ser3
+  Launch - nXDS -d /dev/ser4
 # Launch - nice --2 sonic -t SonicData1 -h Sonic1 -p /dev/ser5
 # Launch - nice --2 sonic -t SonicData2 -h Sonic2 -p /dev/ser6
   Launch - GCToFalgo -v
