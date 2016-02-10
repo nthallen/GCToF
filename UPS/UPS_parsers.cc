@@ -218,9 +218,9 @@ int UPS_ser::parse_QSK1(UPS_cmd_req *cr) {
   }
   UPS_TMp->UPS_Response |= UPSR_QSK1;
   if (N) {
-    UPS_TMp->QWS &= ~UPSR_QSK1_ON;
+    UPS_TMp->UPS_Response |= UPSR_QSK1_ON;
   } else {
-    UPS_TMp->QWS |= UPSR_QSK1_ON;
+    UPS_TMp->UPS_Response &= ~UPSR_QSK1_ON;
   }
   return 0;
 }

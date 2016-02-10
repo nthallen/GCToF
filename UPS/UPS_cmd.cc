@@ -63,7 +63,12 @@ int UPS_cmd::ProcessData(int flag) {
       }
       break; // Fall through to error
     case 'T':
-      if (not_int(arg1)) break;
+      if (cp+1 < nc && buf[cp] == '.') {
+	if (!isdigit(buf[++cp])) break;
+	++cp;
+      } else {
+	if (not_int(arg1)) break;
+      }
       buf[cp] = '\0';
       UPS->enqueue_command((const char *)buf);
       return 0;
