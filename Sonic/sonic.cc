@@ -29,7 +29,8 @@ void sonic_init_options( int argc, char **argv) {
   }
 }
 
-Sonic_TM::Sonic_TM() : TM_Selectee("SonicData", &SonicData, sizeof(SonicData_t)) {
+Sonic_TM::Sonic_TM()
+    : TM_Selectee(tm_recv_name, &SonicData, sizeof(SonicData_t)) {
   clear_TM();
 }
 
