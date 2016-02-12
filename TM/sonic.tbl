@@ -10,7 +10,17 @@ Sonic {
   S: (Sonic1_S,3) (Sonic2_S,3);
 }
 
-{ HBox { |+; [Sonic]; |+ };
+IG {
+  HBox{ +-; Title: "Ion Gauges"; -+ };
+  Hex_P: (Hex_P,9) mbar;
+  ToF_P: (ToF_P,9) mbar;
+  Stat:  (IG_stat,3);
+  Stale: (IG_stale,3);
+}
+
+{ HBox { |; [Sonic]; |; 
+             VGlue 0+1;
+             [IG]; | };
   -;
   { (flttime,9) MFCtr: (MFCtr,5) }
 }

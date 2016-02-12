@@ -3,14 +3,14 @@
 #include "nortlib.h"
 #include "oui.h"
 
-const char *iongauge_path = "/net/athenaII_a/dev/ser4";
+const char *iongauge_path = "/dev/ser4";
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   { Selector S;
     IonGauge_t IGdata;
     IonGauge IG( iongauge_path, &IGdata );
-    IG.setup(38400, 8, 'n', 1, 28, 1 );
+    IG.setup(57600, 8, 'n', 1, 28, 1 );
     Cmd_Selectee QC;
     TM_Selectee TM( "IonGauge", &IGdata, sizeof(IGdata) );
     S.add_child(&IG);

@@ -1,4 +1,4 @@
-# Makefile Generated Sun Jan 24 11:56:39 EST 2016
+# Makefile Generated Thu Feb 11 11:23:53 PST 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm

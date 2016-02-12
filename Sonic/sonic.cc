@@ -7,7 +7,7 @@
 #include "nortlib.h"
 #include "oui.h"
 
-static const char *device_name = "/dev/ser1";
+static const char *device_name = "/dev/ser2";
 static const char *tm_recv_name = "SonicData";
 
 void sonic_init_options( int argc, char **argv) {
