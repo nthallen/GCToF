@@ -42,7 +42,7 @@ DISTRIB = ../UPS/ups
 tmcbase = ../Zeno/TM/Zeno.tmc
 cmdbase = ../Zeno/TM/Zeno.cmd
 colbase = ../Zeno/TM/Zeno_col.tmc
-DISTRIB = ../Zeno/zeno
+DISTRIB = ../Zeno/Zeno_Ser
 
 GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl \
     nXDS.tbl sonic.tbl UPS.tbl
