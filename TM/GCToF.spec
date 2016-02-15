@@ -31,10 +31,6 @@ colbase = UPS_col.tmc
 
 swsbase = GCToF.sws
 
-GENUISRCS = genui.txt
-GENUISRCS = ../UPS/TM/UPS.genui
-GENUISRCS = ../Zaber/TM/Zaber.genui
-
 SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
@@ -46,7 +42,6 @@ DISTRIB = ../UPS/ups
 tmcbase = ../Zeno/TM/Zeno.tmc
 cmdbase = ../Zeno/TM/Zeno.cmd
 colbase = ../Zeno/TM/Zeno_col.tmc
-GENUISRCS = ../Zeno/TM/Zeno.genui
 DISTRIB = ../Zeno/zeno
 
 GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl \
@@ -57,6 +52,13 @@ doit : GCToF.doit
 %%
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
 CPPFLAGS += -I ../Sonic -I ../UPS
+CPPFLAGS += -I ../Zeno
+
+GENUISRCS = genui.txt
+GENUISRCS += ../UPS/TM/UPS.genui
+GENUISRCS += ../Zaber/TM/zaber.genui
+GENUISRCS += ../Zeno/TM/Zeno.genui
+
 
 GCToFeng.cdf : $(GENUISRCS)
 	genui -d ../eng -c $(GENUISRCS)

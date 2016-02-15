@@ -29,7 +29,7 @@ ROWS 8
   1 TT1_CtrlOT:TT1_ErrStat:2 TT1_Errors errors %.0lf
   1 TT1_PwrFail:TT1_ErrStat:3 TT1_Errors errors %.0lf
   1 TT1_AuxFail:TT1_ErrStat:4 TT1_Errors errors %.0lf
-  1 TT1_OverVTT1_ErrStat:5 TT1_Errors errors %.0lf
+  1 TT1_OverV:TT1_ErrStat:5 TT1_Errors errors %.0lf
   1 TT1_Short:TT1_ErrStat:6 TT1_Errors errors %.0lf
   1 TT1_OverLoad:TT1_ErrStat:7 TT1_Errors errors %.0lf
   1 TT1_LowBatt:TT1_ErrStat:9 TT1_Errors errors %.0lf
@@ -55,7 +55,7 @@ ROWS 8
   1 TT2_CtrlOT:TT2_ErrStat:2 TT2_Errors errors %.0lf
   1 TT2_PwrFail:TT2_ErrStat:3 TT2_Errors errors %.0lf
   1 TT2_AuxFail:TT2_ErrStat:4 TT2_Errors errors %.0lf
-  1 TT2_OverVTT2_ErrStat:5 TT2_Errors errors %.0lf
+  1 TT2_OverV:TT2_ErrStat:5 TT2_Errors errors %.0lf
   1 TT2_Short:TT2_ErrStat:6 TT2_Errors errors %.0lf
   1 TT2_OverLoad:TT2_ErrStat:7 TT2_Errors errors %.0lf
   1 TT2_LowBatt:TT2_ErrStat:9 TT2_Errors errors %.0lf
@@ -81,7 +81,7 @@ ROWS 8
   1 TT3_CtrlOT:TT3_ErrStat:2 TT3_Errors errors %.0lf
   1 TT3_PwrFail:TT3_ErrStat:3 TT3_Errors errors %.0lf
   1 TT3_AuxFail:TT3_ErrStat:4 TT3_Errors errors %.0lf
-  1 TT3_OverVTT3_ErrStat:5 TT3_Errors errors %.0lf
+  1 TT3_OverV:TT3_ErrStat:5 TT3_Errors errors %.0lf
   1 TT3_Short:TT3_ErrStat:6 TT3_Errors errors %.0lf
   1 TT3_OverLoad:TT3_ErrStat:7 TT3_Errors errors %.0lf
   1 TT3_LowBatt:TT3_ErrStat:9 TT3_Errors errors %.0lf
