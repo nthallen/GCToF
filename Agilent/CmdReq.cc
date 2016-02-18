@@ -240,7 +240,8 @@ TT_rep_status_t command_request::process_reply(uint8_t *rep, unsigned nb) {
       case 0x34: // Out of range
         error_msg = "Out of range"; break;
       case 0x35: // Win Disabled
-        error_msg = "Win Disabled"; break;
+        return TT_rep_win_disabled;
+        // error_msg = "Win Disabled"; break;
       case 0x30: // '0' of a logical read
       case 0x31: // '1' of a logical read
         break;
