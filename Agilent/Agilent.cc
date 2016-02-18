@@ -35,7 +35,7 @@ void enqueue_polls(TwisTorr *TT, TwisTorr_t *TT_TM) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V0.1.28" );
+  nl_error( 0, "Starting V0.1.29" );
   { Selector Loop;
     TwisTorr_t TT_TM;
     for (unsigned drv = 0; drv < N_TWISTORR_DRIVES; ++drv) {
