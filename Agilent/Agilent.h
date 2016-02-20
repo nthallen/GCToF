@@ -42,7 +42,7 @@
     #include <queue>
     #include <deque>
 
-    enum TT_rep_status_t { TT_rep_ok, TT_rep_incomplete, TT_rep_error };
+    enum TT_rep_status_t { TT_rep_ok, TT_rep_incomplete, TT_rep_error, TT_rep_win_disabled };
     enum CmdRestrictions_t { CR_none, CR_write_in_stop, CR_read_in_start };
     
     // Command Request Object

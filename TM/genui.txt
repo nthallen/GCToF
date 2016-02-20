@@ -160,7 +160,9 @@ ROWS 8
  10 Hex_P IonGauge P
  10 ToF_P IonGauge P
  10 IG_stale IonGauge Stale
- 10 IG_stat IonGauge Stat
+ 10 IG_PRESENT:IG_stat:0 IonGauge Stat
+ 10 IG_HEX_P_FRESH:IG_stat:1 IonGauge Stat
+ 10 IG_TOF_P_FRESH:IG_stat:2 IonGauge Stat
 
  10 Sonic1_U Sonic1 Winds
  10 Sonic1_V Sonic1 Winds

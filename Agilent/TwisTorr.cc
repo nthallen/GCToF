@@ -156,7 +156,9 @@ int TwisTorr::ProcessData(int flag) {
           return 0;
         }
       } else {
-        switch (pending->process_reply(&buf[cp+pending->req_sz], nc-cp-pending->req_sz)) {
+        command_request *enbl_remote;
+        switch (pending->process_reply(&buf[cp+pending->req_sz],
+                    nc-cp-pending->req_sz)) {
           case TT_rep_ok:
             nl_error(MSG_DBG(1), "Reply received OK");
             report_ok();
@@ -185,6 +187,19 @@ int TwisTorr::ProcessData(int flag) {
               return 0;
             }
             break;
+          case TT_rep_win_disabled:
+            nl_error(2,"Window Disabled on drive %d:%d %s", pending->drive,
+              pending->window, pending->read ? "read" : "write");
+            enbl_remote = new_command_req();
+            if (enbl_remote->init(pending->drive, 8, false,
+                  (const uint8_t*)"0")) {
+              free_command(enbl_remote);
+            } else {
+              enqueue_command(enbl_remote);
+              enqueue_command(pending);
+              pending = 0;
+            }
+            break;
           case TT_rep_error:
             report_err("%s: req was: %s", pending->error_msg, pending->ascii_escape());
             break;
@@ -193,7 +208,8 @@ int TwisTorr::ProcessData(int flag) {
         }
         if (nl_debug_level < MSG_DBG(2)) report_ok(); // Temporary error suppression suppression
       }
-      free_command(pending);
+      if (pending)
+        free_command(pending);
       pending = 0;
       TO.Clear();
       consume(nc);
