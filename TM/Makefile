@@ -1,4 +1,4 @@
-# Makefile Generated Mon Feb 15 10:11:58 EST 2016
+# Makefile Generated Mon Feb 15 16:01:06 PST 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
@@ -27,7 +27,7 @@ TGT=GCToFdisp GCToFdispnc GCToFalgo GCToFengext doit GCToFclt
 TGT+=GCToFcltnc GCToFsrvr GCToFcol
 DISTRIB=../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
 DISTRIB+=../IonGauge/IonGauge ../Zaber/zaber ../Sonic/sonic
-DISTRIB+=../UPS/ups ../Zeno/zeno GCToF.pcm tm.dac
+DISTRIB+=../UPS/ups ../Zeno/Zeno_Ser GCToF.pcm tm.dac
 IDISTRIB=Experiment.config VERSION doit
 SRCDIST=GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl GCToF.tma types.tmc
 SRCDIST+=/usr/local/share/huarp/tmdf.tmc
