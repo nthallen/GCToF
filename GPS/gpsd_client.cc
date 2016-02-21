@@ -1,126 +1,337 @@
 #include <stdio.h>
 #include <errno.h>
 #include <stdlib.h>
+#include <string.h>
 #include "gps.h"
+#include "gpsd_client.h"
+#include "nortlib.h"
 
-extern void libgps_dump_state(struct gps_data_t *collect);
+const char *gpsd_remote_node;
+const char *gpsd_remote_exp;
 
-int main(int argc, char **argv) {
-  struct gps_data_t gpsdata;
-  int rc, i;
+void gpsd_init_options( int argc, char **argv) {
+  int c;
 
-  rc = gps_open("127.0.0.1", "2947", &gpsdata);
-  if (rc < 0) {
-    fprintf(stderr, "gps_open() returned error '%s'\n",
-      gps_errstr(errno));
-    exit(1);
-  }
-  gps_stream(&gpsdata, WATCH_ENABLE | WATCH_JSON, NULL);
-  for (i=0; i < 25; ++i) {
-    if (gps_waiting(&gpsdata, 2000000)) {
-      errno = 0;
-      if (gps_read(&gpsdata) == -1) {
-        fprintf(stderr, "gps_read() returned error '%s'\n",
-          gps_errstr(errno));
-      } else {
-        /* Display data from the GPS receiver */
-        // fprintf(stdout, "Received something\n");
-        libgps_dump_state(&gpsdata);
-      }
-    } else {
-      fprintf(stderr, "gps_waiting() returned false, so timeout or error\n");
-      fprintf(stderr, "  error code was '%s'\n", gps_errstr(errno));
-      exit(1);
+  optind = OPTIND_RESET; /* start from the beginning */
+  opterr = 0; /* disable default error message */
+  while ((c = getopt(argc, argv, opt_string)) != -1) {
+    switch (c) {
+      case 'n':
+        gpsd_remote_node = optarg;
+        break;
+      case 'e':
+        gpsd_remote_exp = optarg;
+        break;
+      case '?':
+        nl_error(3, "Unrecognized Option -%c", optopt);
     }
   }
-  gps_stream(&gpsdata, WATCH_DISABLE, NULL);
-  gps_close(&gpsdata);
-  exit(0);
 }
 
-void libgps_dump_state(struct gps_data_t *collect) {
-    FILE *debugfp = stdout;
-    /* no need to dump the entire state, this is a sanity check */
-#ifndef USE_QT
-    /* will fail on a 32-bit machine */
-    (void)fprintf(debugfp, "flags: (0x%04x) %s\n",
-		  (unsigned int)collect->set, gps_maskdump(collect->set));
-#endif
-    if (collect->set & ONLINE_SET)
-	(void)fprintf(debugfp, "ONLINE: %lf\n", collect->online);
-    if (collect->set & TIME_SET)
-	(void)fprintf(debugfp, "TIME: %lf\n", collect->fix.time);
-    if (collect->set & LATLON_SET)
-	(void)fprintf(debugfp, "LATLON: lat/lon: %lf %lf\n",
-		      collect->fix.latitude, collect->fix.longitude);
-    if (collect->set & ALTITUDE_SET)
-	(void)fprintf(debugfp, "ALTITUDE: altitude: %lf  U: climb: %lf\n",
-		      collect->fix.altitude, collect->fix.climb);
-    if (collect->set & SPEED_SET)
-	(void)fprintf(debugfp, "SPEED: %lf\n", collect->fix.speed);
-    if (collect->set & TRACK_SET)
-	(void)fprintf(debugfp, "TRACK: track: %lf\n", collect->fix.track);
-    if (collect->set & CLIMB_SET)
-	(void)fprintf(debugfp, "CLIMB: climb: %lf\n", collect->fix.climb);
-    if (collect->set & STATUS_SET) {
-	const char *status_values[] = { "NO_FIX", "FIX", "DGPS_FIX" };
-	(void)fprintf(debugfp, "STATUS: status: %d (%s)\n",
-		      collect->status, status_values[collect->status]);
-    }
-    if (collect->set & MODE_SET) {
-	const char *mode_values[] = { "", "NO_FIX", "MODE_2D", "MODE_3D" };
-	(void)fprintf(debugfp, "MODE: mode: %d (%s)\n",
-		      collect->fix.mode, mode_values[collect->fix.mode]);
-    }
-    if (collect->set & DOP_SET)
-	(void)fprintf(debugfp,
-		      "DOP: satellites %d, pdop=%lf, hdop=%lf, vdop=%lf\n",
-		      collect->satellites_used, collect->dop.pdop,
-		      collect->dop.hdop, collect->dop.vdop);
-    if (collect->set & VERSION_SET)
-	(void)fprintf(debugfp, "VERSION: release=%s rev=%s proto=%d.%d\n",
-		      collect->version.release,
-		      collect->version.rev,
-		      collect->version.proto_major,
-		      collect->version.proto_minor);
-    if (collect->set & POLICY_SET)
-	(void)fprintf(debugfp,
-		      "POLICY: watcher=%s nmea=%s raw=%d scaled=%s timing=%s, split24=%s pps=%s, devpath=%s\n",
-		      collect->policy.watcher ? "true" : "false",
-		      collect->policy.nmea ? "true" : "false",
-		      collect->policy.raw,
-		      collect->policy.scaled ? "true" : "false",
-		      collect->policy.timing ? "true" : "false",
-		      collect->policy.split24 ? "true" : "false",
-		      collect->policy.pps ? "true" : "false",
-		      collect->policy.devpath);
-    if (collect->set & SATELLITE_SET) {
-	struct satellite_t *sp;
+gpsd_TM::gpsd_TM(gpsd_tm_t *data, const char *remnode,
+    const char *remexp)
+  : Selectee() {
+  TMid = 0;
+  remote = 0;
+  init(data, remnode, remexp);
+}
 
-	(void)fprintf(debugfp, "SKY: satellites in view: %d\n",
-		      collect->satellites_visible);
-	for (sp = collect->skyview;
-	     sp < collect->skyview + collect->satellites_visible;
-	     sp++) {
-	    (void)fprintf(debugfp, "    %2.2d: %2.2d %3.3d %3.0f %c\n",
-			  sp->PRN, sp->elevation,
-			  sp->azimuth, sp->ss,
-			  sp->used ? 'Y' : 'N');
-	}
-    }
-    if (collect->set & DEVICE_SET)
-	(void)fprintf(debugfp, "DEVICE: Device is '%s', driver is '%s'\n",
-		      collect->dev.path, collect->dev.driver);
-    if (collect->set & DEVICELIST_SET) {
-	int i;
-	(void)fprintf(debugfp, "DEVICELIST:%d devices:\n",
-		      collect->devices.ndevices);
-	for (i = 0; i < collect->devices.ndevices; i++) {
-	    (void)fprintf(debugfp, "%d: path='%s' driver='%s'\n",
-			  collect->devices.ndevices,
-			  collect->devices.list[i].path,
-			  collect->devices.list[i].driver);
-	}
-    }
+gpsd_TM::gpsd_TM() : Selectee() {
+  TMid = 0;
+  remote = 0;
+}
 
+void gpsd_TM::init(gpsd_tm_t *data, const char *remnode,
+    const char *remexp) {
+  if (remnode || remexp) {
+    int nb;
+    remote = nl_new_memory(PATH_MAX);
+    if (remexp == 0) {
+      nb = snprintf(remote, PATH_MAX, "/net/%s%s", remnode,
+        tm_dev_name(GPSD_TM_NAME));
+    } else {
+      if (remnode) {
+        nb = snprintf(remote, PATH_MAX, "/net/%s/dev/huarp/%s/DG/data/%s",
+          remnode, remexp, GPSD_TM_NAME);
+      } else {
+        nb = snprintf(remote, PATH_MAX, "/dev/huarp/%s/DG/data/%s", remexp,
+          GPSD_TM_NAME);
+      }
+    }
+    if (nb >= PATH_MAX)
+      nl_error(3, "Constructed path for remote experiment exceeds limit");
+  }
+  TM_data = data;
+  Connect();
+}
+
+/**
+ * Failure of the local connection is considered fatal.
+ */
+void gpsd_TM::Connect() {
+  int save_response = set_response(remote ? 0 : nl_response);
+  TMid = Col_send_init( remote ? remote : GPSD_TM_NAME, data, sizeof(gpsd_tm_t), 0 );
+  if ( TMid ) {
+    TO.Clear();
+    fd = TMid->fd;
+    flags = Selector::Sel_Write;
+    if (remote) {
+      nl_error(0, "TM connection established to %s", remote);
+    }
+  } else {
+    nl_error(MSG_DEBUG(0), "TM connection failed to %s", remote);
+    TO.Set(10,0);
+    flags = Selector::Sel_Timeout;
+  }
+  set_response(save_response);
+}
+
+/**
+ * Issues Col_send_reset()
+ */
+gpsd_TM::~gpsd_TM() {
+  if (TMid) {
+    Col_send_reset(TMid);
+    TMid = 0;
+    fd = -1;
+  }
+}
+
+/**
+ * Calls Col_send() and sets gflag(0)
+ */
+int gpsd_TM::ProcessData(int flag) {
+  if (TMid == 0) {
+    Connect(); // Will either set TMid or TO
+  }
+  if (TMid) {
+    if (Col_send(TMid)) {
+      if (Col_send_reset(TMid)) {
+        nl_error(3, "Error closing %s TM connection: %s",
+          remote_node ? "remote" : "local", strerror(errno));
+      }
+      TMid = 0;
+      fd = -1;
+      if (remote) {
+        TO.Set(10,0);
+        flags = Selector::Sel_Timeout;
+        return 0;
+      } else {
+        flags = 0;
+        nl_error(0, "Connection to local TM closed");
+        return 1;
+      }
+    }
+    if (remote) {
+      TM_data->data2_status = 0;
+      TM_data->err2_state = 0;
+    } else {
+      TM_data->data_status = 0;
+      TM_data->err_status = 0;
+    }
+  }
+  return 0;
+}
+
+Timeout *gpsd_TM::GetTimeout() {
+  return &TO;
+}
+    
+gpsd_client::gpsd_client(gps_tm_t *data) : Selectee() {
+  TM_data = data;
+  //Open connection to gpsd and set fd accordingly
+  rc = gps_open("127.0.0.1", "2947", &gpsdata);
+  if (rc < 0) {
+    nl_error(3, "gps_open() returned error '%s'",
+      gps_errstr(errno));
+  }
+  gps_stream(&gpsdata, WATCH_ENABLE | WATCH_JSON, NULL);
+  fd = gpsdata->gps_fd;
+  flags = Selector::Sel_Read;
+  total_error_count = 0;
+  consecutive_error_count = 0;
+  errors_suppressed = false;
+}
+
+gpsd_client::~gpsd_client() {
+  nl_error(0, "Closing connection to gpsd");
+  gps_stream(&gpsdata, WATCH_DISABLE, NULL);
+  gps_close(&gpsdata);
+}
+
+void gpsd_client::set_data_bit(unsigned bit) {
+  TM_data->data_status |= bit;
+  TM_data->data2_status |= bit;
+}
+
+void gpsd_client::set_error_bit(unsigned bit) {
+  TM_data->err_status |= bit;
+  TM_data->err2_status |= bit;
+}
+
+int gpsd_client::ProcessData(int flag) {
+  int rc, i;
+
+  errno = 0;
+  if (gps_read(&gpsdata) == -1) {
+    ++total_error_count;
+    if (!errors_suppressed) {
+      if (total_error_count >= total_error_limit ) {
+        nl_error(2, "Errors suppressed");
+        errors_suppressed = true;
+      } else {
+        nl_error(2, "gps_read() returned error '%s'",
+          gps_errstr(errno));
+      }
+    }
+    if (++consecutive_error_count > consecutive_error_limit) {
+      nl_error(3, "Consecutive Error limit exceeded");
+    }
+  } else {
+    consecutive_error_count = 0;
+    if (errors_suppressed) {
+      if (total_error_count > 0) {
+        --total_error_count;
+      }
+      if (total_error_count == 0) {
+        errors_suppressed = false;
+      }
+    }
+    if (gpsdata.set & PACKET_SET) set_data_bit(DATA_PACKET);
+    if (gpsdata.set & TIME_SET) {
+      TM_data->time = gpsdata.fix.time;
+      set_data_bit(DATA_TIME);
+    }
+    if (gpsdata.set & TIMERR_SET) {
+      TM_data->ept = gpsdata.fix.ept;
+      set_error_bit(ERR_TIME);
+    }
+    if (gpsdata.set & LATLON_SET) {
+      set_data_bit(DATA_LATLON);
+      TM_data->lat = gpsdata.fix.latitude;
+      TM_data->lon = gpsdata.fix.longitude;
+    }
+    if (gpsdata.set & HERR_SET) {
+      TM_data->epx = gpsdata.fix.epx;
+      TM_data->epy = gpsdata.fix.epy;
+      set_error_bit(ERR_HERR);
+    }
+    if (gpsdata.set & ALTITUDE_SET) {
+      set_data_bit(DATA_ALT);
+      TM_data->alt = gpsdata.fix.altitude;
+    }
+    if (gpsdata.set & VERR_SET) {
+      TM_data->epv = gpsdata.fix.epv;
+      set_error_bit(ERR_VERR);
+    }
+    if (gpsdata.set & SPEED_SET) {
+      set_data_bit(DATA_SPEED);
+      TM_data->speed = gpsdata.fix.speed;
+    }
+    if (gpsdata.set & SPEEDERR_SET) {
+      TM_data->eps = gpsdata.fix.eps;
+      set_error_bit(ERR_SPEEDERR);
+    }
+    if (gpsdata.set & TRACK_SET) {
+      set_data_bit(DATA_TRACK);
+      TM_data->track = gpsdata.fix.track;
+    }
+    if (gpsdata.set & TRACKERR_SET) {
+      TM_data->epd = gpsdata.fix.epd;
+      set_error_bit(ERR_TRACKERR);
+    }
+    if (gpsdata.set & CLIMB_SET) {
+      set_data_bit(DATA_CLIMB);
+      TM_data->climb = gpsdata.fix.climb;
+    }
+    if (gpsdata.set & CLIMBERR_SET) {
+      TM_data->epc = gpsdata.fix.epc;
+      set_error_bit(ERR_CLIMBERR);
+    }
+    if (gpsdata.set & STATUS_SET) {
+      set_data_bit(DATA_STATUS);
+      // TM_data->status = gpsdata.status;
+    }
+    if (gpsdata.set & MODE_SET) {
+      set_data_bit(DATA_MODE);
+      TM_data->mode = gpsdata.fix.mode;
+    }
+    if (gpsdata.set & DOP_SET) {
+      set_data_bit(DATA_DOP);
+      TM_data->satellites_used = gpsdata.satellites_used;
+    }
+    if (gpsdata.set & VERSION_SET) {
+      nl_error(0, "VERSION: release=%s rev=%s proto=%d.%d\n",
+                gpsdata.version.release,
+                gpsdata.version.rev,
+                gpsdata.version.proto_major,
+                gpsdata.version.proto_minor);
+    }
+    // if (gpsdata.set & POLICY_SET)
+    //   nl_error(0,
+    //        "POLICY: watcher=%s nmea=%s raw=%d scaled=%s timing=%s, split24=%s pps=%s, devpath=%s\n",
+    //        gpsdata.policy.watcher ? "true" : "false",
+    //        gpsdata.policy.nmea ? "true" : "false",
+    //        gpsdata.policy.raw,
+    //        gpsdata.policy.scaled ? "true" : "false",
+    //        gpsdata.policy.timing ? "true" : "false",
+    //        gpsdata.policy.split24 ? "true" : "false",
+    //        gpsdata.policy.pps ? "true" : "false",
+    //        gpsdata.policy.devpath);
+    if (gpsdata.set & SATELLITE_SET) {
+      set_data_bit(DATA_SATS);
+      TM_data->satellites_visible = gpsdata.satellites_visible;
+    }
+    // if (gpsdata.set & DEVICE_SET)
+    //   nl_error(0, "DEVICE: Device is '%s', driver is '%s'\n",
+    //        gpsdata.dev.path, gpsdata.dev.driver);
+    //  if (gpsdata.set & DEVICELIST_SET) {
+    //    int i;
+    //    nl_error(0, "DEVICELIST:%d devices:\n",
+    //              gpsdata.devices.ndevices);
+    //    for (i = 0; i < gpsdata.devices.ndevices; i++) {
+    //        nl_error(0, "%d: path='%s' driver='%s'\n",
+    //              gpsdata.devices.ndevices,
+    //              gpsdata.devices.list[i].path,
+    //              gpsdata.devices.list[i].driver);
+    //    }
+    //  }
+    if (gpsdata.set & (TOFF_SET|PPS_SET) {
+      TM_data->real_sec = gpsdata.pps.real.tv_sec;
+      TM_data->real_nsec = gpsdata.pps.real.tv_nsec;
+      TM_data->clock_sec = gpsdata.pps.clock.tv_sec;
+      TM_data->clock_nsec = gpsdata.pps.clock.tv_nsec;
+      if (gpsdata.set & TOFF_SET) set_data_bit(DATA_TOFF);
+      if (gpsdata.set & PPS_SET) set_data_bit(DATA_PPS);
+    }
+    if (gpsdata.set & ERROR_SET) {
+      nl_error(2, "JSON Error: %s", gpsdata.error);
+      set_error_bit(ERR_ERROR);
+    }
+  }
+  return 0;
+}
+
+int main(int argc, char **argv) {
+  oui_init_options(argc, argv);
+  nl_error(0, "Starting V0.1");
+  { Selector Loop;
+    gpsd_tm_t GPSData;
+    memset(&GPSData,0,sizeof(GPSData));
+    gpsd_client GPS(&GPSData);
+    gpsd_TM TM(&GPSData);
+    Cmd_Selectee Cmd;
+    gpsd_TM *TM2 = 0;
+    
+    Loop.add_child(&GPS);
+    Loop.add_child(&TM);
+    Loop.add_child(&Cmd);
+    if (gpsd_remote_node || gpsd_remote_exp) {
+      TM2 = new gpsd_TM(&GPSData, gpsd_remote_node, gpsd_remote_exp);
+      Loop.add_child(TM2);
+    }
+    Loop.event_loop();
+    delete(TM2); // This is the only dynamically allocated one
+  }
+  nl_error(0, "Terminating");
 }

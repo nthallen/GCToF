@@ -22,13 +22,15 @@
     unsigned long clock_sec;
     unsigned long clock_nsec;
     unsigned short data_status;
+    unsigned short data2_status;
     unsigned char err_status;
+    unsigned char err2_status;
     unsigned char mode; // 0-3
     unsigned char satellites_visible; // was int, but srsly?
     unsigned char satellites_used; // was 
   } gpsd_tm_t;
 
-  /* Values for data_status: */
+  /* Values for data_status and data2_status: */
   #define DATA_PACKET (1<<0) // PACKET_SET
   #define DATA_STATUS (1<<1) // STATUS_SET
   #define DATA_TIME   (1<<2) // TIME_SET
@@ -43,7 +45,7 @@
   #define DATA_TOFF   (1<<11) // TOFF_SET (real_*, clock_*)
   #define DATA_PPS    (1<<12) // PPS_SET (real_*, clock_*)
   
-  /* Values for err_status: */
+  /* Values for err_status and err2_status: */
   #define ERR_TIME    (1<<0) // TIMERR_SET (time)
   #define ERR_HERR    (1<<1) // HERR_SET (epx, epy)
   #define ERR_VERR    (1<<2) // VERR_SET (epv)

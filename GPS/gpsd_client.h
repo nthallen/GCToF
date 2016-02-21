@@ -11,38 +11,57 @@
   #ifdef __cplusplus
     };
   #endif
+  
+  extern const char *gpsd_remote_node;
+  extern const char *gpsd_remote_exp;
 
   #ifdef __cplusplus
     #include "SerSelector.h"
 
-    class gpsd_TM : public TM_Selectee {
+    class gpsd_TM : public Selectee {
       public:
+        gpsd_TM(gpsd_tm_t *data, const char *remnode = 0,
+          const char *remexp = 0);
         gpsd_TM();
         ~gpsd_TM();
-        void init(const char *name, void *data, unsigned short size); // hook to save TM_data
-        int ProcessData(int flag); // hook to clear status
-      private:
-        struct gpsd_data_t *TM_data;
-    };
-    
-    class gpsd_client : public Ser_Sel {
-      public:
-        gpsd_client(gpsd_data_t *data);
-        ~gpsd_client();
+        void init(gpsd_tm_t *data, const char *remnode,
+          const char *remexp);
+        int Connect();
         int ProcessData(int flag);
         Timeout *GetTimeout();
-      private:
-        static const unsigned tm_gflag = 0;
-        static const unsigned cmd_gflag = 1;
-        gpsd_data_t *TM_data;
+      protected:
+        send_id TMid;
+        static const char GPSD_TM_NAME[] = "GPSD";
+        const char *remote;
+        gpsd_tm_t *TM_data;
         Timeout TO;
     };
     
+    class gpsd_client : public Selectee {
+      public:
+        gpsd_client(gpsd_tm_t *data);
+        ~gpsd_client();
+        int ProcessData(int flag);
+      private:
+        void set_data_bit(unsigned bit);
+        void set_error_bit(unsigned bit);
+        gps_tm_t *TM_data;
+        struct gps_data_t gpsdata;
+        int consecutive_error_count;
+        int total_error_count;
+        bool errors_suppressed;
+        static const int consecutive_error_limit = 10;
+        static const int total_error_limit = 50;
+    };
+    
+    // I will try not to use this
     class gpsd_cmd : public Cmd_Selectee {
       public:
-        gpsd_cmd();
+        gpsd_cmd(int gf);
         ~gpsd_cmd();
         int ProcessData(int flag); // set cmd_gflag instead of quitting immediately and clear read flags
+      private:
+        int cmd_gflag;
     };
   #endif // __cplusplus
 #endif
