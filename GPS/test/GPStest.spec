@@ -12,6 +12,7 @@ colbase = ../TM/gpsd_col.tmc
 SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/GPStest
 DISTRIB = ../gpsd_client
+OBJ = GPStest.tbl
 
 GPStestdisp : ../TM/gpsd_conv.tmc GPStest.tbl
 GPStestext : GPStesteng.cdf
@@ -19,7 +20,7 @@ GPStestext : GPStesteng.cdf
 %%
 CPPFLAGS += -I ../
 GENUISRCS = genui.txt
-GENUISRCS += ../gpsd.genui
+GENUISRCS += ../TM/gpsd.genui
 
 GPStest.tbl : ../TM/gpsd.tbl GPStest_foot.tbl
 	cat ../TM/gpsd.tbl GPStest_foot.tbl >GPStest.tbl

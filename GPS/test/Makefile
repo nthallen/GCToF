@@ -1,12 +1,12 @@
-# Makefile Generated Sun Feb 21 17:29:49 EST 2016
+# Makefile Generated Sun Feb 21 18:13:41 EST 2016
 MNC=GPStest
 SPECFILE=GPStest.spec
 PCMFILE=GPStest.pcm
 SRC=GPStest.tmc GPStest.tbl GPStesteng.cdf
 TOOL=GPStest.spec Makefile
 SCRIPT=interact
-OBJ=GPStesttbl.tmc GPStestdisp.cc GPStestdispoui.c GPStestdispoui.o
-OBJ+=GPStestdisp.o GPStesttblnc.tmc GPStestdispnc.cc
+OBJ=GPStest.tbl GPStesttbl.tmc GPStestdisp.cc GPStestdispoui.c
+OBJ+=GPStestdispoui.o GPStestdisp.o GPStesttblnc.tmc GPStestdispnc.cc
 OBJ+=GPStestdispncoui.c GPStestdispncoui.o GPStestdispnc.o
 OBJ+=GPStestextcdf.oui GPStestengext.tmc GPStestext.cc
 OBJ+=GPStestextoui.c GPStestextoui.o GPStestext.o GPStestcmd.cc
@@ -140,7 +140,7 @@ clean : tidy
 	@for i in $(OBJECT) $(TARGET); do echo "$$i"; done >.cvsignore
 CPPFLAGS += -I ../
 GENUISRCS = genui.txt
-GENUISRCS += ../gpsd.genui
+GENUISRCS += ../TM/gpsd.genui
 
 GPStest.tbl : ../TM/gpsd.tbl GPStest_foot.tbl
 	cat ../TM/gpsd.tbl GPStest_foot.tbl >GPStest.tbl
