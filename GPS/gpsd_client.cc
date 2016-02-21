@@ -5,9 +5,11 @@
 #include "gps.h"
 #include "gpsd_client.h"
 #include "nortlib.h"
+#include "oui.h"
 
 const char *gpsd_remote_node;
 const char *gpsd_remote_exp;
+const char *gpsd_TM::GPSD_TM_NAME = "GPSD";
 
 void gpsd_init_options( int argc, char **argv) {
   int c;
@@ -45,21 +47,22 @@ void gpsd_TM::init(gpsd_tm_t *data, const char *remnode,
     const char *remexp) {
   if (remnode || remexp) {
     int nb;
-    remote = nl_new_memory(PATH_MAX);
+    char *rmt = (char *)nl_new_memory(PATH_MAX);
     if (remexp == 0) {
-      nb = snprintf(remote, PATH_MAX, "/net/%s%s", remnode,
+      nb = snprintf(rmt, PATH_MAX, "/net/%s%s", remnode,
         tm_dev_name(GPSD_TM_NAME));
     } else {
       if (remnode) {
-        nb = snprintf(remote, PATH_MAX, "/net/%s/dev/huarp/%s/DG/data/%s",
+        nb = snprintf(rmt, PATH_MAX, "/net/%s/dev/huarp/%s/DG/data/%s",
           remnode, remexp, GPSD_TM_NAME);
       } else {
-        nb = snprintf(remote, PATH_MAX, "/dev/huarp/%s/DG/data/%s", remexp,
+        nb = snprintf(rmt, PATH_MAX, "/dev/huarp/%s/DG/data/%s", remexp,
           GPSD_TM_NAME);
       }
     }
     if (nb >= PATH_MAX)
       nl_error(3, "Constructed path for remote experiment exceeds limit");
+    remote = (const char *)rmt;
   }
   TM_data = data;
   Connect();
@@ -70,7 +73,8 @@ void gpsd_TM::init(gpsd_tm_t *data, const char *remnode,
  */
 void gpsd_TM::Connect() {
   int save_response = set_response(remote ? 0 : nl_response);
-  TMid = Col_send_init( remote ? remote : GPSD_TM_NAME, data, sizeof(gpsd_tm_t), 0 );
+  TMid = Col_send_init( remote ? remote : GPSD_TM_NAME, TM_data,
+    sizeof(gpsd_tm_t), 0 );
   if ( TMid ) {
     TO.Clear();
     fd = TMid->fd;
@@ -79,7 +83,7 @@ void gpsd_TM::Connect() {
       nl_error(0, "TM connection established to %s", remote);
     }
   } else {
-    nl_error(MSG_DEBUG(0), "TM connection failed to %s", remote);
+    nl_error(MSG_DBG(0), "TM connection failed to %s", remote);
     TO.Set(10,0);
     flags = Selector::Sel_Timeout;
   }
@@ -108,7 +112,7 @@ int gpsd_TM::ProcessData(int flag) {
     if (Col_send(TMid)) {
       if (Col_send_reset(TMid)) {
         nl_error(3, "Error closing %s TM connection: %s",
-          remote_node ? "remote" : "local", strerror(errno));
+          remote ? "remote" : "local", strerror(errno));
       }
       TMid = 0;
       fd = -1;
@@ -124,7 +128,7 @@ int gpsd_TM::ProcessData(int flag) {
     }
     if (remote) {
       TM_data->data2_status = 0;
-      TM_data->err2_state = 0;
+      TM_data->err2_status = 0;
     } else {
       TM_data->data_status = 0;
       TM_data->err_status = 0;
@@ -137,16 +141,16 @@ Timeout *gpsd_TM::GetTimeout() {
   return &TO;
 }
     
-gpsd_client::gpsd_client(gps_tm_t *data) : Selectee() {
+gpsd_client::gpsd_client(gpsd_tm_t *data) : Selectee() {
   TM_data = data;
   //Open connection to gpsd and set fd accordingly
-  rc = gps_open("127.0.0.1", "2947", &gpsdata);
+  int rc = gps_open("127.0.0.1", "2947", &gpsdata);
   if (rc < 0) {
     nl_error(3, "gps_open() returned error '%s'",
       gps_errstr(errno));
   }
   gps_stream(&gpsdata, WATCH_ENABLE | WATCH_JSON, NULL);
-  fd = gpsdata->gps_fd;
+  fd = gpsdata.gps_fd;
   flags = Selector::Sel_Read;
   total_error_count = 0;
   consecutive_error_count = 0;
@@ -170,8 +174,6 @@ void gpsd_client::set_error_bit(unsigned bit) {
 }
 
 int gpsd_client::ProcessData(int flag) {
-  int rc, i;
-
   errno = 0;
   if (gps_read(&gpsdata) == -1) {
     ++total_error_count;
@@ -230,7 +232,7 @@ int gpsd_client::ProcessData(int flag) {
     }
     if (gpsdata.set & SPEEDERR_SET) {
       TM_data->eps = gpsdata.fix.eps;
-      set_error_bit(ERR_SPEEDERR);
+      set_error_bit(ERR_SPEED);
     }
     if (gpsdata.set & TRACK_SET) {
       set_data_bit(DATA_TRACK);
@@ -238,7 +240,7 @@ int gpsd_client::ProcessData(int flag) {
     }
     if (gpsdata.set & TRACKERR_SET) {
       TM_data->epd = gpsdata.fix.epd;
-      set_error_bit(ERR_TRACKERR);
+      set_error_bit(ERR_TRACK);
     }
     if (gpsdata.set & CLIMB_SET) {
       set_data_bit(DATA_CLIMB);
@@ -246,7 +248,7 @@ int gpsd_client::ProcessData(int flag) {
     }
     if (gpsdata.set & CLIMBERR_SET) {
       TM_data->epc = gpsdata.fix.epc;
-      set_error_bit(ERR_CLIMBERR);
+      set_error_bit(ERR_CLIMB);
     }
     if (gpsdata.set & STATUS_SET) {
       set_data_bit(DATA_STATUS);
@@ -296,7 +298,7 @@ int gpsd_client::ProcessData(int flag) {
     //              gpsdata.devices.list[i].driver);
     //    }
     //  }
-    if (gpsdata.set & (TOFF_SET|PPS_SET) {
+    if (gpsdata.set & (TOFF_SET|PPS_SET)) {
       TM_data->real_sec = gpsdata.pps.real.tv_sec;
       TM_data->real_nsec = gpsdata.pps.real.tv_nsec;
       TM_data->clock_sec = gpsdata.pps.clock.tv_sec;

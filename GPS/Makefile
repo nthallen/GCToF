@@ -1,8 +1,10 @@
+include /usr/local/share/huarp/appgen.mk
+
 GPSOBJ=gpsd_client.o gpsdoui.o
 OBJECT=$(GPSOBJ) gpsdoui.c
 CXXFLAGS=-Wall -g
 CFLAGS=-Wall -g
-GPSD_LDFLAGS=-L gpsd -l gpsd
+GPSD_LDFLAGS=-lgps -lsocket
 
 TARGET=gpsd_client
 
@@ -18,4 +20,3 @@ gpsdoui.c : gpsd.oui
 clean :
 	rm -f $(OBJECT) $(TARGET)
 
-include /usr/local/share/huarp/appgen.mk

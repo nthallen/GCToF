@@ -26,12 +26,12 @@
         ~gpsd_TM();
         void init(gpsd_tm_t *data, const char *remnode,
           const char *remexp);
-        int Connect();
+        void Connect();
         int ProcessData(int flag);
         Timeout *GetTimeout();
       protected:
         send_id TMid;
-        static const char GPSD_TM_NAME[] = "GPSD";
+        static const char *GPSD_TM_NAME;
         const char *remote;
         gpsd_tm_t *TM_data;
         Timeout TO;
@@ -45,7 +45,7 @@
       private:
         void set_data_bit(unsigned bit);
         void set_error_bit(unsigned bit);
-        gps_tm_t *TM_data;
+        gpsd_tm_t *TM_data;
         struct gps_data_t gpsdata;
         int consecutive_error_count;
         int total_error_count;
