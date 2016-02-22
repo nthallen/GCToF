@@ -1,8 +1,11 @@
 gpsd1 {
-  { Mode:             HBox{ (gpsd_mode,3); (gpsd_mode_set,1)};
-    {Satellites: (gpsd_sats_set,1)}
-    Visible: (satellites_visible,3);
-    Used:       (satellites_used,3);
+  HBox {
+    { Satellites:;
+      Visible: HBox{(satellites_visible,3); (gpsd_sats_set,1)};
+      Used:    HBox{(satellites_used,3); (gpsd_dop_set,1)};
+    }; |; {
+      Mode:    HBox{ (gpsd_mode,3); (gpsd_mode_set,1)};
+    }
   };
   
   {HBox{ (gpsd_time,21); (gpsd_time_set,1) }
