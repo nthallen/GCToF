@@ -21,7 +21,7 @@ csv GPStesteng_1 26
   19 gpsd_real_sec 
   20 gpsd_speed 
   21 gpsd_stale 
-  22 gpsd_time 
+  22 gpsd_time %.9lf
   23 gpsd_track 
   24 satellites_used 
   25 satellites_visible 

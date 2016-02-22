@@ -1,6 +1,6 @@
 # gpsd.genui
   1 gpsd_mode gpsd mode
-  1 gpsd_time gpsd time
+  1 gpsd_time gpsd time %.9lf
   1 gpsd_ept gpsd_err time 
   1 gpsd_lat gpsd lat
   1 gpsd_epy gpsd_err dist
