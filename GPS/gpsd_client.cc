@@ -9,7 +9,7 @@
 
 const char *gpsd_remote_node;
 const char *gpsd_remote_exp;
-const char *gpsd_TM::GPSD_TM_NAME = "GPSD";
+const char *gpsd_TM::GPSD_TM_NAME = "gpsd_tm";
 
 void gpsd_init_options( int argc, char **argv) {
   int c;

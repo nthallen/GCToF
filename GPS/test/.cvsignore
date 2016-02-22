@@ -15,6 +15,7 @@ GPStestext.cc
 GPStestextoui.c
 GPStestextoui.o
 GPStestext.o
+doit.dep
 GPStestcmd.cc
 GPStestcmd.dat
 GPStestclt.o
@@ -36,6 +37,7 @@ GPStestcol.o
 GPStestdisp
 GPStestdispnc
 GPStestext
+doit
 GPStestclt
 GPStestcltnc
 GPStestsrvr

@@ -1,23 +1,24 @@
-# Makefile Generated Sun Feb 21 18:13:41 EST 2016
+# Makefile Generated Sun Feb 21 18:01:35 PST 2016
 MNC=GPStest
 SPECFILE=GPStest.spec
 PCMFILE=GPStest.pcm
-SRC=GPStest.tmc GPStest.tbl GPStesteng.cdf
+SRC=GPStest.tmc GPStest.tbl GPStesteng.cdf GPStest.doit
 TOOL=GPStest.spec Makefile
 SCRIPT=interact
 OBJ=GPStest.tbl GPStesttbl.tmc GPStestdisp.cc GPStestdispoui.c
 OBJ+=GPStestdispoui.o GPStestdisp.o GPStesttblnc.tmc GPStestdispnc.cc
 OBJ+=GPStestdispncoui.c GPStestdispncoui.o GPStestdispnc.o
 OBJ+=GPStestextcdf.oui GPStestengext.tmc GPStestext.cc
-OBJ+=GPStestextoui.c GPStestextoui.o GPStestext.o GPStestcmd.cc
-OBJ+=GPStestcmd.dat GPStestclt.o GPStestcltoui.c GPStestcltoui.o
-OBJ+=GPStestcltnc.o GPStestcltncoui.c GPStestcltncoui.o GPStestsrvr.o
-OBJ+=GPStestsrvroui.c GPStestsrvroui.o GPStestcol.cc GPStest.pcm
-OBJ+=tm.dac GPStestcoloui.c GPStestcoloui.o GPStestcol.o
-TGT=GPStestdisp GPStestdispnc GPStestext GPStestclt GPStestcltnc
-TGT+=GPStestsrvr GPStestcol
+OBJ+=GPStestextoui.c GPStestextoui.o GPStestext.o doit.dep
+OBJ+=GPStestcmd.cc GPStestcmd.dat GPStestclt.o GPStestcltoui.c
+OBJ+=GPStestcltoui.o GPStestcltnc.o GPStestcltncoui.c
+OBJ+=GPStestcltncoui.o GPStestsrvr.o GPStestsrvroui.c
+OBJ+=GPStestsrvroui.o GPStestcol.cc GPStest.pcm tm.dac
+OBJ+=GPStestcoloui.c GPStestcoloui.o GPStestcol.o
+TGT=GPStestdisp GPStestdispnc GPStestext doit GPStestclt
+TGT+=GPStestcltnc GPStestsrvr GPStestcol
 DISTRIB=../gpsd_client GPStest.pcm tm.dac
-IDISTRIB=Experiment.config VERSION
+IDISTRIB=Experiment.config VERSION doit
 SRCDIST=GPStest.tbl GPStest.tmc ../TM/gpsd.tmc
 SRCDIST+=/usr/local/share/huarp/cpu_usage.tmc
 SRCDIST+=/usr/local/share/huarp/flttime.tmc
@@ -70,6 +71,8 @@ GPStestdispnc : GPStestdispnc.o GPStestdispncoui.o
 GPStestext : GPStestext.o GPStestextoui.o
 	$(LINK.normCXX) GPStestext.o GPStestextoui.o -ltmpp -ltm -lnort
 	$(OUIUSE) GPStestextoui.c
+doit : GPStest.doit
+	mkdoit3 -o doit  GPStest.doit
 GPStestclt : GPStestclt.o GPStestcltoui.o
 	$(LINK.normCXX) GPStestclt.o GPStestcltoui.o -ltmph -lph -ltmpp -ltm -lnort
 	$(OUIUSE) GPStestcltoui.c
@@ -108,6 +111,9 @@ GPStestextoui.c : GPStestextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) GPStestextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GPStestextoui.o : GPStestextoui.c
 GPStestext.o : GPStestext.cc
+doit.dep : GPStest.doit
+	mkdoit3 -M -o doit  GPStest.doit
+-include doit.dep
 GPStestcmd.cc : /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd
 	$(CMDGEN) -d GPStestcmd.dat /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd
 GPStestclt.o : GPStestcmd.cc

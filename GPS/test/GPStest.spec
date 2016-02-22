@@ -16,6 +16,7 @@ OBJ = GPStest.tbl
 
 GPStestdisp : ../TM/gpsd_conv.tmc GPStest.tbl
 GPStestext : GPStesteng.cdf
+doit : GPStest.doit
 
 %%
 CPPFLAGS += -I ../
