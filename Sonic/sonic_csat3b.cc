@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <string.h>
 #include <ctype.h>
-#include "sonic.h"
+#include "sonic3b.h"
 #include "nortlib.h"
 #include "oui.h"
 
@@ -39,20 +39,20 @@ Sonic3B_TM::Sonic3B_TM(Sonic3BData_t *data)
 Sonic3B_TM::~Sonic3B_TM() {}
 
 void Sonic3B_TM::clear_TM() {
-  SonicData.U = 0.;
-  SonicData.V = 0.;
-  SonicData.W = 0.;
-  SonicData.C = 0.;
-  SonicData.N = 0;
-  SonicData.Status = 0;
+  SonicData->U = 0.;
+  SonicData->V = 0.;
+  SonicData->W = 0.;
+  SonicData->C = 0.;
+  SonicData->N = 0;
+  SonicData->Status = 0;
 }
 
 void Sonic3B_TM::finalize_avg( void ) {
-  if ( SonicData.N ) {
-    SonicData.U /= SonicData.N;
-    SonicData.V /= SonicData.N;
-    SonicData.W /= SonicData.N;
-    SonicData.C /= SonicData.N;
+  if ( SonicData->N ) {
+    SonicData->U /= SonicData->N;
+    SonicData->V /= SonicData->N;
+    SonicData->W /= SonicData->N;
+    SonicData->C /= SonicData->N;
   }
 }
 
@@ -156,14 +156,14 @@ int Sonic3B::ProcessData(int flag) {
         if (signature(&buf[cp0],cp1-cp0) != sig) {
           report_err("Invalid Signature");
         } else {
-          SonicData.U += Ux;
-          SonicData.V += Uy;
-          SonicData.W += Uz;
-          SonicData.C += Ts;
-          SonicData.Status |= DW;
-          ++SonicData.N;
+          SonicData->U += Ux;
+          SonicData->V += Uy;
+          SonicData->W += Uz;
+          SonicData->C += Ts;
+          SonicData->Status |= DW;
+          ++SonicData->N;
           if (RecCtr != RC) {
-            SonicData.Status |= CSAT3B_MISSED_REC;
+            SonicData->Status |= CSAT3B_MISSED_REC;
           }
           RecCtr = (RC+1) & 63;
         }
