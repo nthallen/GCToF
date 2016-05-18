@@ -1,0 +1,29 @@
+Sonic@Suffix@_labels {
+  U:;
+  V:;
+  W:;
+  C:;
+  N:;
+  S:;
+}
+
+Sonic@Suffix@_fields {
+  (Sonic@Suffix@_U,6);
+  (Sonic@Suffix@_V,6);
+  (Sonic@Suffix@_W,6);
+  (Sonic@Suffix@_C,6);
+  (Sonic@Suffix@_N,3);
+  (Sonic@Suffix@_S,4);
+}
+
+Sonic@Suffix@_units {
+  "m/s";
+  "m/s";
+  "m/s";
+  "m/s";
+}
+
+Sonic@Suffix@ {
+  HBox { Title: +-; "Sonic@Suffix@"; -+ };
+  [Sonic@Suffix@_labels] [Sonic@Suffix@_fields] [Sonic@Suffix@_units];
+}

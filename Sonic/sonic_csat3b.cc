@@ -4,7 +4,7 @@
 #include <errno.h>
 #include <string.h>
 #include <ctype.h>
-#include "sonic3b.h"
+#include "sonic3B.h"
 #include "nortlib.h"
 #include "oui.h"
 
@@ -42,7 +42,7 @@ void Sonic3B_TM::clear_TM() {
   SonicData->U = 0.;
   SonicData->V = 0.;
   SonicData->W = 0.;
-  SonicData->C = 0.;
+  SonicData->T = 0.;
   SonicData->N = 0;
   SonicData->Status = 0;
 }
@@ -52,7 +52,7 @@ void Sonic3B_TM::finalize_avg( void ) {
     SonicData->U /= SonicData->N;
     SonicData->V /= SonicData->N;
     SonicData->W /= SonicData->N;
-    SonicData->C /= SonicData->N;
+    SonicData->T /= SonicData->N;
   }
 }
 
@@ -159,7 +159,7 @@ int Sonic3B::ProcessData(int flag) {
           SonicData->U += Ux;
           SonicData->V += Uy;
           SonicData->W += Uz;
-          SonicData->C += Ts;
+          SonicData->T += Ts;
           SonicData->Status |= DW;
           ++SonicData->N;
           if (RecCtr != RC) {

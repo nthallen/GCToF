@@ -1,0 +1,29 @@
+%{
+  /* sonic.tmc */
+  #include "math.h"
+%}
+
+TM "Receive" SonicData@Suffix@ 1;
+
+TM @Rate@ Hz WindSpd Sonic@Suffix@_U;
+TM @Rate@ Hz WindSpd Sonic@Suffix@_V;
+TM @Rate@ Hz WindSpd Sonic@Suffix@_W;
+TM @Rate@ Hz SoundT  Sonic@Suffix@_T;
+TM @Rate@ Hz Sonic_N_t Sonic@Suffix@_N;
+TM @Rate@ Hz Sonic@SSuff@_S_t Sonic@Suffix@_S;
+
+Group Sonic@Suffix@ (Sonic@Suffix@_U, Sonic@Suffix@_V, Sonic@Suffix@_W, Sonic@Suffix@_T, Sonic@Suffix@_N, Sonic@Suffix@_S) {
+  Sonic@Suffix@_U = SonicData@Suffix@.U;
+  Sonic@Suffix@_V = SonicData@Suffix@.V;
+  Sonic@Suffix@_W = SonicData@Suffix@.W;
+  Sonic@Suffix@_T = SonicData@Suffix@.T;
+  Sonic@Suffix@_N = SonicData@Suffix@.N;
+  Sonic@Suffix@_S = SonicData@Suffix@.Status;
+  SonicData@Suffix@.N = 255;
+  SonicData@Suffix@_obj->synch();
+}
+
+SoundT Sonic@Suffix@_C; Invalidate Sonic@Suffix@_C;
+{ Sonic@Suffix@_C = 20.05 * sqrt(Sonic@Suffix@_T+273.15);
+  Validate Sonic@Suffix@_C;
+}

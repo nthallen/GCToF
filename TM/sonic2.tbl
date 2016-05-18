@@ -1,0 +1,29 @@
+Sonic2_labels {
+  U:;
+  V:;
+  W:;
+  C:;
+  N:;
+  S:;
+}
+
+Sonic2_fields {
+  (Sonic2_U,6);
+  (Sonic2_V,6);
+  (Sonic2_W,6);
+  (Sonic2_C,6);
+  (Sonic2_N,3);
+  (Sonic2_S,4);
+}
+
+Sonic2_units {
+  "m/s";
+  "m/s";
+  "m/s";
+  "m/s";
+}
+
+Sonic2 {
+  HBox { Title: +-; "Sonic2"; -+ };
+  [Sonic2_labels] [Sonic2_fields] [Sonic2_units];
+}

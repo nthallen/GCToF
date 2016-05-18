@@ -1,41 +1,34 @@
 tmcbase = types.tmc
-tmcbase = /usr/local/share/huarp/tmdf.tmc
-tmcbase = /usr/local/share/huarp/cpu_usage.tmc
-tmcbase = /usr/local/share/huarp/freemem.tmc
-tmcbase = /usr/local/share/huarp/flttime.tmc
 tmcbase = base.tmc
 tmcbase = TwisTorr.tmc
 tmcbase = nXDS.tmc
 tmcbase = zaber.tmc
 tmcbase = Horiba.tmc
 tmcbase = IG.tmc
-tmcbase = sonic.tmc
 tmcbase = UPS.tmc
 
-cmdbase = /usr/local/share/huarp/root.cmd
-cmdbase = /usr/local/share/huarp/getcon.cmd
 cmdbase = TwisTorr.cmd
 cmdbase = nXDS.cmd
 cmdbase = zaber.cmd
 cmdbase = Horiba.cmd
 cmdbase = ../UPS/TM/UPS.cmd
 
-colbase = /usr/local/share/huarp/tmdf_col.tmc
-colbase = /usr/local/share/huarp/cpu_usage_col.tmc
-colbase = /usr/local/share/huarp/freemem_col.tmc
 colbase = TwisTorr_col.tmc
 colbase = nXDS_col.tmc
 colbase = Horiba_col.tmc
-colbase = sonic_col.tmc
 colbase = UPS_col.tmc
 
 swsbase = GCToF.sws
+
+Module TMbase
+Module Sonic Suffix=1 mode=csat3
+Module Sonic Suffix=2 mode=csat3b
 
 SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
-DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber ../Sonic/sonic
+DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber
 DISTRIB = ../UPS/ups
 
 # Zeno Module
@@ -72,7 +65,5 @@ GCToFeng.cdf : $(GENUISRCS)
 	cd ../IonGauge && make
 ../Zaber/zaber :
 	cd ../Zaber && make
-../Sonic/sonic :
-	cd ../Sonic && make
 ../UPS/ups :
 	cd ../UPS && make

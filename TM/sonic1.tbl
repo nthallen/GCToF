@@ -1,0 +1,29 @@
+Sonic1_labels {
+  U:;
+  V:;
+  W:;
+  C:;
+  N:;
+  S:;
+}
+
+Sonic1_fields {
+  (Sonic1_U,6);
+  (Sonic1_V,6);
+  (Sonic1_W,6);
+  (Sonic1_C,6);
+  (Sonic1_N,3);
+  (Sonic1_S,4);
+}
+
+Sonic1_units {
+  "m/s";
+  "m/s";
+  "m/s";
+  "m/s";
+}
+
+Sonic1 {
+  HBox { Title: +-; "Sonic1"; -+ };
+  [Sonic1_labels] [Sonic1_fields] [Sonic1_units];
+}

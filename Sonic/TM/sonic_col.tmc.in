@@ -1,0 +1,5 @@
+%{
+  /* sonic_col.tmc */
+  #include "sonic@SSuff@.h"
+  Sonic@SSuff@Data_t SonicData@Suffix@;
+%}

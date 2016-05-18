@@ -1,0 +1,7 @@
+/* sonic.tmc */
+TM typedef float WindSpd { text "%6.3lf"; }
+TM typedef float SoundSpd { text "%6.2lf"; }
+TM typedef float SoundT { text "%6.2lf"; }
+TM typedef unsigned char Sonic_N_t { text "%3d"; }
+TM typedef unsigned char Sonic_S_t { text "%4x"; }
+TM typedef unsigned short Sonic3B_S_t { text "%4x"; }

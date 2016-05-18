@@ -1,13 +1,9 @@
 # Sonic.tbl
+Input "sonic1.tbl";
+Input "sonic2.tbl";
+
 Sonic {
-  HBox { Title: +-; "Sonic"; -+ };
-  ""  "1"         "2";
-  U: (Sonic1_U,6) (Sonic2_U,6) "m/s";
-  V: (Sonic1_V,6) (Sonic2_V,6) "m/s";
-  W: (Sonic1_W,6) (Sonic2_W,6) "m/s";
-  C: (Sonic1_C,6) (Sonic2_C,6) "m/s";
-  N: (Sonic1_N,3) (Sonic2_N,3);
-  S: (Sonic1_S,3) (Sonic2_S,3);
+  [Sonic1_labels] [Sonic1_fields] [Sonic2_fields] [Sonic1_units]
 }
 
 IG {

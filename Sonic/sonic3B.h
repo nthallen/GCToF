@@ -5,7 +5,7 @@ typedef struct {
   float U;
   float V;
   float W;
-  float C;
+  float T;
   unsigned short Status;
   unsigned char N;
 } Sonic3BData_t;

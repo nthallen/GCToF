@@ -1,0 +1,21 @@
+/* sonic.tmc */
+
+TM "Receive" SonicData@Suffix@ 1;
+
+TM @Rate@ Hz WindSpd Sonic@Suffix@_U;
+TM @Rate@ Hz WindSpd Sonic@Suffix@_V;
+TM @Rate@ Hz WindSpd Sonic@Suffix@_W;
+TM @Rate@ Hz SoundSpd Sonic@Suffix@_C;
+TM @Rate@ Hz Sonic_N_t Sonic@Suffix@_N;
+TM @Rate@ Hz Sonic@SSuff@_S_t Sonic@Suffix@_S;
+
+Group Sonic@Suffix@ (Sonic@Suffix@_U, Sonic@Suffix@_V, Sonic@Suffix@_W, Sonic@Suffix@_C, Sonic@Suffix@_N, Sonic@Suffix@_S) {
+  Sonic@Suffix@_U = SonicData@Suffix@.U;
+  Sonic@Suffix@_V = SonicData@Suffix@.V;
+  Sonic@Suffix@_W = SonicData@Suffix@.W;
+  Sonic@Suffix@_C = SonicData@Suffix@.C;
+  Sonic@Suffix@_N = SonicData@Suffix@.N;
+  Sonic@Suffix@_S = SonicData@Suffix@.Status;
+  SonicData@Suffix@.N = 255;
+  SonicData@Suffix@_obj->synch();
+}
