@@ -12,6 +12,7 @@ cmdbase = nXDS.cmd
 cmdbase = zaber.cmd
 cmdbase = Horiba.cmd
 cmdbase = ../UPS/TM/UPS.cmd
+cmdbase = address.h
 
 colbase = TwisTorr_col.tmc
 colbase = nXDS_col.tmc
@@ -25,7 +26,7 @@ Module Sonic Suffix=1 mode=csat3
 Module Sonic Suffix=2 mode=csat3b
 Module DSDaq
 
-SCRIPT = interact
+SCRIPT = interact runfile.A1 runfile.A2
 TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
@@ -44,6 +45,8 @@ GCToFalgo : GCToF.tma GCToF.sws
 GCToFengext : GCToFeng.cdf
 doit : GCToF.doit
 %%
+COLFLAGS = -Haddress.h
+address.h : GCToFcol.cc
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
 CPPFLAGS += -I ../Sonic -I ../UPS
 CPPFLAGS += -I ../Zeno

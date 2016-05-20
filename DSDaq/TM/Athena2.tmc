@@ -1,10 +1,10 @@
 /* AO */
-TM 1 Hz A2_DAC_t MFC_Sp4_Sp; Address MFC_Sp4_Sp 0x2000;
-TM 1 Hz A2_DAC_t MFC_Sp5_Sp; Address MFC_Sp5_Sp 0x2001;
+TM 1 Hz A2_DAC_t MFC_Sp4_SP; Address MFC_Sp4_SP 0x2000;
+TM 1 Hz A2_DAC_t MFC_Sp5_SP; Address MFC_Sp5_SP 0x2001;
 
 /* AI */
-TM 1 Hz V1000torr_A2_t Sample_P; Address Sample_P 0;
-TM 1 Hz V100torr_A2_t Column_P; Address Column_P 1;
+TM 1 Hz A2_V1000torr Sample_P; Address Sample_P 0;
+TM 1 Hz A2_V100torr Column_P; Address Column_P 1;
 TM 1 Hz A2_ADC_t MFC_Sp4; Address MFC_Sp4 2;
 TM 1 Hz A2_ADC_t MFC_Sp5; Address MFC_Sp5 3;
 

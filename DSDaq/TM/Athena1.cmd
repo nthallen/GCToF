@@ -18,7 +18,7 @@
   : Set Spare 1 Flow %f (Enter SLM) slm *
       { if_Athena1.Turf( "W%X:%X\n", MFC_Sp1_SP_Address, MFC_Scale($5,5) ); }
   : Set Spare 3 Flow %f (Enter SLM) slm *
-      { if_Athena1.Turf( "W%X:%X\n", MFC_Sp3_SP_Address, MFC_Scale($4,5) ); }
+      { if_Athena1.Turf( "W%X:%X\n", MFC_Sp3_SP_Address, MFC_Scale($5,5) ); }
   : Set Ambient Zero Flow %f (Enter SCCM) sccm *
       { if_Athena1.Turf( "W%X:%X\n", MFC_AMBZ_SP_Address, MFC_Scale($5, 1000) ); }
   : &AII_Cmd &on_off * { if_Athena1.Turf( "W%X:%X\n", $1, $2 ); }
@@ -29,9 +29,9 @@
   : Cold Cal 2 { $0 = 0x4001; }
   : Hot Cal valve 1 { $0 = 0x4002; }
   : Hot Cal valve 2 { $0 = 0x4004; }
-  : Spare valve 3 { $0 = 0x4003; }
-  : Spare valve 5 { $0 = 0x4005; }
-  : Spare valve 7 { $0 = 0x4007; }
+  : Spare valve A1_3 { $0 = 0x4003; }
+  : Spare valve A1_5 { $0 = 0x4005; }
+  : Spare valve A1_7 { $0 = 0x4007; }
   ;
 
 &on_off <unsigned short>

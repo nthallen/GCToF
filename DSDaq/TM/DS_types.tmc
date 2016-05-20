@@ -80,11 +80,6 @@ TM typedef unsigned short A1_DAC_t {
 TM typedef A1_DAC_t A1_V1000sccm_sp { convert DS_SCCM; }
   calibration (A1_V1000sccm_sp, DS_SCCM) { 2048, 0, 4096, 2000 }
 
-// TM typedef A1_DAC_t V500SCCM_sp_t { convert DS_SCCM; }
-//   calibration (V500SCCM_sp_t, DS_SCCM) { 2048, 0, 4096, 1000 }
-// TM typedef A1_DAC_t V5slm_sp_t { convert DS_SLM; }
-//   calibration (V5slm_sp_t, DS_SLM) { 2048, 0, 4096, 10 }
-
 TM typedef unsigned char A1_DS_t {
   text "%3u";
   collect x = A1.read(x.address);
@@ -106,12 +101,19 @@ TM typedef unsigned short A2_DAC_t {
 TM typedef A1_ADC_t A2_ADC_t {
   collect x = A2.read(x.address);
 }
+TM typedef A1_ADCx2_t A2_ADCx2_t {
+  collect x = A2.read(x.address + 0x1100);
+}
+TM typedef A2_ADCx2_t A2_V1000torr { text "%6.1lf"; convert DS_MBAR; }
+  calibration (A2_V1000torr,DS_MBAR) { 0, 0, 32768, 1333.2 }
+TM typedef A2_ADCx2_t A2_V100torr { text "%6.2lf"; convert DS_MBAR; }
+  calibration (A2_V100torr,DS_MBAR) { 0, 0, 32768, 133.32 }
 TM typedef unsigned char A2_DS_t {
   text "%3u";
   collect x = A2.read(x.address);
 }
 TM typedef unsigned char A2_S_t {
-  text "%10u" A1_S_text();
+  text "%10u" DS_S_text();
   collect x = A2.status();
 }
 

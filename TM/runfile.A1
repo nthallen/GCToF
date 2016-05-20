@@ -1,0 +1,5 @@
+# Startup script for GCAthena1
+  memo=Athena1.log
+  echo "Running script runfile.A1" >>$memo
+  Launch AthenaII AthenaII -o $memo
+  parent_loop="-q -M $! -t 5"

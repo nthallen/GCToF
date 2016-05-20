@@ -27,7 +27,7 @@
   : Set Fly Valve Set Point %f (Enter Volts) Volts *
     { if_Hercules.Turf( "W%X:%X\n", FlySt_Address, Herc_Scale($6, 0, 10)); }
   : Set Herc Spare Analog Out %f (Enter Volts) Volts *
-    { if_Hercules.Turf( "W%X:%X\n", SpAO1_sp_Address, Herc_Scale($5, -10, 10)); }
+    { if_Hercules.Turf( "W%X:%X\n", SpAO1_sp_Address, Herc_Scale($6, -10, 10)); }
   ;
 &Herc_On_Off_Cmd <unsigned short>
   : Cal Bypass { $0 = 0; }

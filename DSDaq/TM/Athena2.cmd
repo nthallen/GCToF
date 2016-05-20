@@ -2,7 +2,7 @@
   #ifdef SERVER
     #include "address.h"
 
-    static unsigned short MFC_Scale( double val, double scale ) {
+    static unsigned short MFC_Scale2( double val, double scale ) {
       val = 5*val/scale;
       if ( val > 5 ) val = 5;
       else if ( val < -1 ) val = -1;
@@ -14,9 +14,9 @@
 
 &command
   : Set Spare 4 Flow %f (Enter SCCM) sccm *
-      { if_Athena2.Turf( "W%X:%X\n", MFC_Sp4_SP_Address, MFC_Scale($5, 500) ); }
+      { if_Athena2.Turf( "W%X:%X\n", MFC_Sp4_SP_Address, MFC_Scale2($5, 500) ); }
   : Set Spare 5 Flow %f (Enter SLM) slm *
-      { if_Athena2.Turf( "W%X:%X\n", MFC_Sp5_SP_Address, MFC_Scale($5,5) ); }
+      { if_Athena2.Turf( "W%X:%X\n", MFC_Sp5_SP_Address, MFC_Scale2($5,5) ); }
   : &A2_Cmd &on_off * { if_Athena2.Turf( "W%X:%X\n", $1, $2 ); }
   ;
 &A2_Cmd <unsigned short>
@@ -28,7 +28,7 @@
   : Bypass Pump { $0 = 0x4007; }
   : CO2 Valve { $0 = 0x4008; }
   : GC Tracer Flow to FT { $0 = 0x4009; }
-  : Spare valve 1 { $0 = 0x400A; }
-  : Spare valve 2 { $0 = 0x400B; }
-  : Spare valve 3 { $0 = 0x400C; }
+  : Spare valve A2_1 { $0 = 0x400A; }
+  : Spare valve A2_2 { $0 = 0x400B; }
+  : Spare valve A2_3 { $0 = 0x400C; }
   ;

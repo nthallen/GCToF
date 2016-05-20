@@ -18,3 +18,5 @@ TM 1 Hz A1_ADC_t FT_T1; Address FT_T1 8;
 TM 1 Hz A1_ADC_t FT_T2; Address FT_T2 0; 
 
 TM 1 Hz A1_S_t  A1_Stat;
+
+TM 1 Hz A1_DS_t A1_DS_A; Address A1_DS_A 0x3000;
