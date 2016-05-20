@@ -1,0 +1,93 @@
+Octopole {
+  HBox { +-; Title: Octopole; -+ };
+  Power: (Oct_Pwr_S,3);
+  Amp_sp: (Oct_Amp_sp,6) V;
+  Amp_RB: (Oct_Amp_RB,6) V;
+  Bias_sp: (Oct_Bias_sp,6) V;
+  Bias_RB: (Oct_Bias_RB,6) V;
+  Drive_RB: (Oct_Drive_RB,6) V;
+}
+
+Fly {
+  HBox { +-; Title: Butterfly; -+ };
+  SetPt:    (FlySt,6) V;
+  Position: (Fly_Pos_RB,6) V;
+  Pressure: (Fly_Press_RB,6) V;
+  Open:    (Fly_Op_RB,3);
+  Closed:  (Fly_Cl_RB,3);
+  Ready:   (Fly_Rdy_RB,3);
+  Alarm:   (Fly_Alrm_RB,3);
+  Mode:    (Bfly_Mode,8);
+  Control: (Bfly_Ctrl,7);
+}
+
+TPumps {
+  HBox { +-; Title: Turbos; -+ };
+  ""      A              B;
+  Enb:   (TPA_Enb,3)   (TPB_Enb,3);
+  Start: (TPA_Start,3) (TPB_Start,3);
+  Low:   (TPA_Low,3)   (TPB_Low,3);
+  BT:    (TPA_BT,6)    (TPB_BT,6)   V;
+  Spd:   (TPA_Spd,6)   (TPB_Spd,6)  V;
+  Cmon:  (TPA_Cmon,5)  (TPB_Cmon,5) A;
+  OK:    (TPA_OK,6)    (TPB_OK,6)   V;
+  TV:    (TPA_TV,6)    (TPB_TV,6)   V;
+  x_TV:  ""            (TPBx_TV,6)  V;
+}
+
+DS_Pressures {
+  HBox { +-; Title: Pressures; -+ };
+  Sample_P: (Sample_P,6) mbar;
+  Column_P: (Column_P,6) mbar;
+}
+
+CalValves {
+  HBox { +-; Title: "Cal Valves"; -+ };
+  Bypass: (Bypass_cal,3);
+  Scrub:  (Scrub_cal,3);
+  H2O2:   (H2O2_cal,3);
+  Oacid:  (Oacid_cal,3);
+  MHP:    (MHP_cal,3);
+  Spare1: (Spare1_cal,3);
+  Spare2: (Spare2_cal,3);
+  Spare3: (Spare3_cal,3);
+}
+
+DS_Misc {
+  HBox { +-; Title: Misc; -+ };
+  HV_Pwr_S: (HV_Pwr_S,3);
+  TPSP_RB: (TPSP_RB,3);
+  Relay_28_RB: (Relay_28_RB,3);
+  FTSP_RB: (FTSP_RB,3);
+}
+
+DSDaq {
+  HBox { +-; Title: DSDaq; -+ };
+  Hercules: (Herc_Stat,10);
+  Athena1:  (A1_Stat,10);
+  Athena2:  (A2_Stat,10);
+}
+
+DS_Spares {
+  HBox { +-; Title: Spares; -+ };
+  SpAO1_sp:   (SpAO1_sp,6) V;
+  SpAI1:      (SpAI1,6) V;
+  MFC_Sp4_Sp: (MFC_Sp4_Sp,6) V;
+  MFC_Sp4:    (MFC_Sp4,6)    V;
+  MFC_Sp5_Sp: (MFC_Sp5_Sp,6) V;
+  MFC_Sp5:    (MFC_Sp5,6)    V;
+}
+
+{ HBox {
+    { [Octopole];
+      [Fly];
+      [TPumps];
+    }; |; {
+      [DS_Pressures];
+      [CalValves];
+      [DS_Misc];
+      [DSDaq];
+      [DS_Spares];
+    }
+  }
+}

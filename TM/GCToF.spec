@@ -23,6 +23,7 @@ swsbase = GCToF.sws
 Module TMbase
 Module Sonic Suffix=1 mode=csat3
 Module Sonic Suffix=2 mode=csat3b
+Module DSDaq
 
 SCRIPT = interact
 TGTDIR = $(TGTNODE)/home/GCToF

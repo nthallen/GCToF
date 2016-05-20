@@ -1,0 +1,74 @@
+  1 Oct_Amp_sp Octopole Amp
+  1 Oct_Amp_RB Octopole Amp
+  1 Oct_Bias_sp Octopole Bias
+  1 Oct_Bias_RB Octopole Bias
+  1 Oct_Drive_RB Octopole Drive
+  
+  1 FlySt FlyValve Pos
+  1 Fly_Pos_RB FlyValve Pos
+  1 Fly_Press_RB FlyValve P
+  1 Fly_Op_RB:Herc_DS_E:2 FlyValve Status
+  1 Fly_Cl_RB:Herc_DS_E:4 FlyValve Status
+  1 Fly_Rdy_RB:Herc_DS_E:5 FlyValve Status
+  1 Fly_Alrm_RB:Herc_DS_E:7 FlyValve Status
+  1 Bfly_Mode:Herc_DS_D:4 FlyValve Status
+  1 Fly_Hold:Herc_DS_D:2 FlyValve Status
+  1 Fly_Close:Herc_DS_D:3 FlyValve Status
+  1 Fly_Open:Herc_DS_D:5 FlyValve Status
+  
+  1 HV_Pwr_S:Herc_DS_D:6 Misc Status
+  1 Oct_Pwr_S:Herc_DS_D:7 Misc Status
+  1 Relay_28_RB:Herc_DS_E:1 Misc Status
+  1 TPSP_RB:Herc_DS_E:0 Misc Status
+  1 FTSP_RB:Herc_DS_E:3 Misc Status
+
+  1 Bypass_cal:Herc_DS_A:0 GasCmds Status
+  1 Scrub_cal:Herc_DS_A:1 GasCmds Status
+  1 H2O2_cal:Herc_DS_A:2 GasCmds Status
+  1 Oacid_cal:Herc_DS_A:3 GasCmds Status
+  1 MHP_cal:Herc_DS_A:4 GasCmds Status
+  1 Spare1_cal:Herc_DS_A:5 GasCmds Status
+  1 Spare2_cal:Herc_DS_A:6 GasCmds Status
+  1 Spare2_cal:Herc_DS_A:7 GasCmds Status
+  1 AmbZero:A1_DS_A:0 GasCmds Status
+  1 HotCal1:A1_DS_A:2 GasCmds Status
+  1 HotCal2:A1_DS_A:4 GasCmds Status
+  1 ColdCal1:A1_DS_A:6 GasCmds Status
+  1 ColdCal2:A1_DS_A:1 GasCmds Status
+
+# 1 SpAO1_sp
+# 1 SpAI1
+  1 TPA_BT Turbo BT
+  1 TPB_BT Turbo BT
+  1 TPA_Spd Turbo Speed
+  1 TPB_Spd Turbo Speed
+  1 TPA_Cmon Turbo Cmon
+  1 TPB_Cmon Turbo Cmon
+  1 TPA_OK Turbo OK
+  1 TPB_OK Turbo OK
+  1 TPA_TV Turbo TV
+  1 TPB_TV Turbo TV
+  1 TPBx_TV Turbo TV
+  1 TPB_Enb:Herc_DS_C:4   Turbo Status
+  1 TPA_Enb:Herc_DS_C:5   Turbo Status
+  1 TPA_Start:Herc_DS_C:6 Turbo Status
+  1 TPB_Start:Herc_DS_D:0 Turbo Status
+  1 TPA_Low:Herc_DS_C:7   Turbo Status
+  1 TPB_Low:Herc_DS_D:1   Turbo Status
+
+  1 Herc_Stat DSDaq Status %3d
+  1 A1_Stat DSDaq Status %3d
+  1 A2_Stat DSDaq Status %3d
+
+  
+  1 Bypass_Pump:A2_DS_A:7 GC Status
+  1 GCsamp:A2_DS_A:0 GC Status
+  1 HS_mode:A2_DS_A:1 GC Status
+  1 Norm_mode:A2_DS_A:2 GC Status
+  1 GC_Pickup:A2_DS_A:3 GC Status
+  1 Tracer_GC:A2_DS_A:4 GC Status
+  1 CO2:A2_DS_B:0 GC Status
+  1 Tracer_FT:A2_DS_B:1 GC Status
+  1 SpV_1:A2_DS_B:2 GC Status
+  1 SpV_2:A2_DS_B:3 GC Status
+  1 SpV_3:A2_DS_B:4 GC Status

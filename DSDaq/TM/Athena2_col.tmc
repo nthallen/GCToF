@@ -1,0 +1,5 @@
+%{
+  #include "dsdaq.h"
+  dsdaq A2("AthenaII", "GCAthena2");
+%}
+TM INITFUNC A2.init();

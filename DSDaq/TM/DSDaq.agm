@@ -1,0 +1,9 @@
+ModulDef DSDaq {
+  Definitions for Hercules and Athena I/O
+}
+
+tmcbase = DS_types.tmc Hercules.tmc Athena1.tmc Athena2.tmc
+colbase = Hercules_col.tmc Athena1_col.tmc Athena2_col.tmc
+cmdbase = Hercules.cmd Athena1.cmd Athena2.cmd
+DSDaqdisp : Hercules_conv.tmc Athena_conv.tmc Hercules.tbl
+
