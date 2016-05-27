@@ -1,14 +1,26 @@
 <package> Horiba
+<include> <stdlib.h>
 <include> "horiba_int.h"
 <include> msg
 <follow> msg
 
-<opts> "d:"
+<opts> "d:n:"
 <sort>
 	-d <serial device>
+	-n <number of channels>
+<unsort>
+The '-h' message header option will also change the name
+used for command and telemetry communications.
+
 <switch>
   case 'd':
     horiba_path = optarg;
+    break;
+  case 'n':
+    horiba_channels = atoi(optarg);
+    break;
+  case 'h': // use msg header value for name
+    horiba_name = optarg;
     break;
 
 <package> msghdr_default
