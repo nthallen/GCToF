@@ -333,7 +333,9 @@ int main(int argc, char **argv) {
       Loop.add_child(TM2);
     }
     Loop.event_loop();
-    delete(TM2); // This is the only dynamically allocated one
+    if (TM2) {
+      delete(TM2); // This is the only dynamically allocated one
+    }
   }
   nl_error(0, "Terminating");
 }
