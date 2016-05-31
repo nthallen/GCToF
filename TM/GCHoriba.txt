@@ -1,0 +1,9 @@
+# GCHoriba.txt
+Name GCHoriba
+Rate 1 Hz
+Port /net/GCAthena2/dev/ser3
+Data GC_Bypass   5 sccm %7.3lf "GC Bypass Flow"
+Data GC_Dilution 4 sccm %7.2lf "GC Dilution Flow" 
+Data ColumnN2    1 sccm %6.4lf "GC Column Flow"
+Data PickupFlow  3 sccm %6.2lf "GC Pickup Flow"
+Data GC_Intake   2 sccm %6.2lf "GC Intake Flow"

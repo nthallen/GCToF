@@ -138,24 +138,24 @@ ROWS 8
   1 nX1_OLTO:nX1Stat:14 nXDS1 Stat %.0lf
   1 nX1_AccTO:nX1Stat:15 nXDS1 Stat %.0lf
 
-  1 DilFlow Horiba Dilution
-  1 DilFlowSP Horiba Dilution
-  1 IonSrcFlow Horiba IonSrc
-  1 IonSrcFlowSP Horiba IonSrc
-  1 FFlow Horiba Fluorine
-  1 FFlowSP Horiba Fluorine
-  1 HoribaP Horiba Pressure
-  1 HoribaPSP Horiba Pressure
-  1 DilFlowSP_Stat:HoribaS:0 Horiba Status
-  1 DilFlow_Stat:HoribaS:1 Horiba Status
-  1 IonSrcFlowSP_Stat:HoribaS:2 Horiba Status
-  1 IonSrcFlow_Stat:HoribaS:3 Horiba Status
-  1 FFlowSP_Stat:HoribaS:4 Horiba Status
-  1 FFlow_Stat:HoribaS:5 Horiba Status
-  1 HoribaPSP_Stat:HoribaS:6 Horiba Status
-  1 HoribaP_Stat:HoribaS:7 Horiba Status
-  1 HCmd_Stat:HoribaS:8 Horiba Status
-  1 Horiba_Stale Horiba Stale
+# 1 DilFlow Horiba Dilution
+# 1 DilFlowSP Horiba Dilution
+# 1 IonSrcFlow Horiba IonSrc
+# 1 IonSrcFlowSP Horiba IonSrc
+# 1 FFlow Horiba Fluorine
+# 1 FFlowSP Horiba Fluorine
+# 1 HoribaP Horiba Pressure
+# 1 HoribaPSP Horiba Pressure
+# 1 DilFlowSP_Stat:HoribaS:0 Horiba Status
+# 1 DilFlow_Stat:HoribaS:1 Horiba Status
+# 1 IonSrcFlowSP_Stat:HoribaS:2 Horiba Status
+# 1 IonSrcFlow_Stat:HoribaS:3 Horiba Status
+# 1 FFlowSP_Stat:HoribaS:4 Horiba Status
+# 1 FFlow_Stat:HoribaS:5 Horiba Status
+# 1 HoribaPSP_Stat:HoribaS:6 Horiba Status
+# 1 HoribaP_Stat:HoribaS:7 Horiba Status
+# 1 HCmd_Stat:HoribaS:8 Horiba Status
+# 1 Horiba_Stale Horiba Stale
 
  10 Hex_P IonGauge P
  10 ToF_P IonGauge P

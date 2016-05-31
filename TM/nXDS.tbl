@@ -1,3 +1,6 @@
+Input "GBHoriba.tbl";
+Input "GCHoriba.tbl";
+
 nXDS {
   HBox { +-; Title: nXDS; -+ };
   ""            >A<   >B<;
@@ -37,14 +40,22 @@ Horiba {
 }
 
 Status {
-  -;
-  >(flttime,9)<;
-  MFCtr: (MFCtr,5);
+  +-+;
+  HBox { HGlue 0+1; {
+    (flttime,9);
+    MFCtr: (MFCtr,5);
+  }}
 }
 
 { HBox {
-    |; [nXDS]; |; {
-         [zaber];
-         [Horiba];
-         [Status]; }; |; }
+    |+; {
+      [nXDS];
+      [zaber];
+    }; |+; {
+      [GBHoriba];
+      [GCHoriba];
+      [Status];
+    }; |+;
+  };
+  -
 }

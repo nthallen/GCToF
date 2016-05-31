@@ -1,0 +1,10 @@
+  1 ColumnN2_SP GCHoriba ColumnN2
+  1 ColumnN2   GCHoriba ColumnN2
+  1 GC_Intake_SP GCHoriba GC_Intake
+  1 GC_Intake   GCHoriba GC_Intake
+  1 PickupFlow_SP GCHoriba PickupFlow
+  1 PickupFlow   GCHoriba PickupFlow
+  1 GC_Dilution_SP GCHoriba GC_Dilution
+  1 GC_Dilution   GCHoriba GC_Dilution
+  1 GCHoribaS GCHoriba Status %d
+  1 GCHoriba_Stale GCHoriba Stale

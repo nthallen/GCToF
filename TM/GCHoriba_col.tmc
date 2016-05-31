@@ -1,4 +1,4 @@
 %{
   #include "horiba.h"
-  horiba_tm_t Horiba;
+  horiba_tm_t GCHoriba;
 %}

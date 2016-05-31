@@ -1,0 +1,35 @@
+%{
+  #include "horiba.h"
+  #define GBHoriba_BitStar_text(x) ((x)?" ":"*")
+  #define GBHoriba_CStext(x) ((x)?"OK":"--")
+%}
+TM typedef unsigned char GBHoriba_BitStar { text "%1d" GBHoriba_BitStar_text(); }
+TM typedef unsigned char GBHoriba_CS_t { text "%2d" GBHoriba_CStext(); }
+
+GBHoriba_BitStar Fluorine_SP_Stat; Invalidate Fluorine_SP_Stat;
+  { Fluorine_SP_Stat = (GBHoribaS >> 0) & 1;
+    Validate Fluorine_SP_Stat; }
+GBHoriba_BitStar Fluorine_Stat; Invalidate Fluorine_Stat;
+  { Fluorine_Stat = (GBHoribaS >> 1) & 1;
+    Validate Fluorine_Stat; }
+GBHoriba_BitStar IonSrc_SP_Stat; Invalidate IonSrc_SP_Stat;
+  { IonSrc_SP_Stat = (GBHoribaS >> 2) & 1;
+    Validate IonSrc_SP_Stat; }
+GBHoriba_BitStar IonSrc_Stat; Invalidate IonSrc_Stat;
+  { IonSrc_Stat = (GBHoribaS >> 3) & 1;
+    Validate IonSrc_Stat; }
+GBHoriba_BitStar DilFT_SP_Stat; Invalidate DilFT_SP_Stat;
+  { DilFT_SP_Stat = (GBHoribaS >> 4) & 1;
+    Validate DilFT_SP_Stat; }
+GBHoriba_BitStar DilFT_Stat; Invalidate DilFT_Stat;
+  { DilFT_Stat = (GBHoribaS >> 5) & 1;
+    Validate DilFT_Stat; }
+GBHoriba_BitStar CalP_SP_Stat; Invalidate CalP_SP_Stat;
+  { CalP_SP_Stat = (GBHoribaS >> 6) & 1;
+    Validate CalP_SP_Stat; }
+GBHoriba_BitStar CalP_Stat; Invalidate CalP_Stat;
+  { CalP_Stat = (GBHoribaS >> 7) & 1;
+    Validate CalP_Stat; }
+GBHoriba_CS_t GBHoriba_CS; Invalidate GBHoriba_CS;
+  { GBHoriba_CS = (GBHoribaS >> 2*5) & 1;
+    Validate GBHoriba_CS; }

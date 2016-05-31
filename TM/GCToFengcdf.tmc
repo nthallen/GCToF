@@ -1,0 +1,213 @@
+%{ /* edf2ext.awk reading GCToFeng.cdf */
+  #include "csv_file.h"
+  #include "msg.h"
+  #include "tmctime.h"
+
+  #define Ct24_Long(x) (0xFFFFFF & *(TMLONG *)&x)
+  #define Ct24_Double(x) (double)Ct24_Long(x)
+  #define To_Double(x) (double)(x)
+
+  static double ext_delta = 0.;
+
+  csv_file GCToFeng_1("GCToFeng_1.csv", 74);
+  csv_file GCToFeng_10("GCToFeng_10.csv", 17);
+  void initialize(void) {
+    {
+      char *s;
+      s = getenv("EXT_DELTA");
+      if (s != NULL) {
+        ext_delta=atof(s);
+        msg(MSG, "Using Time Delta of %lf", ext_delta);
+      }
+    }
+    GCToFeng_1.init();
+    GCToFeng_1.init_col(0, "TGCToFeng_1", "%.3lf");
+    GCToFeng_1.init_col(1, "CPU_Pct");
+    GCToFeng_1.init_col(2, "Disk");
+    GCToFeng_1.init_col(3, "SWStat");
+    GCToFeng_1.init_col(4, "TT1_ErrStat", "%.0lf");
+    GCToFeng_1.init_col(5, "TT1_I");
+    GCToFeng_1.init_col(6, "TT1_Status", "%.0lf");
+    GCToFeng_1.init_col(7, "TT1_T");
+    GCToFeng_1.init_col(8, "TT1_V");
+    GCToFeng_1.init_col(9, "TT1_W");
+    GCToFeng_1.init_col(10, "TT1_drvf");
+    GCToFeng_1.init_col(11, "TT1_flags", "%.0lf");
+    GCToFeng_1.init_col(12, "TT1_spd", "%.2lf");
+    GCToFeng_1.init_col(13, "TT2_ErrStat", "%.0lf");
+    GCToFeng_1.init_col(14, "TT2_I");
+    GCToFeng_1.init_col(15, "TT2_Status", "%.0lf");
+    GCToFeng_1.init_col(16, "TT2_T");
+    GCToFeng_1.init_col(17, "TT2_V");
+    GCToFeng_1.init_col(18, "TT2_W");
+    GCToFeng_1.init_col(19, "TT2_drvf");
+    GCToFeng_1.init_col(20, "TT2_flags", "%.0lf");
+    GCToFeng_1.init_col(21, "TT2_spd", "%.2lf");
+    GCToFeng_1.init_col(22, "TT3_ErrStat", "%.0lf");
+    GCToFeng_1.init_col(23, "TT3_I");
+    GCToFeng_1.init_col(24, "TT3_Status", "%.0lf");
+    GCToFeng_1.init_col(25, "TT3_T");
+    GCToFeng_1.init_col(26, "TT3_V");
+    GCToFeng_1.init_col(27, "TT3_W");
+    GCToFeng_1.init_col(28, "TT3_drvf");
+    GCToFeng_1.init_col(29, "TT3_flags", "%.0lf");
+    GCToFeng_1.init_col(30, "TT3_spd", "%.2lf");
+    GCToFeng_1.init_col(31, "TT_stale");
+    GCToFeng_1.init_col(32, "UPS_Capacity");
+    GCToFeng_1.init_col(33, "UPS_F_in");
+    GCToFeng_1.init_col(34, "UPS_F_out");
+    GCToFeng_1.init_col(35, "UPS_Group");
+    GCToFeng_1.init_col(36, "UPS_I_out");
+    GCToFeng_1.init_col(37, "UPS_LoadPct");
+    GCToFeng_1.init_col(38, "UPS_Mode", "%.0f");
+    GCToFeng_1.init_col(39, "UPS_Piece");
+    GCToFeng_1.init_col(40, "UPS_Remain_Time");
+    GCToFeng_1.init_col(41, "UPS_Response");
+    GCToFeng_1.init_col(42, "UPS_Stale");
+    GCToFeng_1.init_col(43, "UPS_Status");
+    GCToFeng_1.init_col(44, "UPS_Tmax");
+    GCToFeng_1.init_col(45, "UPS_VBatN");
+    GCToFeng_1.init_col(46, "UPS_VBatP");
+    GCToFeng_1.init_col(47, "UPS_VBusN");
+    GCToFeng_1.init_col(48, "UPS_VBusP");
+    GCToFeng_1.init_col(49, "UPS_V_in");
+    GCToFeng_1.init_col(50, "UPS_V_out");
+    GCToFeng_1.init_col(51, "UPS_Warn");
+    GCToFeng_1.init_col(52, "Z1V");
+    GCToFeng_1.init_col(53, "Z1pos");
+    GCToFeng_1.init_col(54, "Z1stale");
+    GCToFeng_1.init_col(55, "Z2V");
+    GCToFeng_1.init_col(56, "Z2pos");
+    GCToFeng_1.init_col(57, "Z2stale");
+    GCToFeng_1.init_col(58, "freemem");
+    GCToFeng_1.init_col(59, "nX0CtrlrT");
+    GCToFeng_1.init_col(60, "nX0LinkV");
+    GCToFeng_1.init_col(61, "nX0MtrF");
+    GCToFeng_1.init_col(62, "nX0MtrI");
+    GCToFeng_1.init_col(63, "nX0MtrW");
+    GCToFeng_1.init_col(64, "nX0Power", "%.0lf");
+    GCToFeng_1.init_col(65, "nX0Stat", "%.0lf");
+    GCToFeng_1.init_col(66, "nX1CtrlrT");
+    GCToFeng_1.init_col(67, "nX1LinkV");
+    GCToFeng_1.init_col(68, "nX1MtrF");
+    GCToFeng_1.init_col(69, "nX1MtrI");
+    GCToFeng_1.init_col(70, "nX1MtrW");
+    GCToFeng_1.init_col(71, "nX1Power", "%.0lf");
+    GCToFeng_1.init_col(72, "nX1Stat", "%.0lf");
+    GCToFeng_1.init_col(73, "nX_stale");
+    GCToFeng_10.init();
+    GCToFeng_10.init_col(0, "TGCToFeng_10", "%.3lf");
+    GCToFeng_10.init_col(1, "Hex_P");
+    GCToFeng_10.init_col(2, "IG_stale");
+    GCToFeng_10.init_col(3, "IG_stat");
+    GCToFeng_10.init_col(4, "Sonic1_C");
+    GCToFeng_10.init_col(5, "Sonic1_N");
+    GCToFeng_10.init_col(6, "Sonic1_S");
+    GCToFeng_10.init_col(7, "Sonic1_U");
+    GCToFeng_10.init_col(8, "Sonic1_V");
+    GCToFeng_10.init_col(9, "Sonic1_W");
+    GCToFeng_10.init_col(10, "Sonic2_C");
+    GCToFeng_10.init_col(11, "Sonic2_N");
+    GCToFeng_10.init_col(12, "Sonic2_S");
+    GCToFeng_10.init_col(13, "Sonic2_U");
+    GCToFeng_10.init_col(14, "Sonic2_V");
+    GCToFeng_10.init_col(15, "Sonic2_W");
+    GCToFeng_10.init_col(16, "ToF_P");
+  }
+%}
+TM INITFUNC initialize();
+{
+  GCToFeng_1.set_time(dtime()+ext_delta);
+  GCToFeng_1.set_col(1, text(CPU_Pct));
+  GCToFeng_1.set_col(2, text(Disk));
+  GCToFeng_1.set_col(3, text(SWStat));
+  GCToFeng_1.set_col(4, convert(TT1_ErrStat));
+  GCToFeng_1.set_col(5, text(TT1_I));
+  GCToFeng_1.set_col(6, convert(TT1_Status));
+  GCToFeng_1.set_col(7, text(TT1_T));
+  GCToFeng_1.set_col(8, text(TT1_V));
+  GCToFeng_1.set_col(9, text(TT1_W));
+  GCToFeng_1.set_col(10, text(TT1_drvf));
+  GCToFeng_1.set_col(11, convert(TT1_flags));
+  GCToFeng_1.set_col(12, convert(TT1_spd));
+  GCToFeng_1.set_col(13, convert(TT2_ErrStat));
+  GCToFeng_1.set_col(14, text(TT2_I));
+  GCToFeng_1.set_col(15, convert(TT2_Status));
+  GCToFeng_1.set_col(16, text(TT2_T));
+  GCToFeng_1.set_col(17, text(TT2_V));
+  GCToFeng_1.set_col(18, text(TT2_W));
+  GCToFeng_1.set_col(19, text(TT2_drvf));
+  GCToFeng_1.set_col(20, convert(TT2_flags));
+  GCToFeng_1.set_col(21, convert(TT2_spd));
+  GCToFeng_1.set_col(22, convert(TT3_ErrStat));
+  GCToFeng_1.set_col(23, text(TT3_I));
+  GCToFeng_1.set_col(24, convert(TT3_Status));
+  GCToFeng_1.set_col(25, text(TT3_T));
+  GCToFeng_1.set_col(26, text(TT3_V));
+  GCToFeng_1.set_col(27, text(TT3_W));
+  GCToFeng_1.set_col(28, text(TT3_drvf));
+  GCToFeng_1.set_col(29, convert(TT3_flags));
+  GCToFeng_1.set_col(30, convert(TT3_spd));
+  GCToFeng_1.set_col(31, text(TT_stale));
+  GCToFeng_1.set_col(32, text(UPS_Capacity));
+  GCToFeng_1.set_col(33, text(UPS_F_in));
+  GCToFeng_1.set_col(34, text(UPS_F_out));
+  GCToFeng_1.set_col(35, text(UPS_Group));
+  GCToFeng_1.set_col(36, text(UPS_I_out));
+  GCToFeng_1.set_col(37, text(UPS_LoadPct));
+  GCToFeng_1.set_col(38, convert(UPS_Mode));
+  GCToFeng_1.set_col(39, text(UPS_Piece));
+  GCToFeng_1.set_col(40, text(UPS_Remain_Time));
+  GCToFeng_1.set_col(41, text(UPS_Response));
+  GCToFeng_1.set_col(42, text(UPS_Stale));
+  GCToFeng_1.set_col(43, text(UPS_Status));
+  GCToFeng_1.set_col(44, text(UPS_Tmax));
+  GCToFeng_1.set_col(45, text(UPS_VBatN));
+  GCToFeng_1.set_col(46, text(UPS_VBatP));
+  GCToFeng_1.set_col(47, text(UPS_VBusN));
+  GCToFeng_1.set_col(48, text(UPS_VBusP));
+  GCToFeng_1.set_col(49, text(UPS_V_in));
+  GCToFeng_1.set_col(50, text(UPS_V_out));
+  GCToFeng_1.set_col(51, text(UPS_Warn));
+  GCToFeng_1.set_col(52, text(Z1V));
+  GCToFeng_1.set_col(53, text(Z1pos));
+  GCToFeng_1.set_col(54, text(Z1stale));
+  GCToFeng_1.set_col(55, text(Z2V));
+  GCToFeng_1.set_col(56, text(Z2pos));
+  GCToFeng_1.set_col(57, text(Z2stale));
+  GCToFeng_1.set_col(58, text(freemem));
+  GCToFeng_1.set_col(59, text(nX0CtrlrT));
+  GCToFeng_1.set_col(60, text(nX0LinkV));
+  GCToFeng_1.set_col(61, text(nX0MtrF));
+  GCToFeng_1.set_col(62, text(nX0MtrI));
+  GCToFeng_1.set_col(63, text(nX0MtrW));
+  GCToFeng_1.set_col(64, convert(nX0Power));
+  GCToFeng_1.set_col(65, convert(nX0Stat));
+  GCToFeng_1.set_col(66, text(nX1CtrlrT));
+  GCToFeng_1.set_col(67, text(nX1LinkV));
+  GCToFeng_1.set_col(68, text(nX1MtrF));
+  GCToFeng_1.set_col(69, text(nX1MtrI));
+  GCToFeng_1.set_col(70, text(nX1MtrW));
+  GCToFeng_1.set_col(71, convert(nX1Power));
+  GCToFeng_1.set_col(72, convert(nX1Stat));
+  GCToFeng_1.set_col(73, text(nX_stale));
+}
+{
+  GCToFeng_10.set_time(dtime()+ext_delta);
+  GCToFeng_10.set_col(1, text(Hex_P));
+  GCToFeng_10.set_col(2, text(IG_stale));
+  GCToFeng_10.set_col(3, text(IG_stat));
+  GCToFeng_10.set_col(4, text(Sonic1_C));
+  GCToFeng_10.set_col(5, text(Sonic1_N));
+  GCToFeng_10.set_col(6, text(Sonic1_S));
+  GCToFeng_10.set_col(7, text(Sonic1_U));
+  GCToFeng_10.set_col(8, text(Sonic1_V));
+  GCToFeng_10.set_col(9, text(Sonic1_W));
+  GCToFeng_10.set_col(10, text(Sonic2_C));
+  GCToFeng_10.set_col(11, text(Sonic2_N));
+  GCToFeng_10.set_col(12, text(Sonic2_S));
+  GCToFeng_10.set_col(13, text(Sonic2_U));
+  GCToFeng_10.set_col(14, text(Sonic2_V));
+  GCToFeng_10.set_col(15, text(Sonic2_W));
+  GCToFeng_10.set_col(16, text(ToF_P));
+}

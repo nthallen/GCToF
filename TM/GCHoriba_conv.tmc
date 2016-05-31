@@ -1,0 +1,35 @@
+%{
+  #include "horiba.h"
+  #define GCHoriba_BitStar_text(x) ((x)?" ":"*")
+  #define GCHoriba_CStext(x) ((x)?"OK":"--")
+%}
+TM typedef unsigned char GCHoriba_BitStar { text "%1d" GCHoriba_BitStar_text(); }
+TM typedef unsigned char GCHoriba_CS_t { text "%2d" GCHoriba_CStext(); }
+
+GCHoriba_BitStar ColumnN2_SP_Stat; Invalidate ColumnN2_SP_Stat;
+  { ColumnN2_SP_Stat = (GCHoribaS >> 0) & 1;
+    Validate ColumnN2_SP_Stat; }
+GCHoriba_BitStar ColumnN2_Stat; Invalidate ColumnN2_Stat;
+  { ColumnN2_Stat = (GCHoribaS >> 1) & 1;
+    Validate ColumnN2_Stat; }
+GCHoriba_BitStar GC_Intake_SP_Stat; Invalidate GC_Intake_SP_Stat;
+  { GC_Intake_SP_Stat = (GCHoribaS >> 2) & 1;
+    Validate GC_Intake_SP_Stat; }
+GCHoriba_BitStar GC_Intake_Stat; Invalidate GC_Intake_Stat;
+  { GC_Intake_Stat = (GCHoribaS >> 3) & 1;
+    Validate GC_Intake_Stat; }
+GCHoriba_BitStar PickupFlow_SP_Stat; Invalidate PickupFlow_SP_Stat;
+  { PickupFlow_SP_Stat = (GCHoribaS >> 4) & 1;
+    Validate PickupFlow_SP_Stat; }
+GCHoriba_BitStar PickupFlow_Stat; Invalidate PickupFlow_Stat;
+  { PickupFlow_Stat = (GCHoribaS >> 5) & 1;
+    Validate PickupFlow_Stat; }
+GCHoriba_BitStar GC_Dilution_SP_Stat; Invalidate GC_Dilution_SP_Stat;
+  { GC_Dilution_SP_Stat = (GCHoribaS >> 6) & 1;
+    Validate GC_Dilution_SP_Stat; }
+GCHoriba_BitStar GC_Dilution_Stat; Invalidate GC_Dilution_Stat;
+  { GC_Dilution_Stat = (GCHoribaS >> 7) & 1;
+    Validate GC_Dilution_Stat; }
+GCHoriba_CS_t GCHoriba_CS; Invalidate GCHoriba_CS;
+  { GCHoriba_CS = (GCHoribaS >> 2*5) & 1;
+    Validate GCHoriba_CS; }

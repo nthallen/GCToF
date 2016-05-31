@@ -11,6 +11,8 @@
   Launch - IonGauge -d /dev/ser7
   Launch - ups -p /dev/ser10
   Launch - TwisTorr -d /dev/ser3
+  Launch - Horiba -h GBHoriba -n4 -d /net/GCAthena1/dev/ser1
+# Launch - Horiba -h GCHoriba -n5 -d /net/GCAthena2/dev/ser3
 # Launch - Zeno_Ser -d /dev/ser7
 # Launch - nXDS -d /dev/ser4
 # Launch - nice --2 sonic -t SonicData1 -h Sonic1 -p /dev/ser2

@@ -1,0 +1,8 @@
+# GBHoriba.txt
+Name GBHoriba
+Rate 1 Hz
+Port /net/GCAthena1/dev/ser1
+Data DilFT    3 sccm %7.2lf "FT Dilution Flow"
+Data IonSrc   2 sccm %7.3lf "FT Ion Source Dilution Flow" 
+Data Fluorine 1 sccm %6.4lf "FT Reagent Flow"
+Data CalP     4  kPa %6.2lf "Hot Cal Pressure" 
