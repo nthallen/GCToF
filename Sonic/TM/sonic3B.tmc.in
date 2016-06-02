@@ -11,6 +11,7 @@ TM @Rate@ Hz WindSpd Sonic@Suffix@_W;
 TM @Rate@ Hz SoundT  Sonic@Suffix@_T;
 TM @Rate@ Hz Sonic_N_t Sonic@Suffix@_N;
 TM @Rate@ Hz Sonic@SSuff@_S_t Sonic@Suffix@_S;
+TM @Rate@ Hz Sonic_N_t Sonic@Suffix@_Stale;
 
 Group Sonic@Suffix@ (Sonic@Suffix@_U, Sonic@Suffix@_V, Sonic@Suffix@_W, Sonic@Suffix@_T, Sonic@Suffix@_N, Sonic@Suffix@_S) {
   Sonic@Suffix@_U = SonicData@Suffix@.U;
@@ -19,6 +20,7 @@ Group Sonic@Suffix@ (Sonic@Suffix@_U, Sonic@Suffix@_V, Sonic@Suffix@_W, Sonic@Su
   Sonic@Suffix@_T = SonicData@Suffix@.T;
   Sonic@Suffix@_N = SonicData@Suffix@.N;
   Sonic@Suffix@_S = SonicData@Suffix@.Status;
+  Sonic@Suffix@_Stale = SonicData@Suffix@_obj->stale(255);
   SonicData@Suffix@.N = 255;
   SonicData@Suffix@_obj->synch();
 }
