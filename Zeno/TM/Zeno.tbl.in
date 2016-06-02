@@ -1,20 +1,4 @@
-# Sonic.tbl
-Input "sonic1.tbl";
-Input "sonic2.tbl";
-
-Sonic {
-  HBox { [Sonic1]; |; [Sonic2] }
-}
-
-IG {
-  HBox{ +-; Title: "Ion Gauges"; -+ };
-  Hex_P: (Hex_P,9) mbar;
-  ToF_P: (ToF_P,9) mbar;
-  Stat:  (IG_stat,3);
-  Stale: (IG_stale,3);
-}
-
-Zeno {
+Zeno_yes {
   HBox { +-; "Zeno"; -+ };
   Tdrift: (Zeno_Tdrift,6);
   WindSpeed: (Zeno_WindSpeed,6);
@@ -32,11 +16,6 @@ Zeno {
   Stale: (ZENO_stale,3);
 }
 
-WithZeno { HBox { [Zeno]; |+ }}
-WithoutZeno {}
-ZenoSelect { [WithoutZeno]; }
+Zeno_no {}
 
-{ HBox { |+; { [Sonic]; [IG] }; |+; [ZenoSelect] };
-  -;
-  { (flttime,9) MFCtr: (MFCtr,5) }
-}
+Zeno { [@ZTBL@] }

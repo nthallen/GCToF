@@ -4,4 +4,5 @@
  10 Sonic2_C Sonic2 Sound
 10 Sonic2_T Sonic2 Temp
  10 Sonic2_N Sonic2 N
- 10 Sonic2_S Sonic2 Status
+ 10 Sonic2_S Sonic2 Status %5.0lf
+ 10 Sonic2_Stale Sonic2 Stale

@@ -21,7 +21,7 @@ clean-sonic :
 	cd @MODDIR@/.. && make clean
 }
 
-mode (default,csat3b) [ SSuff=3B SndVar=T SndTemp= ] {
+mode (csat3b) [ SSuff=3B SndVar=T SndTemp= ] {
   tmcbase = sonic@Suffix@.tmc:sonic3B.tmc.in
   colbase = sonic@Suffix@_col.tmc:sonic_col.tmc.in
   genuibase = sonic@Suffix@.genui:sonic.genui.in

@@ -11,6 +11,7 @@ TM 10 Hz WindSpd Sonic2_W;
 TM 10 Hz SoundT  Sonic2_T;
 TM 10 Hz Sonic_N_t Sonic2_N;
 TM 10 Hz Sonic3B_S_t Sonic2_S;
+TM 10 Hz Sonic_N_t Sonic2_Stale;
 
 Group Sonic2 (Sonic2_U, Sonic2_V, Sonic2_W, Sonic2_T, Sonic2_N, Sonic2_S) {
   Sonic2_U = SonicData2.U;
@@ -19,6 +20,7 @@ Group Sonic2 (Sonic2_U, Sonic2_V, Sonic2_W, Sonic2_T, Sonic2_N, Sonic2_S) {
   Sonic2_T = SonicData2.T;
   Sonic2_N = SonicData2.N;
   Sonic2_S = SonicData2.Status;
+  Sonic2_Stale = SonicData2_obj->stale(255);
   SonicData2.N = 255;
   SonicData2_obj->synch();
 }
