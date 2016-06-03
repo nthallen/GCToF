@@ -165,7 +165,7 @@ int Sonic3B::ProcessData(int flag) {
           if (RecCtr != RC) {
             SonicData->Status |= CSAT3B_MISSED_REC;
           }
-          RecCtr = (RC+1) & 63;
+          RecCtr = (RC+1) & 255;
         }
         // consume the whole record in either case
         consume(cp);
