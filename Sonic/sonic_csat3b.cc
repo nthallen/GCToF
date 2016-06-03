@@ -165,7 +165,7 @@ int Sonic3B::ProcessData(int flag) {
           if (RecCtr != RC) {
             SonicData->Status |= CSAT3B_MISSED_REC;
           }
-          RecCtr = (RC+1) & 63;
+          RecCtr = (RC+1) & 255;
         }
         // consume the whole record in either case
         consume(cp);
@@ -180,12 +180,13 @@ int main( int argc, char **argv ) {
   { Selector Sel;
     Sonic3BData_t data;
     Sonic3B Serial(&data);
-    TM_Selectee TM(tm_recv_name, &data, sizeof(data));
+    Sonic3B_TM TM(&data);
     Cmd_Selectee Cmd;
+    Serial.Sonic_init(device_name);
     Sel.add_child(&Serial);
     Sel.add_child(&TM);
     Sel.add_child(&Cmd);
-    nl_error(0, "Started");
+    nl_error(0, "Started: V1.3 %s", device_name);
     Sel.event_loop();
     nl_error(0, "Terminating");
   }

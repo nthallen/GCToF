@@ -34,12 +34,6 @@ GCToFalgo.cc
 GCToFalgooui.c
 GCToFalgooui.o
 GCToFalgo.o
-GCToFengextcdf.oui
-GCToFengcdf.tmc
-GCToFengext.cc
-GCToFengextoui.c
-GCToFengextoui.o
-GCToFengext.o
 doit.dep
 GCToFcmd.cc
 GCToFcmd.dat
@@ -61,6 +55,13 @@ GCToFcol.o
 dsdaq.o
 DSDaqtbl.tmc.dep
 DSDaqtblnc.tmc.dep
+GCToFengext.cdf
+GCToFengextcdf.oui
+GCToFengextcdf.tmc
+GCToFengext.cc
+GCToFengextoui.c
+GCToFengextoui.o
+GCToFengext.o
 GCToFtbl.tmc.dep
 nXDStbl.tmc.dep
 sonictbl.tmc.dep
@@ -75,9 +76,9 @@ DSDaqdispnc
 GCToFdisp
 GCToFdispnc
 GCToFalgo
-GCToFengext
 doit
 GCToFclt
 GCToFcltnc
 GCToFsrvr
 GCToFcol
+GCToFengext

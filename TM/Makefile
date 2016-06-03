@@ -2,7 +2,8 @@
 # Invoking: appgen_module Sonic X Suffix=1 mode=csat3
 # Invoking: appgen_module Sonic X Suffix=2 mode=csat3b
 # Invoking: appgen_module DSDaq X 
-# Makefile Generated Mon May 30 20:53:23 EDT 2016
+# Invoking: appgen_module Zeno X mode=default
+# Makefile Generated Fri Jun 03 15:50:09 EDT 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
@@ -10,10 +11,11 @@ SRC=types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc
 SRC+=IG.tmc UPS.tmc SWData.tmc SWData.h freemem.tmc sonic1.tmc
 SRC+=sonic2.tmc DSDaq.tbl TwisTorr_conv.tmc nXDS_conv.tmc
 SRC+=Horiba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl GCToF.tma
-SRC+=GCToF.sws GCToFeng.cdf GCToF.doit TwisTorr.cmd nXDS.cmd
-SRC+=zaber.cmd Horiba.cmd address.h SWData.cmd TwisTorr_col.tmc
-SRC+=nXDS_col.tmc Horiba_col.tmc UPS_col.tmc SWData_col.tmc
-SRC+=sonic1_col.tmc sonic2_col.tmc
+SRC+=GCToF.sws GCToF.doit TwisTorr.cmd nXDS.cmd zaber.cmd Horiba.cmd
+SRC+=address.h SWData.cmd TwisTorr_col.tmc nXDS_col.tmc
+SRC+=Horiba_col.tmc UPS_col.tmc SWData_col.tmc sonic1_col.tmc
+SRC+=sonic2_col.tmc GCToF.genui TMbase.genui sonic1.genui
+SRC+=sonic2.genui Zeno.genui
 TOOL=GCToF.spec Makefile
 SCRIPT=interact runfile.A1 runfile.A2
 OBJ=SWData.cmd SWData.h SWData.tmc SWData_col.tmc DSDaqtbl.tmc
@@ -24,23 +26,23 @@ OBJ+=GCToFdisp.cc GCToFdispoui.c GCToFdispoui.o GCToFdisp.o
 OBJ+=GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc UPStblnc.tmc
 OBJ+=GCToFdispnc.cc GCToFdispncoui.c GCToFdispncoui.o GCToFdispnc.o
 OBJ+=GCToFsws.tma GCToFalgoa.tmc GCToFalgo.cc GCToFalgooui.c
-OBJ+=GCToFalgooui.o GCToFalgo.o GCToFengextcdf.oui GCToFengcdf.tmc
-OBJ+=GCToFengext.cc GCToFengextoui.c GCToFengextoui.o GCToFengext.o
-OBJ+=doit.dep GCToFcmd.cc GCToFcmd.dat GCToFclt.o GCToFcltoui.c
-OBJ+=GCToFcltoui.o GCToFcltnc.o GCToFcltncoui.c GCToFcltncoui.o
-OBJ+=GCToFsrvr.o GCToFsrvroui.c GCToFsrvroui.o GCToFcol.cc GCToF.pcm
-OBJ+=tm.dac GCToFcoloui.c GCToFcoloui.o GCToFcol.o dsdaq.o
-OBJ+=DSDaqtbl.tmc.dep DSDaqtblnc.tmc.dep GCToFtbl.tmc.dep
-OBJ+=nXDStbl.tmc.dep sonictbl.tmc.dep UPStbl.tmc.dep
-OBJ+=GCToFtblnc.tmc.dep nXDStblnc.tmc.dep sonictblnc.tmc.dep
-OBJ+=UPStblnc.tmc.dep
-TGT=DSDaqdisp DSDaqdispnc GCToFdisp GCToFdispnc GCToFalgo
-TGT+=GCToFengext doit GCToFclt GCToFcltnc GCToFsrvr GCToFcol
+OBJ+=GCToFalgooui.o GCToFalgo.o doit.dep GCToFcmd.cc GCToFcmd.dat
+OBJ+=GCToFclt.o GCToFcltoui.c GCToFcltoui.o GCToFcltnc.o
+OBJ+=GCToFcltncoui.c GCToFcltncoui.o GCToFsrvr.o GCToFsrvroui.c
+OBJ+=GCToFsrvroui.o GCToFcol.cc GCToF.pcm tm.dac GCToFcoloui.c
+OBJ+=GCToFcoloui.o GCToFcol.o dsdaq.o GCToFengext.cdf
+OBJ+=GCToFengextcdf.oui GCToFengextcdf.tmc GCToFengext.cc
+OBJ+=GCToFengextoui.c GCToFengextoui.o GCToFengext.o DSDaqtbl.tmc.dep
+OBJ+=DSDaqtblnc.tmc.dep GCToFtbl.tmc.dep nXDStbl.tmc.dep
+OBJ+=sonictbl.tmc.dep UPStbl.tmc.dep GCToFtblnc.tmc.dep
+OBJ+=nXDStblnc.tmc.dep sonictblnc.tmc.dep UPStblnc.tmc.dep
+TGT=DSDaqdisp DSDaqdispnc GCToFdisp GCToFdispnc GCToFalgo doit
+TGT+=GCToFclt GCToFcltnc GCToFsrvr GCToFcol GCToFengext
 DISTRIB=../Sonic/TM/../sonic ../Sonic/TM/../sonic_csat3b
 DISTRIB+=../DSDaq/TM/../Hercules ../DSDaq/TM/../AthenaII
-DISTRIB+=../Agilent/TwisTorr ../Edwards/nXDS ../Horiba/horiba
-DISTRIB+=../IonGauge/IonGauge ../Zaber/zaber ../UPS/ups
-DISTRIB+=../Zeno/Zeno_Ser GCToF.pcm tm.dac
+DISTRIB+=../Zeno/TM/../Zeno_Ser ../Agilent/TwisTorr ../Edwards/nXDS
+DISTRIB+=../Horiba/horiba ../IonGauge/IonGauge ../Zaber/zaber
+DISTRIB+=../UPS/ups GCToF.pcm tm.dac
 IDISTRIB=Experiment.config VERSION doit
 SRCDIST=DSDaq.tbl GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl GCToF.tma
 SRCDIST+=types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc
@@ -86,7 +88,10 @@ SPECDEPBASE+=../Sonic/TM/Sonic.agm ../Sonic/TM/sonic.tmc.in
 SPECDEPBASE+=../Sonic/TM/sonic_col.tmc.in ../Sonic/TM/sonic.genui.in
 SPECDEPBASE+=../Sonic/TM/sonic.tbl.in ../Sonic/TM/sonic3B.tmc.in
 SPECDEPBASE+=../DSDaq/TM/DSDaq.agm ../DSDaq/TM/Hercules.tbl.in
-AG_CPPFLAGS=-I ../Sonic/TM/.. -I ../Sonic/TM/.. -I ../DSDaq/TM/..
+SPECDEPBASE+=../Zeno/TM/Zeno.agm ../Zeno/TM/Zeno.genui.in
+SPECDEPBASE+=../Zeno/TM/Zeno.tbl.in
+AG_CPPFLAGS=-I ../Sonic/TM/.. -I ../Sonic/TM/.. -I ../DSDaq/TM/.. -I
+AG_CPPFLAGS+=../Zeno/TM/..
 PHTGT=DSDaqtbl.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc
 RCS=$(SRC) $(TOOL) $(SCRIPT)
 SOURCE=$(RCS) $(NONRCS)
@@ -136,9 +141,6 @@ GCToFdispnc : GCToFdispnc.o GCToFdispncoui.o
 GCToFalgo : GCToFalgo.o GCToFalgooui.o
 	$(LINK.normCXX) GCToFalgo.o GCToFalgooui.o -ltmpp -ltm -lnort
 	$(OUIUSE) GCToFalgooui.c
-GCToFengext : GCToFengext.o GCToFengextoui.o
-	$(LINK.normCXX) GCToFengext.o GCToFengextoui.o -ltmpp -ltm -lnort
-	$(OUIUSE) GCToFengextoui.c
 doit : GCToF.doit
 	mkdoit3 -o doit  GCToF.doit
 GCToFclt : GCToFclt.o GCToFcltoui.o
@@ -155,6 +157,9 @@ GCToFcol : GCToFcol.o dsdaq.o GCToFcoloui.o
 	$(LINK.privCXX) GCToFcol.o dsdaq.o GCToFcoloui.o -ltmpp -ltm -lnort
 	$(OUIUSE) GCToFcoloui.c
 	$(PROMOTE) GCToFcol
+GCToFengext : GCToFengext.o GCToFengextoui.o
+	$(LINK.normCXX) GCToFengext.o GCToFengextoui.o -ltmpp -ltm -lnort
+	$(OUIUSE) GCToFengextoui.c
 DSDaqtbl.tmc : DSDaq.tbl
 -include DSDaqtbl.tmc.dep
 DSDaqdisp.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc ../DSDaq/TM/Hercules_conv.tmc ../DSDaq/TM/Athena_conv.tmc DSDaqtbl.tmc VERSION
@@ -210,16 +215,6 @@ GCToFalgooui.c : $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFalgooui.o : GCToFalgooui.c SWData.h
 GCToFalgo.o : GCToFalgo.cc SWData.h
-GCToFengextcdf.oui : GCToFeng.cdf
-	$(EDF2OUI) GCToFeng.cdf
-GCToFengcdf.tmc : GCToFeng.cdf
-	$(EDF2EXT) GCToFeng.cdf
-GCToFengext.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GCToFengcdf.tmc VERSION
-	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GCToFengcdf.tmc
-GCToFengextoui.c : GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
-	$(OUI) GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
-GCToFengextoui.o : GCToFengextoui.c SWData.h
-GCToFengext.o : GCToFengext.cc SWData.h
 doit.dep : GCToF.doit
 	mkdoit3 -M -o doit  GCToF.doit
 -include doit.dep
@@ -248,6 +243,18 @@ GCToFcoloui.o : GCToFcoloui.c SWData.h
 GCToFcol.o : GCToFcol.cc SWData.h
 dsdaq.o : ../DSDaq/TM/../dsdaq.cc SWData.h
 	$(COMPILE.cc) ../DSDaq/TM/../dsdaq.cc
+GCToFengext.cdf : GCToF.genui ../UPS/TM/UPS.genui ../Zaber/TM/zaber.genui TMbase.genui sonic1.genui sonic2.genui Zeno.genui
+	$(GENUI2ENG) GCToF.genui ../UPS/TM/UPS.genui ../Zaber/TM/zaber.genui TMbase.genui sonic1.genui sonic2.genui Zeno.genui
+GCToFengextcdf.oui : GCToFengext.cdf
+	$(EDF2OUI) GCToFengext.cdf
+GCToFengextcdf.tmc : GCToFengext.cdf
+	$(EDF2EXT) GCToFengext.cdf
+GCToFengext.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GCToFengextcdf.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc Horiba.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GCToFengextcdf.tmc
+GCToFengextoui.c : GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
+	$(OUI) GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
+GCToFengextoui.o : GCToFengextoui.c SWData.h
+GCToFengext.o : GCToFengext.cc SWData.h
 SWData.h SWData.tmc SWData_col.tmc SWData.cmd :  GCToF.sws
 	swscomp -o SWData  GCToF.sws
 
@@ -278,20 +285,20 @@ clean-sonic3b :
 clean-dist : clean-DSDaq
 clean-DSDaq :
 	cd ../DSDaq/TM/.. && make clean
+../Zeno/TM/../Zeno_Ser :
+	cd ../Zeno/TM/.. && make
+.PHONY : clean-Zeno
+clean-dist : clean-Zeno
+clean-Zeno :
+	cd ../Zeno/TM/.. && make clean
 COLFLAGS = -Haddress.h
 address.h : GCToFcol.cc
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../Horiba -I ../IonGauge -I ../Zaber
 CPPFLAGS += -I ../Sonic -I ../UPS
-CPPFLAGS += -I ../Zeno
-
-GENUISRCS = genui.txt
-GENUISRCS += ../UPS/TM/UPS.genui
-GENUISRCS += ../Zaber/TM/zaber.genui
-GENUISRCS += ../Zeno/TM/Zeno.genui
+# CPPFLAGS += -I ../Zeno
 
 
-GCToFeng.cdf : $(GENUISRCS)
-	genui -d ../eng -c $(GENUISRCS)
+
 ../Agilent/TwisTorr :
 	cd ../Agilent && make
 ../Edwards/nXDS :
