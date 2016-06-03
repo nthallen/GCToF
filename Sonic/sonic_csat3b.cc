@@ -180,7 +180,7 @@ int main( int argc, char **argv ) {
   { Selector Sel;
     Sonic3BData_t data;
     Sonic3B Serial(&data);
-    TM_Selectee TM(tm_recv_name, &data, sizeof(data));
+    Sonic3B_TM TM(&data);
     Cmd_Selectee Cmd;
     Serial.Sonic_init(device_name);
     Sel.add_child(&Serial);

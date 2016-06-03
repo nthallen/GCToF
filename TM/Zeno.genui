@@ -19,6 +19,6 @@
   1 Zeno_VBatt ZenoHK VBatt 
   1 Zeno_Rain ZenoHK Rain 
   1 Zeno_Lightning ZenoHK LeafWet  LeafWet
-  1 Zeno_BIT ZenoHK BIT 
+  1 Zeno_BIT ZenoHK BIT %8.0lf
   1 Zeno_Tdrift ZenoHK TDrift 
   1 ZENO_stale ZenoHK Stale 
