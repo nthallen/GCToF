@@ -186,7 +186,7 @@ int main( int argc, char **argv ) {
     Sel.add_child(&Serial);
     Sel.add_child(&TM);
     Sel.add_child(&Cmd);
-    nl_error(0, "Started: V1.1 %s", device_name);
+    nl_error(0, "Started: V1.2 %s", device_name);
     Sel.event_loop();
     nl_error(0, "Terminating");
   }
