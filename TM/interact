@@ -4,6 +4,15 @@
   Launch TM/DCo TMbfr
   echo "Running script interact" >$memo
 
+# Launch AthenaII AthenaII
+  for i in GCAthena1 GCAthena2; do
+  if [ -f /net/$i/dev/huarp/GCToF/AthenaII ]; then
+    echo "$i/AthenaII is already running" >$memo
+  else
+    echo "Signaling Parent on $i" >$memo
+    /usr/pkg/bin/sudo /usr/local/sbin/signal_parent $i
+    waitfor /net/$i/dev/huarp/ToF/AthenaII 10 2>$memo
+  fi
   Launch DG/cmd GCToFcol
   Launch cmd/server GCToFsrvr
   Launch - lgr -N `mlf_find LOG`
