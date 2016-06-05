@@ -1,0 +1,39 @@
+On_Off_t AmbZeroS; invalidate AmbZeroS;
+  { AmbZeroS = (A1_DS_A>>0) & 1; Validate AmbZeroS; }
+On_Off_t SpVlv1S; invalidate SpVlv1S;
+  { SpVlv1S = (A1_DS_A>>1) & 1; Validate SpVlv1S; }
+On_Off_t SpVlv2S; invalidate SpVlv2S;
+  { SpVlv2S = (A1_DS_A>>2) & 1; Validate SpVlv2S; }
+On_Off_t SpVlv3S; invalidate SpVlv3S;
+  { SpVlv3S = (A1_DS_A>>3) & 1; Validate SpVlv3S; }
+On_Off_t SpVlv4S; invalidate SpVlv4S;
+  { SpVlv4S = (A1_DS_A>>4) & 1; Validate SpVlv4S; }
+On_Off_t SpVlv5S; invalidate SpVlv5S;
+  { SpVlv5S = (A1_DS_A>>5) & 1; Validate SpVlv5S; }
+On_Off_t SpVlv6S; invalidate SpVlv6S;
+  { SpVlv6S = (A1_DS_A>>6) & 1; Validate SpVlv6S; }
+On_Off_t SpVlv7S; invalidate SpVlv7S;
+  { SpVlv7S = (A1_DS_A>>7) & 1; Validate SpVlv7S; }
+
+On_Off_t Bypass_Pump; invalidate Bypass_Pump;
+  { Bypass_Pump = (A2_DS_A>>7) & 1; Validate Bypass_Pump; }
+On_Off_t GCsamp; invalidate GCsamp;
+  { GCsamp = (A2_DS_A>>0) & 1; Validate GCsamp; }
+On_Off_t HS_mode; invalidate HS_mode;
+  { HS_mode = (A2_DS_A>>1) & 1; Validate HS_mode; }
+On_Off_t Norm_mode; invalidate Norm_mode;
+  { Norm_mode = (A2_DS_A>>2) & 1; Validate Norm_mode; }
+On_Off_t GC_Pickup; invalidate GC_Pickup;
+  { GC_Pickup = (A2_DS_A>>3) & 1; Validate GC_Pickup; }
+On_Off_t Tracer_GC; invalidate Tracer_GC;
+  { Tracer_GC = (A2_DS_A>>4) & 1; Validate Tracer_GC; }
+On_Off_t CO2; invalidate CO2;
+  { CO2 = (A2_DS_B>>0) & 1; Validate CO2; }
+On_Off_t Tracer_FT; invalidate Tracer_FT;
+  { Tracer_FT = (A2_DS_B>>1) & 1; Validate Tracer_FT; }
+On_Off_t SpV_1; invalidate SpV_1;
+  { SpV_1 = (A2_DS_B>>2) & 1; Validate SpV_1; }
+On_Off_t SpV_2; invalidate SpV_2;
+  { SpV_2 = (A2_DS_B>>3) & 1; Validate SpV_2; }
+On_Off_t SpV_3; invalidate SpV_3;
+  { SpV_3 = (A2_DS_B>>4) & 1; Validate SpV_3; }

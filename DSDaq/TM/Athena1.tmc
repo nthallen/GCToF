@@ -1,0 +1,22 @@
+TM 1 Hz A1_V1000sccm_sp MFC_AMBZ_SP; Address MFC_AMBZ_SP 0x2002;
+TM 1 Hz A1_DAC_t MFC_Sp1_SP; Address MFC_Sp1_SP 0x2003;
+TM 1 Hz A1_DAC_t MFC_Sp2_SP; Address MFC_Sp1_SP 0x2000;
+TM 1 Hz A1_DAC_t MFC_Sp3_SP; Address MFC_Sp1_SP 0x2001;
+
+TM 1 Hz A1_V1000sccm MFC_AMBZ; Address MFC_AMBZ 10;
+TM 1 Hz A1_ADC_t MFC_Sp1; Address MFC_Sp1 9;
+TM 1 Hz A1_ADC_t MFC_Sp2; Address MFC_Sp2 1;
+TM 1 Hz A1_ADC_t MFC_Sp3; Address MFC_Sp3 2;
+TM 1 Hz A1_V100torr InL_P; Address InL_P 5;
+TM 1 Hz A1_V1000torr InH_P; Address InH_P 13;
+TM 1 Hz A1_V1000torr P_1000; Address P_1000 3;
+TM 1 Hz A1_ADC_t P_Diff; Address P_Diff 14;
+TM 1 Hz A1_V3000psi RegH_P; Address RegH_P 7;
+TM 1 Hz A1_V100psi RegL_P; Address RegL_P 15;
+TM 1 Hz A1_LMXXX ColdCalT; Address ColdCalT 12;
+TM 1 Hz A1_ADC_t FT_T1; Address FT_T1 8; 
+TM 1 Hz A1_ADC_t FT_T2; Address FT_T2 0; 
+
+TM 1 Hz A1_S_t  A1_Stat;
+
+TM 1 Hz A1_DS_t A1_DS_A; Address A1_DS_A 0x3000;

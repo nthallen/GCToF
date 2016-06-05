@@ -1,3 +1,5 @@
+Input "Zeno.tbl";
+
 TwisTorr {
   HBox { +-; Title: TwisTorr; -+ };
   ""          >"1"<      >"2"<     >"3"<;
@@ -29,14 +31,16 @@ PC {
 Status {
   HBox { +-; Title: Status; -+ };
   SWStat: (SWStat,3);
-  >(flttime,9)<;
+  (flttime,9);
   MFCtr: (MFCtr,5);
 }
 
 { HBox {
     |; [TwisTorr]; |; {
+      [Zeno];
       [PC];
       VGlue 0+1;
-      [Status];
-    }; | }
+      HBox { HGlue 0+1; [Status] };
+    }; | };
+  -;
 }

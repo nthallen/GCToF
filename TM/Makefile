@@ -1,68 +1,103 @@
+# Invoking: appgen_module TMbase X 
+# Invoking: appgen_module Sonic X Suffix=1 mode=csat3
+# Invoking: appgen_module Sonic X Suffix=2 mode=csat3b
+# Invoking: appgen_module DSDaq X 
+# Invoking: appgen_module Zeno X mode=default
 # Invoking: appgen_module Horiba X src=GBHoriba.txt name=GBHoriba mode=driver
 # Invoking: appgen_module Horiba X src=GCHoriba.txt name=GCHoriba
-# Makefile Generated Mon May 30 20:37:45 EDT 2016
+# Makefile Generated Sun Jun 05 16:11:36 EDT 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
 SRC=GBHoriba.txt GCHoriba.txt types.tmc base.tmc TwisTorr.tmc
-SRC+=nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc SWData.h
-SRC+=GBHoriba.tmc GCHoriba.tmc TwisTorr_conv.tmc nXDS_conv.tmc
-SRC+=GBHoriba_conv.tmc GCHoriba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl
-SRC+=UPS.tbl GCToF.tma GCToF.sws GCToF.doit TwisTorr.cmd nXDS.cmd
-SRC+=zaber.cmd SWData.cmd GBHoriba.cmd GCHoriba.cmd TwisTorr_col.tmc
-SRC+=nXDS_col.tmc sonic_col.tmc UPS_col.tmc SWData_col.tmc
-SRC+=GBHoriba_col.tmc GCHoriba_col.tmc GCToF.genui GBHoriba.genui
+SRC+=nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc SWData.h
+SRC+=freemem.tmc sonic1.tmc sonic2.tmc GBHoriba.tmc GCHoriba.tmc
+SRC+=DSDaq.tbl TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc
+SRC+=GCHoriba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl GCToF.tma
+SRC+=GCToF.sws GCToF.doit TwisTorr.cmd nXDS.cmd zaber.cmd address.h
+SRC+=SWData.cmd GBHoriba.cmd GCHoriba.cmd TwisTorr_col.tmc
+SRC+=nXDS_col.tmc UPS_col.tmc SWData_col.tmc sonic1_col.tmc
+SRC+=sonic2_col.tmc GBHoriba_col.tmc GCHoriba_col.tmc GCToF.genui
+SRC+=TMbase.genui sonic1.genui sonic2.genui Zeno.genui GBHoriba.genui
 SRC+=GCHoriba.genui
 TOOL=GCToF.spec Makefile
-SCRIPT=interact
-OBJ=SWData.cmd SWData.h SWData.tmc SWData_col.tmc GCToFtbl.tmc
-OBJ+=nXDStbl.tmc sonictbl.tmc UPStbl.tmc GCToFdisp.cc GCToFdispoui.c
-OBJ+=GCToFdispoui.o GCToFdisp.o GCToFtblnc.tmc nXDStblnc.tmc
-OBJ+=sonictblnc.tmc UPStblnc.tmc GCToFdispnc.cc GCToFdispncoui.c
-OBJ+=GCToFdispncoui.o GCToFdispnc.o GCToFsws.tma GCToFalgoa.tmc
-OBJ+=GCToFalgo.cc GCToFalgooui.c GCToFalgooui.o GCToFalgo.o doit.dep
-OBJ+=GCToFcmd.cc GCToFcmd.dat GCToFclt.o GCToFcltoui.c GCToFcltoui.o
-OBJ+=GCToFcltnc.o GCToFcltncoui.c GCToFcltncoui.o GCToFsrvr.o
-OBJ+=GCToFsrvroui.c GCToFsrvroui.o GCToFcol.cc GCToF.pcm tm.dac
-OBJ+=GCToFcoloui.c GCToFcoloui.o GCToFcol.o GCToFengext.cdf
+SCRIPT=interact runfile.A1 runfile.A2
+OBJ=SWData.cmd SWData.h SWData.tmc SWData_col.tmc DSDaqtbl.tmc
+OBJ+=DSDaqdisp.cc DSDaqdispoui.c DSDaqdispoui.o DSDaqdisp.o
+OBJ+=DSDaqtblnc.tmc DSDaqdispnc.cc DSDaqdispncoui.c DSDaqdispncoui.o
+OBJ+=DSDaqdispnc.o GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc
+OBJ+=GCToFdisp.cc GCToFdispoui.c GCToFdispoui.o GCToFdisp.o
+OBJ+=GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc UPStblnc.tmc
+OBJ+=GCToFdispnc.cc GCToFdispncoui.c GCToFdispncoui.o GCToFdispnc.o
+OBJ+=GCToFsws.tma GCToFalgoa.tmc GCToFalgo.cc GCToFalgooui.c
+OBJ+=GCToFalgooui.o GCToFalgo.o doit.dep GCToFcmd.cc GCToFcmd.dat
+OBJ+=GCToFclt.o GCToFcltoui.c GCToFcltoui.o GCToFcltnc.o
+OBJ+=GCToFcltncoui.c GCToFcltncoui.o GCToFsrvr.o GCToFsrvroui.c
+OBJ+=GCToFsrvroui.o GCToFcol.cc GCToF.pcm tm.dac GCToFcoloui.c
+OBJ+=GCToFcoloui.o GCToFcol.o dsdaq.o GCToFengext.cdf
 OBJ+=GCToFengextcdf.oui GCToFengextcdf.tmc GCToFengext.cc
-OBJ+=GCToFengextoui.c GCToFengextoui.o GCToFengext.o GCToFtbl.tmc.dep
-OBJ+=nXDStbl.tmc.dep sonictbl.tmc.dep UPStbl.tmc.dep
-OBJ+=GCToFtblnc.tmc.dep nXDStblnc.tmc.dep sonictblnc.tmc.dep
-OBJ+=UPStblnc.tmc.dep
-TGT=GCToFdisp GCToFdispnc GCToFalgo doit GCToFclt GCToFcltnc
-TGT+=GCToFsrvr GCToFcol GCToFengext
-DISTRIB=../Agilent/TwisTorr ../Edwards/nXDS ../IonGauge/IonGauge
-DISTRIB+=../Zaber/zaber ../Sonic/sonic ../UPS/ups
-DISTRIB+=../Horiba/TM/../horiba ../Zeno/Zeno_Ser GCToF.pcm tm.dac
+OBJ+=GCToFengextoui.c GCToFengextoui.o GCToFengext.o DSDaqtbl.tmc.dep
+OBJ+=DSDaqtblnc.tmc.dep GCToFtbl.tmc.dep nXDStbl.tmc.dep
+OBJ+=sonictbl.tmc.dep UPStbl.tmc.dep GCToFtblnc.tmc.dep
+OBJ+=nXDStblnc.tmc.dep sonictblnc.tmc.dep UPStblnc.tmc.dep
+TGT=DSDaqdisp DSDaqdispnc GCToFdisp GCToFdispnc GCToFalgo doit
+TGT+=GCToFclt GCToFcltnc GCToFsrvr GCToFcol GCToFengext
+DISTRIB=../Sonic/TM/../sonic ../Sonic/TM/../sonic_csat3b
+DISTRIB+=../DSDaq/TM/../Hercules ../DSDaq/TM/../AthenaII
+DISTRIB+=../Zeno/TM/../Zeno_Ser ../Agilent/TwisTorr ../Edwards/nXDS
+DISTRIB+=../IonGauge/IonGauge ../Zaber/zaber ../UPS/ups
+DISTRIB+=../Horiba/TM/../horiba GCToF.pcm tm.dac
 IDISTRIB=Experiment.config VERSION doit
-SRCDIST=GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl GCToF.tma types.tmc
-SRCDIST+=/usr/local/share/huarp/tmdf.tmc
+SRCDIST=DSDaq.tbl GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl GCToF.tma
+SRCDIST+=types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc
+SRCDIST+=UPS.tmc SWData.tmc SWData.h
+SRCDIST+=/usr/local/share/huarp/tdrift.tmc
 SRCDIST+=/usr/local/share/huarp/cpu_usage.tmc
-SRCDIST+=/usr/local/share/huarp/freemem.tmc
-SRCDIST+=/usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc
-SRCDIST+=nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc
-SRCDIST+=SWData.h GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc
-TMCBASE=types.tmc /usr/local/share/huarp/tmdf.tmc
+SRCDIST+=/usr/local/share/huarp/tmdf.tmc freemem.tmc
+SRCDIST+=/usr/local/share/huarp/flttime.tmc
+SRCDIST+=../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc
+SRCDIST+=../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc
+SRCDIST+=../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc
+SRCDIST+=../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc
+TMCBASE=types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc
+TMCBASE+=UPS.tmc SWData.tmc SWData.h
+TMCBASE+=/usr/local/share/huarp/tdrift.tmc
 TMCBASE+=/usr/local/share/huarp/cpu_usage.tmc
-TMCBASE+=/usr/local/share/huarp/freemem.tmc
-TMCBASE+=/usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc
-TMCBASE+=nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc
-TMCBASE+=SWData.h GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc
-CMDBASE=/usr/local/share/huarp/root.cmd
-CMDBASE+=/usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd
-CMDBASE+=zaber.cmd ../UPS/TM/UPS.cmd SWData.cmd SWData.h GBHoriba.cmd
-CMDBASE+=GCHoriba.cmd ../Zeno/TM/Zeno.cmd
-COLBASE=/usr/local/share/huarp/tmdf_col.tmc
+TMCBASE+=/usr/local/share/huarp/tmdf.tmc freemem.tmc
+TMCBASE+=/usr/local/share/huarp/flttime.tmc
+TMCBASE+=../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc
+TMCBASE+=../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc
+TMCBASE+=../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc
+TMCBASE+=../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc
+CMDBASE=/usr/local/share/huarp/root.cmd TwisTorr.cmd nXDS.cmd
+CMDBASE+=zaber.cmd ../UPS/TM/UPS.cmd address.h SWData.cmd SWData.h
+CMDBASE+=/usr/local/share/huarp/getcon.cmd ../DSDaq/TM/Hercules.cmd
+CMDBASE+=../DSDaq/TM/Athena1.cmd ../DSDaq/TM/Athena2.cmd
+CMDBASE+=../Zeno/TM/Zeno.cmd GBHoriba.cmd GCHoriba.cmd
+COLBASE=TwisTorr_col.tmc nXDS_col.tmc UPS_col.tmc SWData_col.tmc
+COLBASE+=/usr/local/share/huarp/tdrift_col.tmc
 COLBASE+=/usr/local/share/huarp/cpu_usage_col.tmc
-COLBASE+=/usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc
-COLBASE+=nXDS_col.tmc sonic_col.tmc UPS_col.tmc SWData_col.tmc
-COLBASE+=GBHoriba_col.tmc GCHoriba_col.tmc ../Zeno/TM/Zeno_col.tmc
+COLBASE+=/usr/local/share/huarp/tmdf_col.tmc
+COLBASE+=/usr/local/share/huarp/freemem_col.tmc sonic1_col.tmc
+COLBASE+=sonic2_col.tmc ../DSDaq/TM/Hercules_col.tmc
+COLBASE+=../DSDaq/TM/Athena1_col.tmc ../DSDaq/TM/Athena2_col.tmc
+COLBASE+=../DSDaq/TM/../dsdaq.cc ../Zeno/TM/Zeno_col.tmc
+COLBASE+=GBHoriba_col.tmc GCHoriba_col.tmc
 SWSBASE=GCToF.sws
 QCLIBASE=
-SPECDEPBASE=../Horiba/TM/Horiba.agm
-AG_CPPFLAGS=-I ../Horiba/TM/..
-PHTGT=GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc
+SPECDEPBASE=/usr/local/share/huarp/TMbase.agm
+SPECDEPBASE+=/usr/local/share/huarp/freemem_def.tmc.in
+SPECDEPBASE+=/usr/local/share/huarp/TMbase.genui.in
+SPECDEPBASE+=/usr/local/share/huarp/TMbase.tbl.in
+SPECDEPBASE+=../Sonic/TM/Sonic.agm ../Sonic/TM/sonic.tmc.in
+SPECDEPBASE+=../Sonic/TM/sonic_col.tmc.in ../Sonic/TM/sonic.genui.in
+SPECDEPBASE+=../Sonic/TM/sonic.tbl.in ../Sonic/TM/sonic3B.tmc.in
+SPECDEPBASE+=../DSDaq/TM/DSDaq.agm ../DSDaq/TM/Hercules.tbl.in
+SPECDEPBASE+=../Zeno/TM/Zeno.agm ../Zeno/TM/Zeno.genui.in
+SPECDEPBASE+=../Zeno/TM/Zeno.tbl.in ../Horiba/TM/Horiba.agm
+AG_CPPFLAGS=-I ../Sonic/TM/.. -I ../Sonic/TM/.. -I ../DSDaq/TM/.. -I
+AG_CPPFLAGS+=../Zeno/TM/.. -I ../Horiba/TM/..
+PHTGT=DSDaqtbl.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc
 RCS=$(SRC) $(TOOL) $(SCRIPT)
 SOURCE=$(RCS) $(NONRCS)
 OBJECT=$(OBJ) *.err
@@ -96,6 +131,12 @@ ifeq ($(WPHOTON),YES)
 	  cmp -s $$tgt /usr/local/share/huarp/nulltbl.tmc && echo Remaking $$tgt && rm -f $$tgt; \
 	done; true
 endif
+DSDaqdisp : DSDaqdisp.o DSDaqdispoui.o
+	$(LINK.normCXX) DSDaqdisp.o DSDaqdispoui.o -ldisp -ltmph -lph -ltmpp -ltm -lnort
+	$(OUIUSE) DSDaqdispoui.c
+DSDaqdispnc : DSDaqdispnc.o DSDaqdispncoui.o
+	$(LINK.normCXX) DSDaqdispnc.o DSDaqdispncoui.o -ldispnc -ltmnc -lncurses -ltmpp -ltm -lnort
+	$(OUIUSE) DSDaqdispncoui.c
 GCToFdisp : GCToFdisp.o GCToFdispoui.o
 	$(LINK.normCXX) GCToFdisp.o GCToFdispoui.o -ldisp -ltmph -lph -ltmpp -ltm -lnort
 	$(OUIUSE) GCToFdispoui.c
@@ -117,13 +158,29 @@ GCToFsrvr : GCToFsrvr.o GCToFsrvroui.o
 	$(LINK.privCXX) GCToFsrvr.o GCToFsrvroui.o -ltmpp -ltm -lnort
 	$(OUIUSE) GCToFsrvroui.c
 	$(PROMOTE) GCToFsrvr
-GCToFcol : GCToFcol.o GCToFcoloui.o
-	$(LINK.privCXX) GCToFcol.o GCToFcoloui.o -ltmpp -ltm -lnort
+GCToFcol : GCToFcol.o dsdaq.o GCToFcoloui.o
+	$(LINK.privCXX) GCToFcol.o dsdaq.o GCToFcoloui.o -ltmpp -ltm -lnort
 	$(OUIUSE) GCToFcoloui.c
 	$(PROMOTE) GCToFcol
 GCToFengext : GCToFengext.o GCToFengextoui.o
 	$(LINK.normCXX) GCToFengext.o GCToFengextoui.o -ltmpp -ltm -lnort
 	$(OUIUSE) GCToFengextoui.c
+DSDaqtbl.tmc : DSDaq.tbl
+-include DSDaqtbl.tmc.dep
+DSDaqdisp.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc ../DSDaq/TM/Hercules_conv.tmc ../DSDaq/TM/Athena_conv.tmc DSDaqtbl.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc ../DSDaq/TM/Hercules_conv.tmc ../DSDaq/TM/Athena_conv.tmc DSDaqtbl.tmc
+DSDaqdispoui.c : $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
+	$(OUI) $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
+DSDaqdispoui.o : DSDaqdispoui.c SWData.h
+DSDaqdisp.o : DSDaqdisp.cc SWData.h
+DSDaqtblnc.tmc : DSDaq.tbl
+-include DSDaqtblnc.tmc.dep
+DSDaqdispnc.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc ../DSDaq/TM/Hercules_conv.tmc ../DSDaq/TM/Athena_conv.tmc DSDaqtblnc.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc ../DSDaq/TM/Hercules_conv.tmc ../DSDaq/TM/Athena_conv.tmc DSDaqtblnc.tmc
+DSDaqdispncoui.c : $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
+	$(OUI) $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
+DSDaqdispncoui.o : DSDaqdispncoui.c SWData.h
+DSDaqdispnc.o : DSDaqdispnc.cc SWData.h
 GCToFtbl.tmc : GCToF.tbl
 -include GCToFtbl.tmc.dep
 nXDStbl.tmc : nXDS.tbl
@@ -132,8 +189,8 @@ sonictbl.tmc : sonic.tbl
 -include sonictbl.tmc.dep
 UPStbl.tmc : UPS.tbl
 -include UPStbl.tmc.dep
-GCToFdisp.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc VERSION
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc
+GCToFdisp.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtbl.tmc nXDStbl.tmc sonictbl.tmc UPStbl.tmc
 GCToFdispoui.c : $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFdispoui.o : GCToFdispoui.c SWData.h
@@ -146,8 +203,8 @@ sonictblnc.tmc : sonic.tbl
 -include sonictblnc.tmc.dep
 UPStblnc.tmc : UPS.tbl
 -include UPStblnc.tmc.dep
-GCToFdispnc.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc UPStblnc.tmc VERSION
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc UPStblnc.tmc
+GCToFdispnc.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc UPStblnc.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFtblnc.tmc nXDStblnc.tmc sonictblnc.tmc UPStblnc.tmc
 GCToFdispncoui.c : $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/nctable.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFdispncoui.o : GCToFdispncoui.c SWData.h
@@ -157,8 +214,8 @@ GCToFsws.tma : GCToF.sws
 GCToFalgoa.tmc : GCToF.tma GCToFsws.tma GCToFsrvr
 	$(SERVER) ./GCToFsrvr
 	$(TMCALGO) -V "`./GCToFsrvr -R`" GCToF.tma GCToFsws.tma
-GCToFalgo.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc GCToFalgoa.tmc VERSION
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc GCToFalgoa.tmc
+GCToFalgo.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc GCToFalgoa.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc GCToFalgoa.tmc
 GCToFalgooui.c : $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFalgooui.o : GCToFalgooui.c SWData.h
@@ -166,37 +223,39 @@ GCToFalgo.o : GCToFalgo.cc SWData.h
 doit.dep : GCToF.doit
 	mkdoit3 -M -o doit  GCToF.doit
 -include doit.dep
-GCToFcmd.cc : /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd zaber.cmd ../UPS/TM/UPS.cmd SWData.cmd GBHoriba.cmd GCHoriba.cmd ../Zeno/TM/Zeno.cmd
-	$(CMDGEN) -d GCToFcmd.dat /usr/local/share/huarp/root.cmd /usr/local/share/huarp/getcon.cmd TwisTorr.cmd nXDS.cmd zaber.cmd ../UPS/TM/UPS.cmd SWData.cmd GBHoriba.cmd GCHoriba.cmd ../Zeno/TM/Zeno.cmd
-GCToFclt.o : GCToFcmd.cc SWData.h
+GCToFcmd.cc : /usr/local/share/huarp/root.cmd TwisTorr.cmd nXDS.cmd zaber.cmd ../UPS/TM/UPS.cmd SWData.cmd /usr/local/share/huarp/getcon.cmd ../DSDaq/TM/Hercules.cmd ../DSDaq/TM/Athena1.cmd ../DSDaq/TM/Athena2.cmd ../Zeno/TM/Zeno.cmd GBHoriba.cmd GCHoriba.cmd
+	$(CMDGEN) -d GCToFcmd.dat /usr/local/share/huarp/root.cmd TwisTorr.cmd nXDS.cmd zaber.cmd ../UPS/TM/UPS.cmd SWData.cmd /usr/local/share/huarp/getcon.cmd ../DSDaq/TM/Hercules.cmd ../DSDaq/TM/Athena1.cmd ../DSDaq/TM/Athena2.cmd ../Zeno/TM/Zeno.cmd GBHoriba.cmd GCHoriba.cmd
+GCToFclt.o : GCToFcmd.cc address.h SWData.h
 	$(COMPILE.clt) GCToFcmd.cc
 GCToFcltoui.c : $(OUIDIR)/kbdclt.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/kbdclt.oui $(OUIDIR)/msg.oui
-GCToFcltoui.o : GCToFcltoui.c SWData.h
-GCToFcltnc.o : GCToFcmd.cc SWData.h
+GCToFcltoui.o : GCToFcltoui.c address.h SWData.h
+GCToFcltnc.o : GCToFcmd.cc address.h SWData.h
 	$(COMPILE.cltnc) GCToFcmd.cc
 GCToFcltncoui.c : $(OUIDIR)/kbdclt.oui $(OUIDIR)/nctable.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/kbdclt.oui $(OUIDIR)/nctable.oui $(OUIDIR)/msg.oui
-GCToFcltncoui.o : GCToFcltncoui.c SWData.h
-GCToFsrvr.o : GCToFcmd.cc SWData.h
+GCToFcltncoui.o : GCToFcltncoui.c address.h SWData.h
+GCToFsrvr.o : GCToFcmd.cc address.h SWData.h
 	$(COMPILE.srvr) GCToFcmd.cc
 GCToFsrvroui.c : $(OUIDIR)/cis.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/cis.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
-GCToFsrvroui.o : GCToFsrvroui.c SWData.h
-GCToFcol.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc nXDS_col.tmc sonic_col.tmc UPS_col.tmc SWData_col.tmc GBHoriba_col.tmc GCHoriba_col.tmc ../Zeno/TM/Zeno_col.tmc VERSION
-	$(TMC.col) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/freemem_col.tmc TwisTorr_col.tmc nXDS_col.tmc sonic_col.tmc UPS_col.tmc SWData_col.tmc GBHoriba_col.tmc GCHoriba_col.tmc ../Zeno/TM/Zeno_col.tmc
+GCToFsrvroui.o : GCToFsrvroui.c address.h SWData.h
+GCToFcol.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc TwisTorr_col.tmc nXDS_col.tmc UPS_col.tmc SWData_col.tmc /usr/local/share/huarp/tdrift_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/freemem_col.tmc sonic1_col.tmc sonic2_col.tmc ../DSDaq/TM/Hercules_col.tmc ../DSDaq/TM/Athena1_col.tmc ../DSDaq/TM/Athena2_col.tmc ../Zeno/TM/Zeno_col.tmc GBHoriba_col.tmc GCHoriba_col.tmc VERSION
+	$(TMC.col) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc TwisTorr_col.tmc nXDS_col.tmc UPS_col.tmc SWData_col.tmc /usr/local/share/huarp/tdrift_col.tmc /usr/local/share/huarp/cpu_usage_col.tmc /usr/local/share/huarp/tmdf_col.tmc /usr/local/share/huarp/freemem_col.tmc sonic1_col.tmc sonic2_col.tmc ../DSDaq/TM/Hercules_col.tmc ../DSDaq/TM/Athena1_col.tmc ../DSDaq/TM/Athena2_col.tmc ../Zeno/TM/Zeno_col.tmc GBHoriba_col.tmc GCHoriba_col.tmc
 GCToFcoloui.c : $(OUIDIR)/collect.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 	$(OUI) $(OUIDIR)/collect.oui $(OUIDIR)/seteuid.oui $(OUIDIR)/msg.oui
 GCToFcoloui.o : GCToFcoloui.c SWData.h
 GCToFcol.o : GCToFcol.cc SWData.h
-GCToFengext.cdf : GCToF.genui ../UPS/TM/UPS.genui ../Zaber/TM/zaber.genui GBHoriba.genui GCHoriba.genui ../Zeno/TM/Zeno.genui
-	$(GENUI2ENG) GCToF.genui ../UPS/TM/UPS.genui ../Zaber/TM/zaber.genui GBHoriba.genui GCHoriba.genui ../Zeno/TM/Zeno.genui
+dsdaq.o : ../DSDaq/TM/../dsdaq.cc SWData.h
+	$(COMPILE.cc) ../DSDaq/TM/../dsdaq.cc
+GCToFengext.cdf : GCToF.genui ../UPS/TM/UPS.genui ../Zaber/TM/zaber.genui TMbase.genui sonic1.genui sonic2.genui Zeno.genui GBHoriba.genui GCHoriba.genui
+	$(GENUI2ENG) GCToF.genui ../UPS/TM/UPS.genui ../Zaber/TM/zaber.genui TMbase.genui sonic1.genui sonic2.genui Zeno.genui GBHoriba.genui GCHoriba.genui
 GCToFengextcdf.oui : GCToFengext.cdf
 	$(EDF2OUI) GCToFengext.cdf
 GCToFengextcdf.tmc : GCToFengext.cdf
 	$(EDF2EXT) GCToFengext.cdf
-GCToFengext.cc : types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFengextcdf.tmc VERSION
-	$(TMC) types.tmc /usr/local/share/huarp/tmdf.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/freemem.tmc /usr/local/share/huarp/flttime.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc sonic.tmc UPS.tmc SWData.tmc GBHoriba.tmc GCHoriba.tmc ../Zeno/TM/Zeno.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFengextcdf.tmc
+GCToFengext.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFengextcdf.tmc VERSION
+	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc UPS.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc GBHoriba.tmc GCHoriba.tmc GBHoriba_conv.tmc GCHoriba_conv.tmc GCToFengextcdf.tmc
 GCToFengextoui.c : GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 	$(OUI) GCToFengextcdf.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui
 GCToFengextoui.o : GCToFengextoui.c SWData.h
@@ -211,6 +270,32 @@ clean : tidy
 clean-dist : clean
 $(IGNOREFILE) : Makefile
 	@for i in $(OBJECT) $(TARGET); do echo "$$i"; done >$(IGNOREFILE)
+../Sonic/TM/../sonic :
+	cd ../Sonic/TM/.. && make sonic
+.PHONY : clean-sonic
+clean-dist : clean-sonic
+clean-sonic :
+	cd ../Sonic/TM/.. && make clean
+../Sonic/TM/../sonic_csat3b :
+	cd ../Sonic/TM/.. && make sonic_csat3b
+.PHONY : clean-sonic3b
+clean-dist : clean-sonic3b
+clean-sonic3b :
+	cd ../Sonic/TM/.. && make clean
+../DSDaq/TM/../Hercules :
+	cd ../DSDaq/TM/.. && make Hercules
+../DSDaq/TM/../AthenaII :
+	cd ../DSDaq/TM/.. && make AthenaII
+.PHONY : clean-DSDaq
+clean-dist : clean-DSDaq
+clean-DSDaq :
+	cd ../DSDaq/TM/.. && make clean
+../Zeno/TM/../Zeno_Ser :
+	cd ../Zeno/TM/.. && make
+.PHONY : clean-Zeno
+clean-dist : clean-Zeno
+clean-Zeno :
+	cd ../Zeno/TM/.. && make clean
 GBHoriba.tmc GBHoriba_col.tmc GBHoriba.cmd GBHoriba_conv.tmc GBHoriba.genui GBHoriba.tbl : GBHoriba.txt ../Horiba/TM/Horiba_gen
 	../Horiba/TM/Horiba_gen GBHoriba.txt name=GBHoriba
 .PHONY : clean-Horiba
@@ -218,17 +303,15 @@ GBHoriba.tmc GBHoriba_col.tmc GBHoriba.cmd GBHoriba_conv.tmc GBHoriba.genui GBHo
 	cd ../Horiba/TM/.. && make
 clean-dist : clean-Horiba
 clean-Horiba :
-	cd @MODDIR/.. && make clean
+	cd ../Horiba/TM/.. && make clean
 GCHoriba.tmc GCHoriba_col.tmc GCHoriba.cmd GCHoriba_conv.tmc GCHoriba.genui GCHoriba.tbl : GCHoriba.txt ../Horiba/TM/Horiba_gen
 	../Horiba/TM/Horiba_gen GCHoriba.txt name=GCHoriba
+COLFLAGS = -Haddress.h
+address.h : GCToFcol.cc
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../IonGauge -I ../Zaber
-CPPFLAGS += -I ../Sonic -I ../UPS
-CPPFLAGS += -I ../Zeno
+CPPFLAGS += -I ../UPS
 
 
-
-# GCToFeng.cdf : $(GENUISRCS)
-#	genui -d ../eng -c $(GENUISRCS)
 ../Agilent/TwisTorr :
 	cd ../Agilent && make
 ../Edwards/nXDS :
@@ -237,7 +320,5 @@ CPPFLAGS += -I ../Zeno
 	cd ../IonGauge && make
 ../Zaber/zaber :
 	cd ../Zaber && make
-../Sonic/sonic :
-	cd ../Sonic && make
 ../UPS/ups :
 	cd ../UPS && make

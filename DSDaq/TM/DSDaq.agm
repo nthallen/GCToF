@@ -1,0 +1,20 @@
+ModuleDef DSDaq {
+  Definitions for Hercules and Athena I/O
+}
+
+tmcbase = DS_types.tmc Hercules.tmc Athena1.tmc Athena2.tmc
+colbase = Hercules_col.tmc Athena1_col.tmc Athena2_col.tmc
+colbase = ../dsdaq.cc
+cmdbase = Hercules.cmd Athena1.cmd Athena2.cmd
+DSDaqdisp : Hercules_conv.tmc Athena_conv.tmc DSDaq.tbl:Hercules.tbl.in
+CPPFLAGS = -I @MODDIR@/..
+DISTRIB = @MODDIR@/../Hercules @MODDIR@/../AthenaII
+%%
+@MODDIR@/../Hercules :
+	cd @MODDIR@/.. && make Hercules
+@MODDIR@/../AthenaII :
+	cd @MODDIR@/.. && make AthenaII
+.PHONY : clean-DSDaq
+clean-dist : clean-DSDaq
+clean-DSDaq :
+	cd @MODDIR@/.. && make clean

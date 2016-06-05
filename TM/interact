@@ -4,6 +4,17 @@
   Launch TM/DCo TMbfr
   echo "Running script interact" >$memo
 
+# Launch AthenaII AthenaII
+  for i in GCAthena1 GCAthena2; do
+    if [ -f /net/$i/dev/huarp/GCToF/AthenaII ]; then
+      echo "$i/AthenaII is already running" >$memo
+    else
+      echo "Signaling Parent on $i" >$memo
+      /usr/pkg/bin/sudo /usr/local/sbin/signal_parent $i
+      waitfor /net/$i/dev/huarp/GCToF/AthenaII 10 2>$memo
+    fi
+  done
+  Launch Hercules Hercules
   Launch DG/cmd GCToFcol
   Launch cmd/server GCToFsrvr
   Launch - lgr -N `mlf_find LOG`
@@ -12,9 +23,9 @@
   Launch - ups -p /dev/ser10
   Launch - TwisTorr -d /dev/ser3
   Launch - Horiba -h GBHoriba -n4 -d /net/GCAthena1/dev/ser1
-# Launch - Horiba -h GCHoriba -n5 -d /net/GCAthena2/dev/ser3
-# Launch - Zeno_Ser -d /dev/ser7
+  Launch - Horiba -h GCHoriba -n5 -d /net/GCAthena2/dev/ser3
+  Launch - Zeno_Ser -d /dev/ser8
 # Launch - nXDS -d /dev/ser4
 # Launch - nice --2 sonic -t SonicData1 -h Sonic1 -p /dev/ser2
-# Launch - nice --2 sonic -t SonicData2 -h Sonic2 -p /dev/ser6
+  Launch - nice --2 sonic_csat3b -t SonicData2 -h Sonic2 -p /dev/ser9
   Launch - GCToFalgo -v

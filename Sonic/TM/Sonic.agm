@@ -1,0 +1,38 @@
+ModuleDef Sonic [ Suffix= Rate=10 SSuff= SndVar= SndTemp=# ] {
+  Sonic Module supports Campbell Scientific Sonic Anemometers
+  CSAT3 and CSAT3B
+}
+
+tmcbase = sonic_types.tmc
+
+mode (default,csat3) [ SndVar=C ] {
+  tmcbase = sonic@Suffix@.tmc:sonic.tmc.in
+  colbase = sonic@Suffix@_col.tmc:sonic_col.tmc.in
+  genuibase = sonic@Suffix@.genui:sonic.genui.in
+  - : sonic@Suffix@.tbl:sonic.tbl.in
+  DISTRIB = @MODDIR@/../sonic
+  CPPFLAGS = -I @MODDIR@/..
+  %%
+@MODDIR@/../sonic :
+	cd @MODDIR@/.. && make sonic
+.PHONY : clean-sonic
+clean-dist : clean-sonic
+clean-sonic :
+	cd @MODDIR@/.. && make clean
+}
+
+mode (csat3b) [ SSuff=3B SndVar=T SndTemp= ] {
+  tmcbase = sonic@Suffix@.tmc:sonic3B.tmc.in
+  colbase = sonic@Suffix@_col.tmc:sonic_col.tmc.in
+  genuibase = sonic@Suffix@.genui:sonic.genui.in
+  - : sonic@Suffix@.tbl:sonic.tbl.in
+  DISTRIB = @MODDIR@/../sonic_csat3b
+  CPPFLAGS = -I @MODDIR@/..
+  %%
+@MODDIR@/../sonic_csat3b :
+	cd @MODDIR@/.. && make sonic_csat3b
+.PHONY : clean-sonic3b
+clean-dist : clean-sonic3b
+clean-sonic3b :
+	cd @MODDIR@/.. && make clean
+}

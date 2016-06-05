@@ -2,6 +2,16 @@ SWData.cmd
 SWData.h
 SWData.tmc
 SWData_col.tmc
+DSDaqtbl.tmc
+DSDaqdisp.cc
+DSDaqdispoui.c
+DSDaqdispoui.o
+DSDaqdisp.o
+DSDaqtblnc.tmc
+DSDaqdispnc.cc
+DSDaqdispncoui.c
+DSDaqdispncoui.o
+DSDaqdispnc.o
 GCToFtbl.tmc
 nXDStbl.tmc
 sonictbl.tmc
@@ -42,6 +52,7 @@ tm.dac
 GCToFcoloui.c
 GCToFcoloui.o
 GCToFcol.o
+dsdaq.o
 GCToFengext.cdf
 GCToFengextcdf.oui
 GCToFengextcdf.tmc
@@ -49,6 +60,8 @@ GCToFengext.cc
 GCToFengextoui.c
 GCToFengextoui.o
 GCToFengext.o
+DSDaqtbl.tmc.dep
+DSDaqtblnc.tmc.dep
 GCToFtbl.tmc.dep
 nXDStbl.tmc.dep
 sonictbl.tmc.dep
@@ -58,6 +71,8 @@ nXDStblnc.tmc.dep
 sonictblnc.tmc.dep
 UPStblnc.tmc.dep
 *.err
+DSDaqdisp
+DSDaqdispnc
 GCToFdisp
 GCToFdispnc
 GCToFalgo

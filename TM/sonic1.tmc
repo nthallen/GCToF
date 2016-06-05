@@ -1,0 +1,23 @@
+/* sonic.tmc */
+
+TM "Receive" SonicData1 1;
+
+TM 10 Hz WindSpd Sonic1_U;
+TM 10 Hz WindSpd Sonic1_V;
+TM 10 Hz WindSpd Sonic1_W;
+TM 10 Hz SoundSpd Sonic1_C;
+TM 10 Hz Sonic_N_t Sonic1_N;
+TM 10 Hz Sonic_S_t Sonic1_S;
+TM 10 Hz Sonic_N_t Sonic1_Stale;
+
+Group Sonic1 (Sonic1_U, Sonic1_V, Sonic1_W, Sonic1_C, Sonic1_N, Sonic1_S) {
+  Sonic1_U = SonicData1.U;
+  Sonic1_V = SonicData1.V;
+  Sonic1_W = SonicData1.W;
+  Sonic1_C = SonicData1.C;
+  Sonic1_N = SonicData1.N;
+  Sonic1_S = SonicData1.Status;
+  Sonic1_Stale = SonicData1_obj->stale(255);
+  SonicData1.N = 255;
+  SonicData1_obj->synch();
+}

@@ -1,0 +1,37 @@
+ModuleDef Zeno [ FMTSUFFIX= ZTBL=Zeno_yes ] {
+  Zeno Module supports RS-232 communication with
+  the Zeno Weather Station
+  modes:
+    default: Include Zeno driver and data
+    disable: Do not include Zeno driver and data
+    disable2: Do not collect or extract Zeno data, but
+      preserve engineering plots for compatability
+}
+
+mode (default) {
+  tmcbase = Zeno.tmc
+  colbase = Zeno_col.tmc
+  cmdbase = Zeno.cmd
+  genuibase = Zeno.genui:Zeno.genui.in
+  - : Zeno.tbl:Zeno.tbl.in
+  DISTRIB = @MODDIR@/../Zeno_Ser
+  CPPFLAGS = -I @MODDIR@/..
+  %%
+@MODDIR@/../Zeno_Ser :
+	cd @MODDIR@/.. && make
+}
+
+mode (disable) [ ZTBL=Zeno_no ] {
+  - : Zeno.tbl:Zeno.tbl.in
+}
+
+mode (disable2) [ FMTSUFFIX=%- ZTBL=Zeno_no ] {
+  genuibase = Zeno.genui:Zeno.genui.in
+  - : Zeno.tbl:Zeno.tbl.in
+}
+
+%%
+.PHONY : clean-Zeno
+clean-dist : clean-Zeno
+clean-Zeno :
+	cd @MODDIR@/.. && make clean

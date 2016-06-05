@@ -4,13 +4,13 @@
   const char *TT_Status_text(signed short stat) {
     const char *rv = "********";
     switch (stat) {
-      case 0: rv = "Stop    "; break;
+      case 0: rv = "    Stop"; break;
       case 1: rv = "WtIntlck"; break;
       case 2: rv = "Starting"; break;
       case 3: rv = "AutoTune"; break;
-      case 4: rv = "Braking "; break;
-      case 5: rv = "Normal  "; break;
-      case 6: rv = "Fail    "; break;
+      case 4: rv = " Braking"; break;
+      case 5: rv = "  Normal"; break;
+      case 6: rv = "    Fail"; break;
       default: break;
     }
     return rv;

@@ -1,0 +1,8 @@
+ @Rate@ Sonic@Suffix@_U Sonic@Suffix@ Winds
+ @Rate@ Sonic@Suffix@_V Sonic@Suffix@ Winds
+ @Rate@ Sonic@Suffix@_W Sonic@Suffix@ Winds
+ @Rate@ Sonic@Suffix@_C Sonic@Suffix@ Sound
+@SndTemp@@Rate@ Sonic@Suffix@_T Sonic@Suffix@ Temp
+ @Rate@ Sonic@Suffix@_N Sonic@Suffix@ N
+ @Rate@ Sonic@Suffix@_S Sonic@Suffix@ Status %5.0lf
+ @Rate@ Sonic@Suffix@_Stale Sonic@Suffix@ Stale

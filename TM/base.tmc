@@ -1,3 +1,1 @@
-TM typedef unsigned char UCHAR { text "%3u"; }
-TM 1 Hz freemem_t freemem;
 

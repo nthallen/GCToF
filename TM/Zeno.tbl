@@ -1,4 +1,4 @@
-Zeno {
+Zeno_yes {
   HBox { +-; "Zeno"; -+ };
   Tdrift: (Zeno_Tdrift,6);
   WindSpeed: (Zeno_WindSpeed,6);
@@ -15,3 +15,7 @@ Zeno {
   BIT: (Zeno_BIT,8);
   Stale: (ZENO_stale,3);
 }
+
+Zeno_no {}
+
+Zeno { [Zeno_yes] }

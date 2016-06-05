@@ -1,0 +1,10 @@
+Sonic@Suffix@ {
+  HBox { Title: +-; "Sonic@Suffix@"; -+ };
+  U: (Sonic@Suffix@_U,6) "m/s";
+  V: (Sonic@Suffix@_V,6) "m/s";
+  W: (Sonic@Suffix@_W,6) "m/s";
+  C: (Sonic@Suffix@_C,6) "m/s";
+  N: (Sonic@Suffix@_N,6) "m/s";
+  S: (Sonic@Suffix@_S,6) "m/s";
+  >{Stale: (Sonic@Suffix@_Stale,3)};
+}

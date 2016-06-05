@@ -1,0 +1,133 @@
+/* Types for use by the DSDaq Module */
+TM typedef double DS_VOLTS { text "%6.2lf"; }
+TM typedef double DS_AMPS { text "%5.3lf"; }
+TM typedef double DS_SCCM { text "%6.1lf"; }
+TM typedef double DS_SLM { text "%6.3lf"; }
+TM typedef double DS_CELCIUS { text "%5.1lf"; }
+TM typedef double DS_MBAR { text "%6.1lf"; }
+TM typedef double DS_PSI { text "%4.0lf"; }
+%{
+  const char *DS_S_text(unsigned char sv) {
+    switch (sv) {
+      case 0: return "gone     ";
+      case 1: return "init     ";
+      case 2: return "connected";
+      default: return "?????????";
+    }
+  }
+%}
+
+TM typedef unsigned short Herc_DAC_t {
+    convert DS_VOLTS;
+    text "%6.2lf";
+    collect x = Herc.read(x.address);
+  }
+  calibration (Herc_DAC_t, DS_VOLTS) { 0, -10, 4096, 10 }
+
+TM typedef unsigned char Herc_DS_t {
+  text "%3u";
+  collect x = Herc.read(x.address);
+}
+TM typedef unsigned char Herc_S_t {
+  text "%10u" DS_S_text();
+  collect x = Herc.status();
+}
+
+TM typedef signed short Herc_ADC_t {
+    convert DS_VOLTS;
+    text "%6.2lf";
+    collect x = Herc.read(0x1000 + x.address);
+  }
+  calibration (Herc_ADC_t, DS_VOLTS) { -32768, -10, 32768, 10 }
+
+/* TPA_Cmon, TPB_Cmon: 0-10 V = 0-4.545 A */
+TM typedef Herc_ADC_t AD16_TPAMPS { text "%5.3lf"; convert DS_AMPS; }
+  calibration (AD16_TPAMPS, DS_AMPS) { 0, 0, 32768, 4.545 }
+
+/******************/
+/* Athena1 types: */
+/******************/
+TM typedef signed short A1_ADC_t {
+    convert DS_VOLTS;
+    text "%6.2lf";
+    collect x = A1.read(0x1000 + x.address);
+  }
+  calibration (A1_ADC_t, DS_VOLTS) { -32768, -10, 32768, 10 }
+TM typedef A1_ADC_t A1_ADCx2_t {
+    collect x = A1.read(x.address + 0x1100);
+  }
+  calibration (A1_ADCx2_t, DS_VOLTS) { -32768, -5, 32768, 5 }
+TM typedef A1_ADCx2_t A1_V1000sccm { text "%6.1lf"; convert DS_SCCM; }
+  calibration (A1_V1000sccm,DS_SCCM) { 0, 0, 32768, 1000 }
+TM typedef A1_ADCx2_t A1_V1000torr { text "%6.1lf"; convert DS_MBAR; }
+  calibration (A1_V1000torr,DS_MBAR) { 0, 0, 32768, 1333.2 }
+TM typedef A1_ADCx2_t A1_V100torr { convert DS_MBAR; }
+  calibration (A1_V100torr,DS_MBAR) { 0, 0, 32768, 133.32 }
+TM typedef A1_ADCx2_t A1_V100psi { convert DS_PSI; }
+  calibration (A1_V100psi,DS_PSI) { 6553.6, 0, 32768, 100 }
+TM typedef A1_ADCx2_t A1_V3000psi { convert DS_PSI; }
+  calibration (A1_V3000psi,DS_PSI) { 6553.6, 0, 32768, 3000 }
+TM typedef A1_ADCx2_t A1_LMXXX { convert DS_CELCIUS; }
+  calibration (A1_LMXXX,DS_CELCIUS) { 1638.4, -50, 31129.6, 150 }
+
+TM typedef unsigned short A1_DAC_t {
+    convert DS_VOLTS;
+    text "%6.2lf";
+    collect x = A1.read(x.address);
+  }
+  calibration (A1_DAC_t, DS_VOLTS) { 0, 0, 4096, 10 }
+
+TM typedef A1_DAC_t A1_V1000sccm_sp { convert DS_SCCM; }
+  calibration (A1_V1000sccm_sp, DS_SCCM) { 2048, 0, 4096, 2000 }
+
+TM typedef unsigned char A1_DS_t {
+  text "%3u";
+  collect x = A1.read(x.address);
+}
+TM typedef unsigned char A1_S_t {
+  text "%10u" DS_S_text();
+  collect x = A1.status();
+}
+
+/******************/
+/* Athena2 types: */
+/******************/
+TM typedef unsigned short A2_DAC_t {
+    convert DS_VOLTS;
+    text "%6.2lf";
+    collect x = A2.read(x.address);
+  }
+  calibration (A2_DAC_t, DS_VOLTS) { 0, 0, 4096, 10 }
+TM typedef A1_ADC_t A2_ADC_t {
+  collect x = A2.read(x.address);
+}
+TM typedef A1_ADCx2_t A2_ADCx2_t {
+  collect x = A2.read(x.address + 0x1100);
+}
+TM typedef A2_ADCx2_t A2_V1000torr { text "%6.1lf"; convert DS_MBAR; }
+  calibration (A2_V1000torr,DS_MBAR) { 0, 0, 32768, 1333.2 }
+TM typedef A2_ADCx2_t A2_V100torr { text "%6.2lf"; convert DS_MBAR; }
+  calibration (A2_V100torr,DS_MBAR) { 0, 0, 32768, 133.32 }
+TM typedef unsigned char A2_DS_t {
+  text "%3u";
+  collect x = A2.read(x.address);
+}
+TM typedef unsigned char A2_S_t {
+  text "%10u" DS_S_text();
+  collect x = A2.status();
+}
+
+/*************************/
+/* Digital Status types: */
+/*************************/
+%{
+  #define on_off_text(x) ((x)?" On":"Off")
+  #define start_stop_text(x) ((x)?"Start":" Stop")
+  #define low_high_text(x) ((x)?" Low":"High")
+  #define bfly_mode_text(x) ((x)?"Pressure":"Position")
+%}
+TM typedef unsigned char On_Off_t { text "%3d" on_off_text(); }
+TM typedef unsigned char Start_t { text "%5d" start_stop_text(); }
+TM typedef unsigned char Low_High_t { text "%5d" low_high_text(); }
+TM typedef unsigned char Bfly_Mode_t { text "%8d" bfly_mode_text(); }
+TM typedef unsigned char Bfly_Ctrl_t { text "%7d" bfly_ctrl_text(); }
