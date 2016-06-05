@@ -25,8 +25,8 @@ TPumps {
   HBox { +-; Title: Turbos; -+ };
   ""      >A<              >B<;
   Enb:   (TPA_Enb,3)   (TPB_Enb,3);
-  Start: (TPA_Start,3) (TPB_Start,3);
-  Low:   (TPA_Low,3)   (TPB_Low,3);
+  Start: (TPA_Start,5) (TPB_Start,5);
+  Low:   (TPA_Low,4)   (TPB_Low,4);
   BT:    (TPA_BT,6)    (TPB_BT,6)   V;
   Spd:   (TPA_Spd,6)   (TPB_Spd,6)  V;
   Cmon:  (TPA_Cmon,5)  (TPB_Cmon,5) A;

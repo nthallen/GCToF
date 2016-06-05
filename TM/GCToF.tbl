@@ -31,7 +31,7 @@ PC {
 Status {
   HBox { +-; Title: Status; -+ };
   SWStat: (SWStat,3);
-  >(flttime,9)<;
+  (flttime,9);
   MFCtr: (MFCtr,5);
 }
 
@@ -40,6 +40,7 @@ Status {
       [Zeno];
       [PC];
       VGlue 0+1;
-      [Status];
-    }; | }
+      HBox { HGlue 0+1; [Status] };
+    }; | };
+  -;
 }

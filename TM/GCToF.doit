@@ -1,4 +1,5 @@
 batchfile interact
 display GCToFdisp
+display DSDaqdisp
 client GCToFclt
 memo

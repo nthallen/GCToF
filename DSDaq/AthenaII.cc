@@ -6,7 +6,7 @@
 #include "oui.h"
 #include "nortlib.h"
 
-AthenaII::AthenaII(int ad_se) : dsdaqdrv("Athena_GB") {
+AthenaII::AthenaII(int ad_se) : dsdaqdrv("AthenaII") {
   int i;
   n_ad = ad_se ? 16 : 8;
   n_dio = 3;

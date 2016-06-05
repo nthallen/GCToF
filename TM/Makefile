@@ -3,7 +3,7 @@
 # Invoking: appgen_module Sonic X Suffix=2 mode=csat3b
 # Invoking: appgen_module DSDaq X 
 # Invoking: appgen_module Zeno X mode=default
-# Makefile Generated Fri Jun 03 15:50:09 EDT 2016
+# Makefile Generated Sun Jun 05 18:22:52 UTC 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
