@@ -48,9 +48,6 @@ CalValves {
   H2O2:   (H2O2_cal,3);
   Oacid:  (Oacid_cal,3);
   MHP:    (MHP_cal,3);
-  Spare1: (Spare1_cal,3);
-  Spare2: (Spare2_cal,3);
-  Spare3: (Spare3_cal,3);
 }
 
 DS_Misc {
@@ -68,26 +65,94 @@ DSDaq {
   Athena2:  (A2_Stat,10);
 }
 
+GBzero {
+  HBox { +-; Title: Zero; -+ };
+  ""            >Set<           >Flow<;
+  (AmbZeroS,3) (MFC_AMBZ_SP,6) (MFC_AMBZ,6) sccm;
+}
+
+GBcal {
+  HBox { +-; Title: "GB Cal"; -+ };
+  ""  >"1"<  >"2"<  >Set<   >T<;
+  Cold: (ColdCal1S,3) (ColdCal2S,3) "" (ColdCalT,6) C;
+  Hot:  (HotCal1S,3)  (HotCal2S,3); #  (HotCalT_SP,6) (HotCalT) C;
+}
+
+GBPT {
+  HBox { +-; Title: "GB P/T"; -+ };
+  RegH_P: (RegH_P,6) psi;
+  RegL_P: (RegL_P,6) psi;
+  InH_P:  (InH_P,6) mbar;
+  InL_P:  (InL_P,6) mbar;
+  P_1000: (P_1000,6) mbar;
+  P_Diff: (P_Diff,6) V;
+  FT_T1:  (FT_T1,6) V;
+  FT_T2:  (FT_T2,6) V;
+}
+
+GCstatus {
+  HBox { +-; Title: "GC Status"; -+ };
+  "Bypass Pump:" (Bypass_Pump,3);
+  CO2:           (CO2,3);
+  GC_Pickup:     (GC_Pickup,3);
+  GCsamp:        (GCsamp,3);
+  HS_mode:       (HS_mode,3);
+  Norm_mode:     (Norm_mode,3);
+  Tracer_FT:     (Tracer_FT,3);
+  Tracer_GC:     (Tracer_GC,3);
+}
+
 DS_Spares {
   HBox { +-; Title: Spares; -+ };
   SpAO1_sp:   (SpAO1_sp,6) V;
   SpAI1:      (SpAI1,6) V;
+  MFC_Sp1_SP: (MFC_Sp1_SP,6) V;
+  MFC_Sp1:    (MFC_Sp1,6)    V;
+  MFC_Sp2_SP: (MFC_Sp2_SP,6) V;
+  MFC_Sp2:    (MFC_Sp2,6)    V;
+  MFC_Sp3_SP: (MFC_Sp3_SP,6) V;
+  MFC_Sp3:    (MFC_Sp3,6)    V;
   MFC_Sp4_SP: (MFC_Sp4_SP,6) V;
   MFC_Sp4:    (MFC_Sp4,6)    V;
   MFC_Sp5_SP: (MFC_Sp5_SP,6) V;
   MFC_Sp5:    (MFC_Sp5,6)    V;
+  Spare1: (Spare1_cal,3);
+  Spare2: (Spare2_cal,3);
+  Spare3: (Spare3_cal,3);
+}
+
+DSraw {
+  (A1_DS_A,5);
+  (A2_DS_A,5);
+  (A2_DS_B,5);
+  (Herc_DS_A,5);
+  (Herc_DS_C,5);
+  (Herc_DS_D,5);
+  (Herc_DS_E,5);
+}
+
+MFCtr {
+  +-+;
+  HBox {
+    HGlue 0+1; {
+      VGlue 0+1;
+      {(flttime,9)};
+      MFCtr: (MFCtr,5);
+    }
+  }
 }
 
 { HBox {
     { [Octopole];
       [Fly];
+    }; |; {
       [TPumps];
+      [DS_Misc];
     }; |; {
       [DS_Pressures];
       [CalValves];
-      [DS_Misc];
       [DSDaq];
-      [DS_Spares];
+      [MFCtr];
     }
   }
 }

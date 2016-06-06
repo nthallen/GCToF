@@ -6,7 +6,7 @@ tmcbase = DS_types.tmc Hercules.tmc Athena1.tmc Athena2.tmc
 colbase = Hercules_col.tmc Athena1_col.tmc Athena2_col.tmc
 colbase = ../dsdaq.cc
 cmdbase = Hercules.cmd Athena1.cmd Athena2.cmd
-DSDaqdisp : Hercules_conv.tmc Athena_conv.tmc DSDaq.tbl:Hercules.tbl.in
+DSDaqdisp : Hercules_conv.tmc Athena_conv.tmc DSDaq.tbl:Hercules.tbl.in Athena.tbl:Athena.tbl.in
 CPPFLAGS = -I @MODDIR@/..
 DISTRIB = @MODDIR@/../Hercules @MODDIR@/../AthenaII
 %%

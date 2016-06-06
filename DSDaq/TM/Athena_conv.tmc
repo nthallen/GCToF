@@ -1,17 +1,17 @@
 On_Off_t AmbZeroS; invalidate AmbZeroS;
   { AmbZeroS = (A1_DS_A>>0) & 1; Validate AmbZeroS; }
-On_Off_t SpVlv1S; invalidate SpVlv1S;
-  { SpVlv1S = (A1_DS_A>>1) & 1; Validate SpVlv1S; }
-On_Off_t SpVlv2S; invalidate SpVlv2S;
-  { SpVlv2S = (A1_DS_A>>2) & 1; Validate SpVlv2S; }
-On_Off_t SpVlv3S; invalidate SpVlv3S;
-  { SpVlv3S = (A1_DS_A>>3) & 1; Validate SpVlv3S; }
+On_Off_t ColdCal2S; invalidate ColdCal2S;
+  { ColdCal2S = (A1_DS_A>>1) & 1; Validate ColdCal2S; }
+On_Off_t HotCal1S; invalidate HotCal1S;
+  { HotCal1S = (A1_DS_A>>2) & 1; Validate HotCal1S; }
+On_Off_t HotCal2S; invalidate HotCal2S;
+  { HotCal2S = (A1_DS_A>>3) & 1; Validate HotCal2S; }
 On_Off_t SpVlv4S; invalidate SpVlv4S;
   { SpVlv4S = (A1_DS_A>>4) & 1; Validate SpVlv4S; }
 On_Off_t SpVlv5S; invalidate SpVlv5S;
   { SpVlv5S = (A1_DS_A>>5) & 1; Validate SpVlv5S; }
-On_Off_t SpVlv6S; invalidate SpVlv6S;
-  { SpVlv6S = (A1_DS_A>>6) & 1; Validate SpVlv6S; }
+On_Off_t ColdCal1S; invalidate ColdCal1S;
+  { ColdCal1S = (A1_DS_A>>6) & 1; Validate ColdCal1S; }
 On_Off_t SpVlv7S; invalidate SpVlv7S;
   { SpVlv7S = (A1_DS_A>>7) & 1; Validate SpVlv7S; }
 

@@ -3,11 +3,13 @@ SWData.h
 SWData.tmc
 SWData_col.tmc
 DSDaqtbl.tmc
+Athenatbl.tmc
 DSDaqdisp.cc
 DSDaqdispoui.c
 DSDaqdispoui.o
 DSDaqdisp.o
 DSDaqtblnc.tmc
+Athenatblnc.tmc
 DSDaqdispnc.cc
 DSDaqdispncoui.c
 DSDaqdispncoui.o
@@ -61,7 +63,9 @@ GCToFengextoui.c
 GCToFengextoui.o
 GCToFengext.o
 DSDaqtbl.tmc.dep
+Athenatbl.tmc.dep
 DSDaqtblnc.tmc.dep
+Athenatblnc.tmc.dep
 GCToFtbl.tmc.dep
 nXDStbl.tmc.dep
 sonictbl.tmc.dep

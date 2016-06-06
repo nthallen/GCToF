@@ -133,9 +133,9 @@ DSraw {
 
 MFCtr {
   +-+;
+  VGlue 0+1;
   HBox {
     HGlue 0+1; {
-      VGlue 0+1;
       {(flttime,9)};
       MFCtr: (MFCtr,5);
     }
@@ -143,16 +143,15 @@ MFCtr {
 }
 
 { HBox {
-    { [Octopole];
-      [Fly];
+    {
+      [GBzero];
+      [GBcal];
+      [GBPT];
     }; |; {
-      [TPumps];
-      [DS_Misc];
-    }; |; {
-      [DS_Pressures];
-      [CalValves];
-      [DSDaq];
+      [GCstatus];
       [MFCtr];
+    }; |; {
+      [DS_Spares];
     }
   }
 }

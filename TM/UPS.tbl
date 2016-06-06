@@ -7,7 +7,7 @@ UPS1 {
   I_out: (UPS_I_out,6) A;
   Load:  (UPS_LoadPct,3) "%";
   VBatP: (UPS_VBatP,6) V;
-  VBatn: (UPS_VBatn,6) V;
+  VBatN: (UPS_VBatN,6) V;
   VBat:  (UPS_VBat,6) V;
   VBusP: (UPS_VBusP,6) V;
   VBusN: (UPS_VBusN,6) V;
