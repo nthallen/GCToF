@@ -76,6 +76,7 @@ int AthenaII::da_read(unsigned short offset, unsigned short &data) {
  * @return 0 on success.
  */
 int AthenaII::da_write(unsigned short offset, unsigned short value) {
+  int i;
   if ( offset >= 4 ) return 1;
   nl_error( -2, "da_write(%d, 0x%04X)", offset, value);
   da_values[offset] = value;
