@@ -1,7 +1,7 @@
 HEADER Wennberg GC ToF
 MNEMONIC GCToF
-HOMEDIR GCTof_Data_Dir
-ROWS 8
+HOMEDIR GCToF_Data_Dir
+ROWS 20
   1 CPU_Pct HK CPU
   1 Disk    HK Disk
   1 freemem HK freemem
