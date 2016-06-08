@@ -76,12 +76,18 @@ int AthenaII::da_read(unsigned short offset, unsigned short &data) {
  * @return 0 on success.
  */
 int AthenaII::da_write(unsigned short offset, unsigned short value) {
+  int i;
   if ( offset >= 4 ) return 1;
   nl_error( -2, "da_write(%d, 0x%04X)", offset, value);
   da_values[offset] = value;
-  out8(base + 6, value & 0xFF);
-  out8(base + 7, ((value >> 8) & 0xF) + (offset << 6));
-  return 0;
+  for (i = 0; i < 10; ++i) {
+    if ((in8(base+3) & 0x10) == 0) {
+      out8(base + 6, value & 0xFF);
+      out8(base + 7, ((value >> 8) & 0xF) + (offset << 6));
+      return 0;
+    }
+  }
+  return 1;
 }
 
 /**
