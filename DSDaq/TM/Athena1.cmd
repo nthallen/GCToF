@@ -6,7 +6,8 @@
       val = 5*val/scale;
       if ( val > 5 ) val = 5;
       else if ( val < -1 ) val = -1;
-      return (unsigned short)(4096*(val+10)/20);
+      // return (unsigned short)(4096*(val+10)/20);
+      return (unsigned short)(4096*val/10);
     }
   #endif
 %}
