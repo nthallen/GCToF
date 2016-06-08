@@ -10,6 +10,7 @@
 const char *horiba_path = "/net/athenaII_a/dev/ser3";
 const char *horiba_name = "Horiba";
 int horiba_channels = 4;
+int opt_echo = 1;
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
@@ -203,12 +204,14 @@ int HoribaSer::parse_response() {
     report_err("Unexpected input");
     return 0;
   }
-  if (nc < CurQuery->query.length()) {
-    report_err("Did not see complete echo. Query was: '%s'",
-      ascii_escape(CurQuery->query));
-    return 0;
-  } else if (not_str(CurQuery->query)) {
-    return 0;
+  if (opt_echo) {
+    if (nc < CurQuery->query.length()) {
+      report_err("Did not see complete echo. Query was: '%s'",
+        ascii_escape(CurQuery->query));
+      return 0;
+    } else if (not_str(CurQuery->query)) {
+      return 0;
+    }
   }
   if (cp >= nc) {
     report_err("Timeout: Query was: '%s'",

@@ -4,10 +4,11 @@
 <include> msg
 <follow> msg
 
-<opts> "d:n:"
+<opts> "d:n:e"
 <sort>
 	-d <serial device>
 	-n <number of channels>
+	-e RS485 Hardware suppresses echo
 <unsort>
 The '-h' message header option will also change the name
 used for command and telemetry communications.
@@ -15,6 +16,9 @@ used for command and telemetry communications.
 <switch>
   case 'd':
     horiba_path = optarg;
+    break;
+  case 'e':
+    opt_echo = 0;
     break;
   case 'n':
     horiba_channels = atoi(optarg);

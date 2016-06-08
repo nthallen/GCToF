@@ -6,6 +6,7 @@
 extern const char *horiba_path;
 extern const char *horiba_name;
 extern int horiba_channels;
+extern int opt_echo;
 
 #ifdef __cplusplus
 
