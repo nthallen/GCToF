@@ -72,3 +72,21 @@
   1 SpV_1:A2_DS_B:2 GC Status
   1 SpV_2:A2_DS_B:3 GC Status
   1 SpV_3:A2_DS_B:4 GC Status
+
+  1 MFC_AMBZ_SP GB Zero
+  1 MFC_AMBZ    GB Zero
+  1 MFC_Sp1_SP  GB Spare
+  1 MFC_SP1     GB Spare
+  1 MFC_Sp2_SP  GB Spare
+  1 MFC_SP2     GB Spare
+  1 MFC_Sp3_SP  GB Spare
+  1 MFC_SP3     GB Spare
+  1 InL_P       GB P
+  1 InH_P       GB P
+  1 P_1000      GB P
+  1 P_Diff      GB DP
+  1 RegH_P      GB RegP
+  1 RegL_P      GB RegP
+  1 ColdCalT    GB T
+  1 FT_T1       GB T
+  1 FT_T2       GB T
