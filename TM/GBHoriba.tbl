@@ -20,7 +20,7 @@ CalP {
   CalP:
     >HBox{(CalP_SP,6); (CalP_SP_Stat,1)}
     >HBox{(CalP,6); (CalP_Stat,1)}
-    kPa;
+    mbar;
 }
 GBHoriba_Status {
   { Cmd: (GBHoriba_CS,2) HGlue 0+1 Stale: (GBHoriba_Stale,3) }
@@ -43,6 +43,6 @@ GBHoriba {
   CalP:
     >HBox{(CalP_SP,6); (CalP_SP_Stat,1)}
     >HBox{(CalP,6); (CalP_Stat,1)}
-    kPa;
+    mbar;
   { Cmd: (GBHoriba_CS,2) HGlue 0+1 Stale: (GBHoriba_Stale,3) }
 }

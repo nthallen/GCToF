@@ -43,11 +43,11 @@ while (my $line = <$ifh>) {
     die "$srcfile:$linenum: Name redefined\n"
       if $Name ne '';
     $Name = $1;
-  } elsif ( $line =~ m/^\s* Data \s+ ([A-Za-z]\w+) \s+ (\d+) \s+
+  } elsif ( $line =~ m|^\s* Data \s+ ([A-Za-z]\w+) \s+ (\d+) \s+
                         (\w+) \s+ %(\d)\.(\d)lf \s+
-                        "([^"]+)" (\s+ [\d.]+)? \s* $/x ) {
+                        "([^"]+)" (?:\s+ ([\d./]+))? \s* $|x ) {
     my ($datum,$channel,$unit,$w,$p,$text,$scale) =
-      ($1,$2,$3,$4,$5,$6);
+      ($1,$2,$3,$4,$5,$6,$7);
     die "$srcfile:$linenum: Datum $datum conflicts with earlier definition\n"
       if $Data{$datum};
     die "$srcfile:$linenum: Channel $channel already assigned\n"
