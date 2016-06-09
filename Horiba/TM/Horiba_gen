@@ -135,10 +135,14 @@ for (my $i = 1; $i < $HORIBA_MAX_CHANNELS; ++$i) {
     my $text = $D->{text};
     my @text = split(' ',$text);
     my $textlen = @text + 1;
+    $scale = "";
+    if ($D->{scale}) {
+      $scale = "/" . $D->{scale};
+    }
     $cmddef .=
       "  : " . join(' ', @text) .
         " %f (Enter value in $unit) $unit\n" .
-      "    { \$0.channel = $i; \$0.value = \$$textlen; }\n";
+      "    { \$0.channel = $i; \$0.value = \$$textlen$scale; }\n";
   }
 }
 
