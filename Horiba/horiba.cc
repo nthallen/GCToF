@@ -14,7 +14,7 @@ int opt_echo = 1;
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V13.00" );
+  nl_error( 0, "Starting V13.01" );
   { Selector S;
     HoribaCmd HC;
     horiba_tm_t TMdata;
@@ -139,8 +139,8 @@ HoribaSer::HoribaSer(const char *ser_dev, horiba_tm_t *data, HoribaCmd *HCmd)
   // Initialize queries 
   Qlist.resize(horiba_channels*2);
   for (int i = 1; i <= horiba_channels; ++i) {
-    Qlist[0].format(i, &TMdata->channel[i].SP, 1<<(2*i-2), 'B', "RFC");
-    Qlist[0].format(i, &TMdata->channel[i].RB, 1<<(2*i-1), 'B', "RFV");
+    Qlist[2*i-2].format(i, &TMdata->channel[i].SP, 1<<(2*i-2), 'B', "RFC");
+    Qlist[2*i-1].format(i, &TMdata->channel[i].RB, 1<<(2*i-1), 'B', "RFV");
   }
   CurQuery = 0;
   nq = qn = 0;
