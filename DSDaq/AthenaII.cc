@@ -10,7 +10,7 @@ AthenaII::AthenaII(int ad_se) : dsdaqdrv("AthenaII") {
   int i;
   n_ad = ad_se ? 16 : 8;
   n_dio = 3;
-  n_bio = 8; // hard coded, but really configurable.
+  n_bio = 24; // hard coded, but really configurable.
   base = 0x280;
   for (i = 0; i < 4; ++i) da_values[i] = 2048;
   for (i = 0; i < n_dio; ++i) dio_values[i] = 0;
@@ -114,9 +114,11 @@ int AthenaII::dio_write(unsigned short offset, unsigned short value) {
  */
 int AthenaII::bit_read(unsigned short offset, unsigned short &data) {
   unsigned char mask;
-  if (offset >= n_dio) return 1; // and we know n_dio == 3
+  if (offset >= n_bio) return 1; // and we know n_dio == 3
+  byte = offset/8;
+  offset = offset%8;
   mask = 1 << offset;
-  data = (in8(base + 8) & mask) ? 1 : 0; // Read from port A
+  data = (in8(base + 8 + byte) & mask) ? 1 : 0;
   return 0;
 }
 
@@ -124,16 +126,18 @@ int AthenaII::bit_read(unsigned short offset, unsigned short &data) {
  * @return 0 on success.
  */
 int AthenaII::bit_write(unsigned short offset, unsigned short value) {
-  unsigned char mask;
-  if (offset >= n_bio) return 1; // and we know n_bio == 8
+  unsigned char mask, byte;
+  if (offset >= n_bio) return 1;
+  byte = offset/8;
+  offset = offset%8;
   mask = 1 << offset;
   if (value) {
-    dio_values[0] |= mask;
+    dio_values[byte] |= mask;
   } else {
-    dio_values[0] &= ~mask;
+    dio_values[byte] &= ~mask;
   }
-  nl_error(-2, "Bit value 0x%02X", dio_values[0]);
-  out8(base + 8, dio_values[0]);
+  nl_error(-2, "Bit value 0x%02X", dio_values[byte]);
+  out8(base + 8 + byte, dio_values[byte]);
   return 0;
 }
 
