@@ -113,7 +113,7 @@ int AthenaII::dio_write(unsigned short offset, unsigned short value) {
  * @return 0 on success.
  */
 int AthenaII::bit_read(unsigned short offset, unsigned short &data) {
-  unsigned char mask;
+  unsigned char mask, byte;
   if (offset >= n_bio) return 1; // and we know n_dio == 3
   byte = offset/8;
   offset = offset%8;
