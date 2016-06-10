@@ -59,9 +59,9 @@ TM typedef A1_ADC_t A1_ADCx2_t {
   calibration (A1_ADCx2_t, DS_VOLTS) { -32768, -5, 32768, 5 }
 TM typedef A1_ADCx2_t A1_V1000sccm { text "%6.1lf"; convert DS_SCCM; }
   calibration (A1_V1000sccm,DS_SCCM) { 0, 0, 32768, 1000 }
-TM typedef A1_ADCx2_t A1_V1000torr { text "%6.1lf"; convert DS_MBAR; }
+TM typedef A1_ADC_t A1_V1000torr { text "%6.1lf"; convert DS_MBAR; }
   calibration (A1_V1000torr,DS_MBAR) { 0, 0, 32768, 1333.2 }
-TM typedef A1_ADCx2_t A1_V100torr { convert DS_MBAR; }
+TM typedef A1_ADC_t A1_V100torr { convert DS_MBAR; }
   calibration (A1_V100torr,DS_MBAR) { 0, 0, 32768, 133.32 }
 TM typedef A1_ADCx2_t A1_V100psi { convert DS_PSI; }
   calibration (A1_V100psi,DS_PSI) { 6553.6, 0, 32768, 100 }
