@@ -14,7 +14,7 @@ int opt_echo = 1;
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V13.01" );
+  nl_error( 0, "Starting V13.02" );
   { Selector S;
     HoribaCmd HC;
     horiba_tm_t TMdata;
@@ -62,6 +62,7 @@ void HoribaQuery::format(unsigned short addr, float *resultp,
     query.append("\003\003\003", 3);
   else if (bcc == '*')
     query.append("\003\003\003\003\003\003\003\003\003", 9);
+  nl_error(-2, "Query formatted: '%s'", ascii_escape(query.c_str()));
 }
 
 /**
@@ -103,7 +104,7 @@ int HoribaCmd::ProcessData(int flag) {
       not_str("\n", 1) ) {
     return 0;
   }
-  if (addr < 1 || addr > 3) {
+  if (addr < 1 || addr > horiba_channels) {
     report_err("Invalid address %d in HoribaCmd", addr);
     return 0;
   }
