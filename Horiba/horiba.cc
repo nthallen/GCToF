@@ -62,7 +62,7 @@ void HoribaQuery::format(unsigned short addr, float *resultp,
     query.append("\003\003\003", 3);
   else if (bcc == '*')
     query.append("\003\003\003\003\003\003\003\003\003", 9);
-  nl_error(-2, "Query formatted: '%s'", ascii_escape(query.c_str()));
+  nl_error(-2, "Query formatted: '%s'", ascii_escape(query));
 }
 
 /**
@@ -140,8 +140,8 @@ HoribaSer::HoribaSer(const char *ser_dev, horiba_tm_t *data, HoribaCmd *HCmd)
   // Initialize queries 
   Qlist.resize(horiba_channels*2);
   for (int i = 1; i <= horiba_channels; ++i) {
-    Qlist[2*i-2].format(i, &TMdata->channel[i].SP, 1<<(2*i-2), 'B', "RFC");
-    Qlist[2*i-1].format(i, &TMdata->channel[i].RB, 1<<(2*i-1), 'B', "RFV");
+    Qlist[2*i-2].format(i, &TMdata->channel[i-1].SP, 1<<(2*i-2), 'B', "RFC");
+    Qlist[2*i-1].format(i, &TMdata->channel[i-1].RB, 1<<(2*i-1), 'B', "RFV");
   }
   CurQuery = 0;
   nq = qn = 0;

@@ -35,9 +35,9 @@
   : Cal H2O2 { $0 = 4; }
   : Cal Oacid { $0 = 6; }
   : Cal MHP { $0 = 8; }
-  : Cal Spare1 { $0 = 10; }
-  : Cal Spare2 { $0 = 12; }
-  : Cal Spare3 { $0 = 14; }
+  : Spare Valve H_1 { $0 = 10; }
+  : Spare Valve H_2 { $0 = 12; }
+  : Spare Valve H_3 { $0 = 14; }
   : Turbo Scroll Pump { $0 = 16; }
   : Turbo Scroll Valve { $0 = 18; }
   : Flow Tube Scroll Pump { $0 = 20; }
