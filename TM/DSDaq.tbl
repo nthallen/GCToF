@@ -119,9 +119,9 @@ DS_Spares {
   Spare1: (Spare1_cal,3);
   Spare2: (Spare2_cal,3);
   Spare3: (Spare3_cal,3);
-  SpV_1: (SpV_1_cal,3);
-  SpV_2: (SpV_2_cal,3);
-  SpV_3: (SpV_3_cal,3);
+  SpV_1: (SpV_1,3);
+  SpV_2: (SpV_2,3);
+  SpV_3: (SpV_3,3);
 }
 
 DSraw {

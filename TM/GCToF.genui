@@ -95,8 +95,8 @@ ROWS 20
   1 nX_stale nXDS Stale
   
   1 nX0_Power:nX0Power:0 nXDS0 Stat %.0lf
-  1 nX0_V802:nX0Power:1 nXDS0 Stat %.0lf
-  1 nX0_Resp:nX0Stat:0 nXDS0 Stat %.0lf
+  1 nX0V802:nX0Power:1 nXDS0 Stat %.0lf
+  1 nX0Resp:nX0Stat:0 nXDS0 Stat %.0lf
   1 nX0_Dec:nX0Stat:1 nXDS0 Stat %.0lf
   1 nX0_Acc:nX0Stat:2 nXDS0 Stat %.0lf
   1 nX0_Stdby:nX0Stat:3 nXDS0 Stat %.0lf
@@ -120,8 +120,8 @@ ROWS 20
   1 nX1MtrF nXDS Freq
 
   1 nX1_Power:nX1Power:0 nXDS1 Stat %.0lf
-  1 nX1_V802:nX0Power:1 nXDS1 Stat %.0lf
-  1 nX1_Resp:nX1Stat:0 nXDS1 Stat %.0lf
+  1 nX1V802:nX1Power:1 nXDS1 Stat %.0lf
+  1 nX1Resp:nX1Stat:0 nXDS1 Stat %.0lf
   1 nX1_Dec:nX1Stat:1 nXDS1 Stat %.0lf
   1 nX1_Acc:nX1Stat:2 nXDS1 Stat %.0lf
   1 nX1_Stdby:nX1Stat:3 nXDS1 Stat %.0lf

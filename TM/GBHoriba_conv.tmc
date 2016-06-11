@@ -31,5 +31,5 @@ GBHoriba_BitStar CalP_Stat; Invalidate CalP_Stat;
   { CalP_Stat = (GBHoribaS >> 7) & 1;
     Validate CalP_Stat; }
 GBHoriba_CS_t GBHoriba_CS; Invalidate GBHoriba_CS;
-  { GBHoriba_CS = (GBHoribaS >> 2*5) & 1;
+  { GBHoriba_CS = (GBHoribaS >> 10) & 1;
     Validate GBHoriba_CS; }

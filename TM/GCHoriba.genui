@@ -1,10 +1,18 @@
   1 ColumnN2_SP GCHoriba ColumnN2
   1 ColumnN2   GCHoriba ColumnN2
+  1 ColumnN2_SP_Stat:GCHoribaS:0 GCHoriba Status %5.0lf
+  1 ColumnN2_Stat:GCHoribaS:1 GCHoriba Status %5.0lf
   1 GC_Intake_SP GCHoriba GC_Intake
   1 GC_Intake   GCHoriba GC_Intake
+  1 GC_Intake_SP_Stat:GCHoribaS:2 GCHoriba Status %5.0lf
+  1 GC_Intake_Stat:GCHoribaS:3 GCHoriba Status %5.0lf
   1 PickupFlow_SP GCHoriba PickupFlow
   1 PickupFlow   GCHoriba PickupFlow
+  1 PickupFlow_SP_Stat:GCHoribaS:4 GCHoriba Status %5.0lf
+  1 PickupFlow_Stat:GCHoribaS:5 GCHoriba Status %5.0lf
   1 GC_Dilution_SP GCHoriba GC_Dilution
   1 GC_Dilution   GCHoriba GC_Dilution
-  1 GCHoribaS GCHoriba Status %d
+  1 GC_Dilution_SP_Stat:GCHoribaS:6 GCHoriba Status %5.0lf
+  1 GC_Dilution_Stat:GCHoribaS:7 GCHoriba Status %5.0lf
   1 GCHoriba_Stale GCHoriba Stale
+  1 GCHoriba_CS:GCHoribaS:10 GCHoriba Status %5.0lf
