@@ -62,6 +62,7 @@ void HoribaQuery::format(unsigned short addr, float *resultp,
     query.append("\003\003\003", 3);
   else if (bcc == '*')
     query.append("\003\003\003\003\003\003\003\003\003", 9);
+  nl_error(-2, "Query formatted: '%s'", ascii_escape(query.c_str()));
 }
 
 /**
