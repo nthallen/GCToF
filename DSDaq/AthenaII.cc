@@ -25,7 +25,7 @@ int AthenaII::init_hardware() {
   if ( ThreadCtl(_NTO_TCTL_IO, 0) == -1 )
     nl_error( 3, "Unable to enable I/O privilege: %s", strerror(errno) );
   out8( base, 0x60 ); // Reset board, including D/A
-  out8( base + 11, 0x8B ); // A:Out, B,C:In
+  out8( base + 11, 0x89 ); // A,B:Out, C:In
   return 0;
 }
 
