@@ -48,6 +48,9 @@ CalValves {
   H2O2:   (H2O2_cal,3);
   Oacid:  (Oacid_cal,3);
   MHP:    (MHP_cal,3);
+  H_SpV_1S: (H_SpV_1S,3);
+  H_SpV_2S: (H_SpV_2S,3);
+  H_SpV_3S: (H_SpV_3S,3);
 }
 
 DS_Misc {
@@ -116,12 +119,6 @@ DS_Spares {
   MFC_Sp4:    (MFC_Sp4,6)    V;
   MFC_Sp5_SP: (MFC_Sp5_SP,6) V;
   MFC_Sp5:    (MFC_Sp5,6)    V;
-  Spare1: (Spare1_cal,3);
-  Spare2: (Spare2_cal,3);
-  Spare3: (Spare3_cal,3);
-  SpV_1: (SpV_1,3);
-  SpV_2: (SpV_2,3);
-  SpV_3: (SpV_3,3);
 }
 
 DSraw {

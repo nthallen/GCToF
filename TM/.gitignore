@@ -49,6 +49,7 @@ GCToFsrvr.o
 GCToFsrvroui.c
 GCToFsrvroui.o
 GCToFcol.cc
+GCToF.pcm
 tm.dac
 GCToFcoloui.c
 GCToFcoloui.o

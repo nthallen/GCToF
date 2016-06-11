@@ -8,12 +8,12 @@ On_Off_t Oacid_cal; Invalidate Oacid_cal;
   { Oacid_cal = (Herc_DS_A>>3) & 1; Validate Oacid_cal; }
 On_Off_t MHP_cal; Invalidate MHP_cal;
   { MHP_cal = (Herc_DS_A>>4) & 1; Validate MHP_cal; }
-On_Off_t Spare1_cal; Invalidate Spare1_cal;
-  { Spare1_cal = (Herc_DS_A>>5) & 1; Validate Spare1_cal; }
-On_Off_t Spare2_cal; Invalidate Spare2_cal;
-  { Spare2_cal = (Herc_DS_A>>6) & 1; Validate Spare2_cal; }
-On_Off_t Spare3_cal; Invalidate Spare3_cal;
-  { Spare3_cal = (Herc_DS_A>>7) & 1; Validate Spare3_cal; }
+On_Off_t H_SpV_1S; Invalidate H_SpV_1S;
+  { H_SpV_1S = (Herc_DS_A>>5) & 1; Validate H_SpV_1S; }
+On_Off_t H_SpV_2S; Invalidate H_SpV_2S;
+  { H_SpV_2S = (Herc_DS_A>>6) & 1; Validate H_SpV_2S; }
+On_Off_t H_SpV_3S; Invalidate H_SpV_3S;
+  { H_SpV_3S = (Herc_DS_A>>7) & 1; Validate H_SpV_3S; }
 
 On_Off_t TPB_Enb; Invalidate TPB_Enb;
   { TPB_Enb = (Herc_DS_C>>4) & 1; Validate TPB_Enb; }

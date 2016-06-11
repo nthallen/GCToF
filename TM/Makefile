@@ -5,7 +5,7 @@
 # Invoking: appgen_module Zeno X mode=default
 # Invoking: appgen_module Horiba X src=GBHoriba.txt name=GBHoriba mode=driver
 # Invoking: appgen_module Horiba X src=GCHoriba.txt name=GCHoriba
-# Makefile Generated Tue Jun 07 20:41:46 EDT 2016
+# Makefile Generated Sat Jun 11 17:22:07 UTC 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
@@ -19,7 +19,7 @@ SRC+=zaber.cmd address.h SWData.cmd GBHoriba.cmd GCHoriba.cmd
 SRC+=TwisTorr_col.tmc nXDS_col.tmc UPS_col.tmc SWData_col.tmc
 SRC+=sonic1_col.tmc sonic2_col.tmc GBHoriba_col.tmc GCHoriba_col.tmc
 SRC+=GCToF.genui TMbase.genui sonic1.genui sonic2.genui Zeno.genui
-SRC+=GBHoriba.genui GCHoriba.genui GCToF.pcm
+SRC+=GBHoriba.genui GCHoriba.genui
 TOOL=GCToF.spec Makefile
 SCRIPT=interact runfile.A1 runfile.A2
 OBJ=SWData.cmd SWData.h SWData.tmc SWData_col.tmc DSDaqtbl.tmc
@@ -33,8 +33,8 @@ OBJ+=GCToFdispncoui.o GCToFdispnc.o GCToFsws.tma GCToFalgoa.tmc
 OBJ+=GCToFalgo.cc GCToFalgooui.c GCToFalgooui.o GCToFalgo.o doit.dep
 OBJ+=GCToFcmd.cc GCToFcmd.dat GCToFclt.o GCToFcltoui.c GCToFcltoui.o
 OBJ+=GCToFcltnc.o GCToFcltncoui.c GCToFcltncoui.o GCToFsrvr.o
-OBJ+=GCToFsrvroui.c GCToFsrvroui.o GCToFcol.cc tm.dac GCToFcoloui.c
-OBJ+=GCToFcoloui.o GCToFcol.o dsdaq.o GCToFengext.cdf
+OBJ+=GCToFsrvroui.c GCToFsrvroui.o GCToFcol.cc GCToF.pcm tm.dac
+OBJ+=GCToFcoloui.c GCToFcoloui.o GCToFcol.o dsdaq.o GCToFengext.cdf
 OBJ+=GCToFengextcdf.oui GCToFengextcdf.tmc GCToFengext.cc
 OBJ+=GCToFengextoui.c GCToFengextoui.o GCToFengext.o DSDaqtbl.tmc.dep
 OBJ+=Athenatbl.tmc.dep DSDaqtblnc.tmc.dep Athenatblnc.tmc.dep
