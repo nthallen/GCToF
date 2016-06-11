@@ -31,5 +31,5 @@ GCHoriba_BitStar GC_Dilution_Stat; Invalidate GC_Dilution_Stat;
   { GC_Dilution_Stat = (GCHoribaS >> 7) & 1;
     Validate GC_Dilution_Stat; }
 GCHoriba_CS_t GCHoriba_CS; Invalidate GCHoriba_CS;
-  { GCHoriba_CS = (GCHoribaS >> 2*5) & 1;
+  { GCHoriba_CS = (GCHoribaS >> 10) & 1;
     Validate GCHoriba_CS; }

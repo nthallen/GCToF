@@ -132,6 +132,10 @@ for (my $i = 1; $i < $HORIBA_MAX_CHANNELS; ++$i) {
       "  { $RBvar = (${Name}S >> $RBbit) & 1;\n" .
       "    Validate $RBvar; }\n";
 
+    print $genui
+      "  $Rate $SPvar:${Name}S:$SPbit $Name Status %5.0lf\n",
+      "  $Rate $RBvar:${Name}S:$RBbit $Name Status %5.0lf\n";
+
     my $text = $D->{text};
     my @text = split(' ',$text);
     my $textlen = @text + 1;
@@ -172,7 +176,6 @@ print $col
   "%}\n";
 
 print $genui
-  "  $Rate ${Name}S $Name Status %d\n" .
   "  $Rate ${Name}_Stale $Name Stale\n";
 
 print $tbl
@@ -186,6 +189,7 @@ print $tbl
   "  { Cmd: (${Name}_CS,2) HGlue 0+1 Stale: (${Name}_Stale,3) }\n" .
   "}\n";
 
+my $CSbit = 2*$HORIBA_MAX_CHANNELS;
 print $conv
   "%{\n" .
   "  #include \"horiba.h\"\n" .
@@ -198,8 +202,11 @@ print $conv
     "{ text \"%2d\" ${Name}_CStext(); }\n\n" .
   $convdef .
   "${Name}_CS_t ${Name}_CS; Invalidate ${Name}_CS;\n" .
-  "  { ${Name}_CS = (${Name}S >> 2*$HORIBA_MAX_CHANNELS) & 1;\n" .
+  "  { ${Name}_CS = (${Name}S >> $CSbit) & 1;\n" .
   "    Validate ${Name}_CS; }\n";
+
+print $genui
+  "  $Rate ${Name}_CS:${Name}S:$CSbit ${Name} Status %5.0lf\n";
 
 print $cmd
   "%{\n" .

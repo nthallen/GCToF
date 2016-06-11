@@ -29,15 +29,18 @@
   1 MHP_cal:Herc_DS_A:4 GasCmds Status
   1 Spare1_cal:Herc_DS_A:5 GasCmds Status
   1 Spare2_cal:Herc_DS_A:6 GasCmds Status
-  1 Spare2_cal:Herc_DS_A:7 GasCmds Status
-  1 AmbZero:A1_DS_A:0 GasCmds Status
-  1 HotCal1:A1_DS_A:2 GasCmds Status
-  1 HotCal2:A1_DS_A:4 GasCmds Status
-  1 ColdCal1:A1_DS_A:6 GasCmds Status
-  1 ColdCal2:A1_DS_A:1 GasCmds Status
+  1 Spare3_cal:Herc_DS_A:7 GasCmds Status
+  1 AmbZeroS:A1_DS_A:0 GasCmds Status
+  1 HotCal1S:A1_DS_A:2 GasCmds Status
+  1 HotCal2S:A1_DS_A:4 GasCmds Status
+  1 ColdCal1S:A1_DS_A:6 GasCmds Status
+  1 ColdCal2S:A1_DS_A:1 GasCmds Status
+  1 SpVlv4S:A1_DS_A:3 GasCmds Status
+  1 SpVlv5S:A1_DS_A:5 GasCmds Status
+  1 SpVlv7S:A1_DS_A:7 GasCmds Status
 
-# 1 SpAO1_sp
-# 1 SpAI1
+  1 SpAO1_sp DSDaq Spares
+  1 SpAI1 DSDaq Spares
   1 TPA_BT Turbo BT
   1 TPB_BT Turbo BT
   1 TPA_Spd Turbo Speed
@@ -61,6 +64,8 @@
   1 A2_Stat DSDaq Status %3d
 
   
+  1 Column_P GC P
+  1 Sample_P GC P
   1 Bypass_Pump:A2_DS_A:7 GC Status
   1 GCsamp:A2_DS_A:0 GC Status
   1 HS_mode:A2_DS_A:1 GC Status
@@ -76,11 +81,15 @@
   1 MFC_AMBZ_SP GB Zero
   1 MFC_AMBZ    GB Zero
   1 MFC_Sp1_SP  GB Spare
-  1 MFC_SP1     GB Spare
+  1 MFC_Sp1     GB Spare
   1 MFC_Sp2_SP  GB Spare
-  1 MFC_SP2     GB Spare
+  1 MFC_Sp2     GB Spare
   1 MFC_Sp3_SP  GB Spare
-  1 MFC_SP3     GB Spare
+  1 MFC_Sp3     GB Spare
+  1 MFC_Sp4_SP  GB Spare
+  1 MFC_Sp4     GB Spare
+  1 MFC_Sp5_SP  GB Spare
+  1 MFC_Sp5     GB Spare
   1 InL_P       GB P
   1 InH_P       GB P
   1 P_1000      GB P
