@@ -2,21 +2,25 @@
   #ifdef SERVER
     #include "address.h"
 
+    /** Limits output to 0-5V for MFCs
+     * @param val desired output in engineering units (e.g. sccm)
+     * @param scale engineering unit value at 5V
+     */
     static unsigned short MFC_Scale2( double val, double scale ) {
       val = 5*val/scale;
       if ( val > 5 ) val = 5;
       else if ( val < -1 ) val = -1;
-      // return (unsigned short)(4096*(val+10)/20);
-      return (unsigned short)(4096*val/10);
+      return (unsigned short)(4096*(val+10)/20); // bipolar +/-10V
+      // return (unsigned short)(4096*val/10); // unipolar 0-10V
     }
   #endif
 %}
 %INTERFACE <Athena2:/net/GCAthena2/dev/huarp/GCToF/AthenaII>
 
 &command
-  : Set Spare 4 Flow %f (Enter SCCM) sccm *
-      { if_Athena2.Turf( "W%X:%X\n", MFC_Sp4_SP_Address, MFC_Scale2($5, 500) ); }
-  : Set Spare 5 Flow %f (Enter SLM) slm *
+  : Set Spare 4 Flow %f (Enter Volts) V *
+      { if_Athena2.Turf( "W%X:%X\n", MFC_Sp4_SP_Address, MFC_Scale2($5,5) ); }
+  : Set Spare 5 Flow %f (Enter Volts) V *
       { if_Athena2.Turf( "W%X:%X\n", MFC_Sp5_SP_Address, MFC_Scale2($5,5) ); }
   : &A2_Cmd &on_off * { if_Athena2.Turf( "W%X:%X\n", $1, $2 ); }
   ;

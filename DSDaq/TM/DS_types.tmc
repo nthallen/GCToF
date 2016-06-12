@@ -75,7 +75,7 @@ TM typedef unsigned short A1_DAC_t {
     text "%6.2lf";
     collect x = A1.read(x.address);
   }
-  calibration (A1_DAC_t, DS_VOLTS) { 0, 0, 4096, 10 }
+  calibration (A1_DAC_t, DS_VOLTS) { 0, -10, 4096, 10 }
 
 TM typedef A1_DAC_t A1_V1000sccm_sp { convert DS_SCCM; }
   calibration (A1_V1000sccm_sp, DS_SCCM) { 2048, 0, 4096, 2000 }
@@ -97,7 +97,7 @@ TM typedef unsigned short A2_DAC_t {
     text "%6.2lf";
     collect x = A2.read(x.address);
   }
-  calibration (A2_DAC_t, DS_VOLTS) { 0, 0, 4096, 10 }
+  calibration (A2_DAC_t, DS_VOLTS) { 0, -10, 4096, 10 }
 TM typedef A1_ADC_t A2_ADC_t {
   collect x = A2.read(x.address);
 }

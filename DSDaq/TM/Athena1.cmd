@@ -2,23 +2,27 @@
   #ifdef SERVER
     #include "address.h"
 
+    /** Limits output to 0-5V for MFC.
+     * @param val Desired value in engineering units
+     * @scale scale Engineering units corresponding to 5V
+     */
     static unsigned short MFC_Scale( double val, double scale ) {
       val = 5*val/scale;
       if ( val > 5 ) val = 5;
       else if ( val < -1 ) val = -1;
-      // return (unsigned short)(4096*(val+10)/20);
-      return (unsigned short)(4096*val/10);
+      return (unsigned short)(4096*(val+10)/20); // bipolar +/- 10V
+      // return (unsigned short)(4096*val/10); // unipolar 0-10V
     }
   #endif
 %}
 %INTERFACE <Athena1:/net/GCAthena1/dev/huarp/GCToF/AthenaII>
 
 &command
-  : Set Spare 2 Flow %f (Enter SCCM) sccm *
-      { if_Athena1.Turf( "W%X:%X\n", MFC_Sp2_SP_Address, MFC_Scale($5, 500) ); }
-  : Set Spare 1 Flow %f (Enter SLM) slm *
+  : Set Spare 2 Flow %f (Enter Volts) V *
+      { if_Athena1.Turf( "W%X:%X\n", MFC_Sp2_SP_Address, MFC_Scale($5, 5) ); }
+  : Set Spare 1 Flow %f (Enter Volts) V *
       { if_Athena1.Turf( "W%X:%X\n", MFC_Sp1_SP_Address, MFC_Scale($5,5) ); }
-  : Set Spare 3 Flow %f (Enter SLM) slm *
+  : Set Spare 3 Flow %f (Enter Volts) V *
       { if_Athena1.Turf( "W%X:%X\n", MFC_Sp3_SP_Address, MFC_Scale($5,5) ); }
   : Set Ambient Zero Flow %f (Enter SCCM) sccm *
       { if_Athena1.Turf( "W%X:%X\n", MFC_AMBZ_SP_Address, MFC_Scale($5, 1000) ); }
