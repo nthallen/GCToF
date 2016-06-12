@@ -84,7 +84,7 @@ open(my $cmd, ">", "$Name.cmd") ||
 # Open the rest here also
 
 my ($typedef, $datadef, $coldef, @grpmem, $tbldef, $convdef, $cmddef);
-for (my $i = 1; $i < $HORIBA_MAX_CHANNELS; ++$i) {
+for (my $i = 1; $i <= $HORIBA_MAX_CHANNELS; ++$i) {
   if ($Channel{$i}) {
     my $offset = $i-1;
     my $datum = $Channel{$i};

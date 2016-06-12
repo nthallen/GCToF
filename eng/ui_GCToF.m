@@ -139,6 +139,7 @@ f = ne_dialg(f, 'add', 1, 0, 'pGCToFgchs', 'Status' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgchgci', 'GC Intake' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgchpf', 'Pickup Flow' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgchgcd', 'GC Dilution' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFgchgcb', 'GC Bypass' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgchstale', 'Stale' );
 f = ne_listdirs(f, 'GCToF_Data_Dir', 15);
 f = ne_dialg(f, 'newcol');

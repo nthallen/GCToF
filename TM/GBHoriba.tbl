@@ -6,8 +6,8 @@ Fluorine {
 }
 IonSrc {
   IonSrc:
-    >HBox{(IonSrc_SP,4); (IonSrc_SP_Stat,1)}
-    >HBox{(IonSrc,4); (IonSrc_Stat,1)}
+    >HBox{(IonSrc_SP,5); (IonSrc_SP_Stat,1)}
+    >HBox{(IonSrc,5); (IonSrc_Stat,1)}
     sccm;
 }
 DilFT {
@@ -33,8 +33,8 @@ GBHoriba {
     >HBox{(Fluorine,5); (Fluorine_Stat,1)}
     sccm;
   IonSrc:
-    >HBox{(IonSrc_SP,4); (IonSrc_SP_Stat,1)}
-    >HBox{(IonSrc,4); (IonSrc_Stat,1)}
+    >HBox{(IonSrc_SP,5); (IonSrc_SP_Stat,1)}
+    >HBox{(IonSrc,5); (IonSrc_Stat,1)}
     sccm;
   DilFT:
     >HBox{(DilFT_SP,6); (DilFT_SP_Stat,1)}

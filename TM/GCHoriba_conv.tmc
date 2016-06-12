@@ -30,6 +30,12 @@ GCHoriba_BitStar GC_Dilution_SP_Stat; Invalidate GC_Dilution_SP_Stat;
 GCHoriba_BitStar GC_Dilution_Stat; Invalidate GC_Dilution_Stat;
   { GC_Dilution_Stat = (GCHoribaS >> 7) & 1;
     Validate GC_Dilution_Stat; }
+GCHoriba_BitStar GC_Bypass_SP_Stat; Invalidate GC_Bypass_SP_Stat;
+  { GC_Bypass_SP_Stat = (GCHoribaS >> 8) & 1;
+    Validate GC_Bypass_SP_Stat; }
+GCHoriba_BitStar GC_Bypass_Stat; Invalidate GC_Bypass_Stat;
+  { GC_Bypass_Stat = (GCHoribaS >> 9) & 1;
+    Validate GC_Bypass_Stat; }
 GCHoriba_CS_t GCHoriba_CS; Invalidate GCHoriba_CS;
   { GCHoriba_CS = (GCHoribaS >> 10) & 1;
     Validate GCHoriba_CS; }

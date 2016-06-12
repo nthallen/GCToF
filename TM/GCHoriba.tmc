@@ -2,9 +2,10 @@
   #define GCHoriba_channel(x,y) GCHoriba.channel[x].y
 %}
 TM typedef short ColumnN2_sccm { text "%6.3lf"; }
-TM typedef short GC_Intake_sccm { text "%4.1lf"; }
+TM typedef short GC_Intake_sccm { text "%6.1lf"; }
 TM typedef short PickupFlow_sccm { text "%6.1lf"; }
 TM typedef short GC_Dilution_sccm { text "%6.1lf"; }
+TM typedef short GC_Bypass_sccm { text "%6.1lf"; }
 TM typedef unsigned short GCHoribaS_t { text "%04x"; }
 TM typedef unsigned char GCHoribaSt_t { text "%3d"; }
 
@@ -16,11 +17,13 @@ TM 1 Hz PickupFlow_sccm PickupFlow_SP;
 TM 1 Hz PickupFlow_sccm PickupFlow;
 TM 1 Hz GC_Dilution_sccm GC_Dilution_SP;
 TM 1 Hz GC_Dilution_sccm GC_Dilution;
+TM 1 Hz GC_Bypass_sccm GC_Bypass_SP;
+TM 1 Hz GC_Bypass_sccm GC_Bypass;
 TM 1 Hz GCHoribaS_t GCHoribaS;
 TM 1 Hz GCHoribaSt_t GCHoriba_Stale;
 TM "Receive" GCHoriba 1;
 
-Group GCHoriba (ColumnN2_SP, ColumnN2, GC_Intake_SP, GC_Intake, PickupFlow_SP, PickupFlow, GC_Dilution_SP, GC_Dilution) {
+Group GCHoriba (ColumnN2_SP, ColumnN2, GC_Intake_SP, GC_Intake, PickupFlow_SP, PickupFlow, GC_Dilution_SP, GC_Dilution, GC_Bypass_SP, GC_Bypass) {
   ColumnN2_SP = GCHoriba_channel(0,SP) * 1000;
   ColumnN2 = GCHoriba_channel(0,RB) * 1000;
   GC_Intake_SP = GCHoriba_channel(1,SP) * 10;
@@ -29,6 +32,8 @@ Group GCHoriba (ColumnN2_SP, ColumnN2, GC_Intake_SP, GC_Intake, PickupFlow_SP, P
   PickupFlow = GCHoriba_channel(2,RB) * 10;
   GC_Dilution_SP = GCHoriba_channel(3,SP) * 10;
   GC_Dilution = GCHoriba_channel(3,RB) * 10;
+  GC_Bypass_SP = GCHoriba_channel(4,SP) * 10;
+  GC_Bypass = GCHoriba_channel(4,RB) * 10;
   GCHoribaS = GCHoriba.HoribaS;
   GCHoriba_Stale = GCHoriba_obj->stale(255);
   GCHoriba_obj->synch();

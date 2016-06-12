@@ -14,5 +14,9 @@
   1 GC_Dilution   GCHoriba GC_Dilution
   1 GC_Dilution_SP_Stat:GCHoribaS:6 GCHoriba Status %5.0lf
   1 GC_Dilution_Stat:GCHoribaS:7 GCHoriba Status %5.0lf
+  1 GC_Bypass_SP GCHoriba GC_Bypass
+  1 GC_Bypass   GCHoriba GC_Bypass
+  1 GC_Bypass_SP_Stat:GCHoribaS:8 GCHoriba Status %5.0lf
+  1 GC_Bypass_Stat:GCHoribaS:9 GCHoriba Status %5.0lf
   1 GCHoriba_Stale GCHoriba Stale
   1 GCHoriba_CS:GCHoribaS:10 GCHoriba Status %5.0lf

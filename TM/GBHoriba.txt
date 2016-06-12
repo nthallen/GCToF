@@ -3,6 +3,6 @@ Name GBHoriba
 Rate 1 Hz
 Port /net/GCAthena1/dev/ser1
 Data DilFT    3 sccm %6.1lf "FT Dilution Flow"
-Data IonSrc   2 sccm %4.1lf "FT Ion Source Dilution Flow" 
+Data IonSrc   2 sccm %5.1lf "FT Ion Source Dilution Flow" 
 Data Fluorine 1 sccm %5.3lf "FT Reagent Flow"
 Data CalP     4 mbar %6.1lf "" 30.

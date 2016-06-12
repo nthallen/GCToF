@@ -20,4 +20,6 @@
     { $0.channel = 3; $0.value = $4; }
   : GC Dilution Flow %f (Enter value in sccm) sccm
     { $0.channel = 4; $0.value = $4; }
+  : GC Bypass Flow %f (Enter value in sccm) sccm
+    { $0.channel = 5; $0.value = $4; }
 ;
