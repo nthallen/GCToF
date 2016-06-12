@@ -45,7 +45,7 @@ while (my $line = <$ifh>) {
     $Name = $1;
   } elsif ( $line =~ m|^\s* Data \s+ ([A-Za-z]\w+) \s+ (\d+) \s+
                         (\w+) \s+ %(\d)\.(\d)lf \s+
-                        "([^"]+)" (?:\s+ ([\d./]+))? \s* $|x ) {
+                        "([^"]*)" (?:\s+ ([\d./]+))? \s* $|x ) {
     my ($datum,$channel,$unit,$w,$p,$text,$scale) =
       ($1,$2,$3,$4,$5,$6,$7);
     die "$srcfile:$linenum: Datum $datum conflicts with earlier definition\n"
@@ -137,16 +137,18 @@ for (my $i = 1; $i < $HORIBA_MAX_CHANNELS; ++$i) {
       "  $Rate $RBvar:${Name}S:$RBbit $Name Status %5.0lf\n";
 
     my $text = $D->{text};
-    my @text = split(' ',$text);
-    my $textlen = @text + 1;
-    $scale = "";
-    if ($D->{scale}) {
-      $scale = "/" . $D->{scale};
+    if (length($text) > 0) {
+      my @text = split(' ',$text);
+      my $textlen = @text + 1;
+      $scale = "";
+      if ($D->{scale}) {
+	$scale = "/" . $D->{scale};
+      }
+      $cmddef .=
+	"  : " . join(' ', @text) .
+	  " %f (Enter value in $unit) $unit\n" .
+	"    { \$0.channel = $i; \$0.value = \$$textlen$scale; }\n";
     }
-    $cmddef .=
-      "  : " . join(' ', @text) .
-        " %f (Enter value in $unit) $unit\n" .
-      "    { \$0.channel = $i; \$0.value = \$$textlen$scale; }\n";
   }
 }
 

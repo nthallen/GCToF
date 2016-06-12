@@ -18,6 +18,4 @@
     { $0.channel = 2; $0.value = $6; }
   : FT Dilution Flow %f (Enter value in sccm) sccm
     { $0.channel = 3; $0.value = $4; }
-  : Hot Cal Pressure %f (Enter value in mbar) mbar
-    { $0.channel = 4; $0.value = $4/30.; }
 ;

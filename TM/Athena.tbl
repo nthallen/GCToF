@@ -117,7 +117,7 @@ DS_Spares {
   MFC_Sp5_SP: (MFC_Sp5_SP,6) V;
   MFC_Sp5:    (MFC_Sp5,6)    V;
   A1_SpV_3S:  (A1_SpV_3S,3);
-  A1_SpV_3S:  (A1_SpV_5S,3);
+  A1_SpV_5S:  (A1_SpV_5S,3);
   A1_SpV_7S:  (A1_SpV_7S,3);
   A2_SpV_1S: (A2_SpV_1S,3);
   A2_SpV_2S: (A2_SpV_2S,3);
