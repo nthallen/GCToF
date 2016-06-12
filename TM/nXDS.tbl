@@ -1,5 +1,7 @@
 Input "GBHoriba.tbl";
 Input "GCHoriba.tbl";
+Input "GBWatlow.tbl";
+Input "GCWatlow.tbl";
 
 nXDS {
   HBox { +-; Title: nXDS; -+ };
@@ -51,6 +53,9 @@ Status {
     |+; {
       [nXDS];
       [zaber];
+    }; |+; {
+      [GBWatlow];
+      [GCWatlow];
     }; |+; {
       [GBHoriba];
       [GCHoriba];

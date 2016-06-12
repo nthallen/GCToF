@@ -1,0 +1,28 @@
+GC_T {
+  GC_T:  (GC_T_SP,5) (GC_T,5) C;
+}
+GCF4_2T {
+  GCF4_2T:  (GCF4_2T_SP,5) (GCF4_2T,5) C;
+}
+GCF4_3T {
+  GCF4_3T:  "" (GCF4_3T,5) C;
+}
+GCPM6_1T {
+  GCPM6_1T:  (GCPM6_1T_SP,5) (GCPM6_1T,5) C;
+}
+GCPM6_2T {
+  GCPM6_2T:  (GCPM6_2T_SP,5) (GCPM6_2T,5) C;
+}
+GCWatlow_Status {
+  { HGlue 0+1 Stale: (GCWatlow_Stale,3) }
+}
+GCWatlow {
+  HBox { +-; Title: GCWatlow; -+ };
+  "" >Set< >Flow<;
+  GC_T:  (GC_T_SP,5) (GC_T,5) C;
+  GCF4_2T:  (GCF4_2T_SP,5) (GCF4_2T,5) C;
+  GCF4_3T:  "" (GCF4_3T,5) C;
+  GCPM6_1T:  (GCPM6_1T_SP,5) (GCPM6_1T,5) C;
+  GCPM6_2T:  (GCPM6_2T_SP,5) (GCPM6_2T,5) C;
+  { HGlue 0+1 Stale: (GCWatlow_Stale,3) }
+}

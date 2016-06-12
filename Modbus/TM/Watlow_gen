@@ -1,0 +1,215 @@
+#! /usr/bin/perl -w
+use strict;
+
+# Watlow_gen <srcfile> name=<name>
+# Generates the following:
+#   <name>.tmc
+#   <name>_col.tmc
+#   <name>.cmd
+#   # <name>_conv.tmc
+#   <name>.genui
+
+my $srcfile = $ARGV[0] ||
+  die "Must specify a source file\n";
+my $name_cl = 'Watlow';
+my $Rate = '1';
+my $Port = '/dev/ser1';
+my $Name = '';
+my %Data;
+my @Data;
+my %Channel;
+my $linenum = 0;
+if (@ARGV > 1) {
+  if ($ARGV[1] =~ m/^name=([a-z][a-z0-9_]*)$/i ) {
+    $name_cl = $1;
+  } else {
+    die "Invalid name specification: '$ARGV[1]'\n";
+  }
+}
+
+open(my $ifh, "<", $srcfile)
+  or die "Cannot open < $srcfile\n";
+
+my %valid_chan = map { ($_ => 1) } qw(F4/1 F4/2 F4/3 PM6C/1 PM6C/2);
+my %no_SP = ('F4/3' => 1);
+
+while (my $line = <$ifh>) {
+  ++$linenum;
+  chomp $line;
+  next if $line =~ m/^\s*(?:#.*)?$/;
+  if ( $line =~ m|^\s*Rate\s+(\d+(?:/\d+)?)\s+Hz\s*|i ) {
+    $Rate = $1;
+  } elsif ( $line =~ m/^\s*Port\s+(\S+)\s*$/i ) {
+    $Port = $1;
+  } elsif ( $line =~ m/^\s*Name\s+([a-z]\w*)\s*$/i ) {
+    die "$srcfile:$linenum: Name redefined\n"
+      if $Name ne '';
+    $Name = $1;
+  } elsif ( $line =~ m,^\s* Data \s+ ([A-Za-z]\w+) \s+ (F4|PM6C)
+                        \s+ (\d+) (?:\s+ "([^"]*)")? \s* $,x ) {
+    my ($datum,$comp,$channel,$text) =
+      ($1,$2,$3,$4);
+    die "$srcfile:$linenum: Datum $datum conflicts with earlier definition\n"
+      if $Data{$datum};
+    die "$srcfile:$linenum: Invalid channel: $comp/$channel\n"
+      unless defined($valid_chan{"$comp/$channel"});
+    die "$srcfile:$linenum: Channel $comp/$channel already assigned\n"
+      if $Channel{"$comp/$channel"};
+    $Data{$datum} = { channel => $channel, comp => $comp, text => $text };
+    $Channel{"$comp/$channel"} = $datum;
+    push @Data, $datum;
+  } else {
+    die "$srcfile:$linenum: Syntax error: '$line'\n";
+  }
+}
+
+close($ifh) or warn "Error closing srcfile '$srcfile'\n";
+
+$Name = "Watlow" unless $Name ne '';
+die "$srcfile: command line and sourcefile disagree on Name\n"
+  unless $Name eq $name_cl;
+
+open(my $tmc, ">", "$Name.tmc") ||
+  die "$srcfile: Unable to write output file $Name.tmc\n";
+open(my $col, ">", "${Name}_col.tmc") ||
+  die "$srcfile: Unable to write output file ${Name}_col.tmc\n";
+open(my $genui, ">", "${Name}.genui") ||
+  die "$srcfile: Unable to write output file ${Name}.genui\n";
+open(my $tbl, ">", "$Name.tbl") ||
+  die "$srcfile: Unable to write output file $Name.tbl\n";
+# open(my $conv, ">", "${Name}_conv.tmc") ||
+#   die "$srcfile: Unable to write output file ${Name}_conv.tmc\n";
+open(my $cmd, ">", "$Name.cmd") ||
+  die "$srcfile: Unable to write output file $Name.cmd\n";
+
+my ($typedef, $datadef, $coldef, @grpmem, $tbldef);
+my %cmddef = ('F4' => '', 'PM6C' => '');
+
+for my $datum (@Data) {
+  my $D = $Data{$datum};
+  my $comp = $D->{comp};
+  my $text = $D->{text};
+  my $channel = $D->{channel};
+  my $type = "${Name}_${comp}_T";
+
+  my $datumtbl = "  $datum: ";
+  if ( $no_SP{"$comp/$channel"} ) {
+    $datumtbl .= ' ""';
+  } else {
+    $datadef .= "TM $Rate Hz $type ${datum}_SP;\n";
+    $coldef .= "  ${datum}_SP = ${Name}.${comp}_SP$channel;\n";
+    push(@grpmem, "${datum}_SP");
+    print $genui
+      "  $Rate ${datum}_SP $Name $datum\n";
+    $datumtbl .= " (${datum}_SP,5)";
+    if ($text) {
+      my @text = split(' ',$text);
+      $cmddef{$comp} .=
+        "  : " . join(' ', @text) .
+        "  { \$0 = $channel; }\n";
+    }
+  }
+  $datadef .= "TM $Rate Hz $type ${datum};\n";
+  $coldef .= "  ${datum} = ${Name}.${comp}_T$channel;\n";
+  push(@grpmem, $datum);
+
+  print $genui
+    "  $Rate $datum   $Name $datum\n";
+
+  $datumtbl .= " (${datum},5) C;\n";
+  $tbldef .= $datumtbl;
+  print $tbl
+    "$datum {\n$datumtbl" . 
+    "}\n";
+}
+push(@grpmem, "${Name}_Stale");
+
+print $tmc
+  "%{\n" .
+  "  #include \"modbus.h\"\n" .
+  "  extern Modbus_t $Name;\n" .
+  "  const char *${Name}_F4_status_text(signed short in) {\n" .
+  "    switch (in) {\n" .
+  "      case 0: return \"Termina\";\n" .
+  "      case 1: return \"Pre-run\";\n" .
+  "      case 2: return \"Running\";\n" .
+  "      case 3: return \"Holding\";\n" .
+  "      default: return \"*******\";\n" .
+  "    }\n" .
+  "  }\n" .
+  "%}\n" .
+  "TM \"Receive\" $Name 1;\n" .
+  "\n" .
+  "TM typedef float ${Name}_PM6C_T { text \"%5.1f\"; }\n" .
+  "TM typedef signed short ${Name}_F4_T { text \"%5.1f\"; }\n" .
+  "TM typedef signed short ${Name}_F4_Op_t { text \"%7d\" " .
+    "${Name}_F4_status_text(); }\n" .
+  "TM typedef unsigned char ${Name}St_t { text \"%3d\"; }\n" .
+
+  "\n$datadef" .
+  "TM $Rate Hz ${Name}St_t ${Name}_Stale;\n" .
+
+  "Group $Name (" . join(', ', @grpmem) . ") {\n" .
+  $coldef . 
+  "  ${Name}_Stale = ${Name}_obj->stale(255);\n" .
+  "  ${Name}_obj->synch();\n}\n";
+
+print $col
+  "%{\n" .
+  "  #include \"modbus.h\"\n" .
+  "  Modbus_t $Name;\n" .
+  "%}\n";
+
+print $genui
+  "  $Rate ${Name}_Stale $Name Stale\n";
+
+print $tbl
+  "${Name}_Status {\n" .
+  "  { HGlue 0+1 Stale: (${Name}_Stale,3) }\n" .
+  "}\n" .
+  "$Name {\n" .
+  "  HBox { +-; Title: $Name; -+ };\n" .
+  '  "" >Set< >Flow<;' . "\n" .
+  $tbldef .
+  "  { HGlue 0+1 Stale: (${Name}_Stale,3) }\n" .
+  "}\n";
+
+my $has_F4 = 0;
+for my $compchan (keys %Channel) {
+  $has_F4 = 1 if $compchan =~ /^F4/;
+}
+
+print $cmd
+  "%{\n" .
+  "  #include <math.h>\n" .
+  "%}\n" .
+  "\n" .
+  "%INTERFACE <$Name>\n" .
+  "\n" .
+  "&command\n" .
+  "  : ${Name} PM Set &${Name}_PM %f (Enter Temperature in Celcius) * {\n" .
+  "      if_${Name}.Turf(\"S%d:%.1f\\n\", \$4, \$5);\n" .
+  "    }\n";
+print $cmd
+  "  : ${Name} F4 Set &${Name}_F4 %f (Enter Temperature in Celcius) * {\n" .
+  "      if_${Name}.Turf(\"F%d:%d\\n\", \$4, (int)floor(\$5*10 + 0.5));\n" .
+  "    }\n" .
+  "  : ${Name} F4 Resume Profile * {\n" .
+  "      if_${Name}.Turf(\"F3:1\\n\");\n" .
+  "    }\n" .
+  "  : ${Name} F4 Terminate Profile * {\n" .
+  "      if_${Name}.Turf(\"F4:1\\n\");\n" .
+  "    }\n" if $has_F4;
+print $cmd
+  "  ;\n" .
+  "\n" .
+  "&${Name}_PM <int>\n" . $cmddef{PM6C} . "  ;\n";
+print $cmd
+  "\n" .
+  "&${Name}_F4 <int>\n" . $cmddef{F4} . "  ;\n" if $has_F4;
+
+close($tmc) || warn "$srcfile: Error closing output file $Name.tmc\n";
+close($col) || warn "$srcfile: Error closing output file ${Name}_col.tmc\n";
+close($genui) || warn "$srcfile: Error closing output file ${Name}.genui\n";
+close($tbl) || warn "$srcfile: Error closing output file $Name.tbl\n";
+close($cmd) || warn "$srcfile: Error closing output file $Name.cmd\n";

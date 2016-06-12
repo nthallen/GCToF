@@ -1,0 +1,33 @@
+%{
+  #include "modbus.h"
+  extern Modbus_t GBWatlow;
+  const char *GBWatlow_F4_status_text(signed short in) {
+    switch (in) {
+      case 0: return "Termina";
+      case 1: return "Pre-run";
+      case 2: return "Running";
+      case 3: return "Holding";
+      default: return "*******";
+    }
+  }
+%}
+TM "Receive" GBWatlow 1;
+
+TM typedef float GBWatlow_PM6C_T { text "%5.1f"; }
+TM typedef signed short GBWatlow_F4_T { text "%5.1f"; }
+TM typedef signed short GBWatlow_F4_Op_t { text "%7d" GBWatlow_F4_status_text(); }
+TM typedef unsigned char GBWatlowSt_t { text "%3d"; }
+
+TM 1 Hz GBWatlow_PM6C_T HotCalT_SP;
+TM 1 Hz GBWatlow_PM6C_T HotCalT;
+TM 1 Hz GBWatlow_PM6C_T GBPM6_2T_SP;
+TM 1 Hz GBWatlow_PM6C_T GBPM6_2T;
+TM 1 Hz GBWatlowSt_t GBWatlow_Stale;
+Group GBWatlow (HotCalT_SP, HotCalT, GBPM6_2T_SP, GBPM6_2T, GBWatlow_Stale) {
+  HotCalT_SP = GBWatlow.PM6C_SP1;
+  HotCalT = GBWatlow.PM6C_T1;
+  GBPM6_2T_SP = GBWatlow.PM6C_SP2;
+  GBPM6_2T = GBWatlow.PM6C_T2;
+  GBWatlow_Stale = GBWatlow_obj->stale(255);
+  GBWatlow_obj->synch();
+}

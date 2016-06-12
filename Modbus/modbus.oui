@@ -1,0 +1,31 @@
+<package> modbus
+<include> "modbus.h"
+<include> msg
+<follow> msg
+
+<opts> "d:ef"
+<sort>
+	-d <serial device>
+	-e RS485 Hardware suppresses echo
+	-f Collect F4 data
+<unsort>
+The '-h' message header option will also change the name
+used for command and telemetry communications.
+
+<switch>
+  case 'd':
+    modbus_path = optarg;
+    break;
+  case 'e':
+    opt_echo = 0;
+    break;
+  case 'f':
+    opt_f4 = 1;
+    break;
+  case 'h': // use msg header value for name
+    modbus_name = optarg;
+    break;
+
+<package> msghdr_default
+<var>
+  char *msg_hdr_default = "modbus";
