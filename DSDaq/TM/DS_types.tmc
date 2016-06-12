@@ -106,7 +106,7 @@ TM typedef A1_ADCx2_t A2_ADCx2_t {
 }
 TM typedef A2_ADC_t A2_V1000torr { text "%6.1lf"; convert DS_MBAR; }
   calibration (A2_V1000torr,DS_MBAR) { 0, 0, 32768, 1333.2 }
-TM typedef A2_ADCx2_t A2_V100torr { text "%6.2lf"; convert DS_MBAR; }
+TM typedef A2_ADC_t A2_V100torr { text "%6.2lf"; convert DS_MBAR; }
   calibration (A2_V100torr,DS_MBAR) { 0, 0, 32768, 133.32 }
 TM typedef unsigned char A2_DS_t {
   text "%3u";
