@@ -1,19 +1,19 @@
 Fluorine {
   Fluorine:
-    >HBox{(Fluorine_SP,6); (Fluorine_SP_Stat,1)}
-    >HBox{(Fluorine,6); (Fluorine_Stat,1)}
+    >HBox{(Fluorine_SP,5); (Fluorine_SP_Stat,1)}
+    >HBox{(Fluorine,5); (Fluorine_Stat,1)}
     sccm;
 }
 IonSrc {
   IonSrc:
-    >HBox{(IonSrc_SP,7); (IonSrc_SP_Stat,1)}
-    >HBox{(IonSrc,7); (IonSrc_Stat,1)}
+    >HBox{(IonSrc_SP,4); (IonSrc_SP_Stat,1)}
+    >HBox{(IonSrc,4); (IonSrc_Stat,1)}
     sccm;
 }
 DilFT {
   DilFT:
-    >HBox{(DilFT_SP,7); (DilFT_SP_Stat,1)}
-    >HBox{(DilFT,7); (DilFT_Stat,1)}
+    >HBox{(DilFT_SP,6); (DilFT_SP_Stat,1)}
+    >HBox{(DilFT,6); (DilFT_Stat,1)}
     sccm;
 }
 CalP {
@@ -29,16 +29,16 @@ GBHoriba {
   HBox { +-; Title: GBHoriba; -+ };
   "" >Set< >Flow<;
   Fluorine:
-    >HBox{(Fluorine_SP,6); (Fluorine_SP_Stat,1)}
-    >HBox{(Fluorine,6); (Fluorine_Stat,1)}
+    >HBox{(Fluorine_SP,5); (Fluorine_SP_Stat,1)}
+    >HBox{(Fluorine,5); (Fluorine_Stat,1)}
     sccm;
   IonSrc:
-    >HBox{(IonSrc_SP,7); (IonSrc_SP_Stat,1)}
-    >HBox{(IonSrc,7); (IonSrc_Stat,1)}
+    >HBox{(IonSrc_SP,4); (IonSrc_SP_Stat,1)}
+    >HBox{(IonSrc,4); (IonSrc_Stat,1)}
     sccm;
   DilFT:
-    >HBox{(DilFT_SP,7); (DilFT_SP_Stat,1)}
-    >HBox{(DilFT,7); (DilFT_Stat,1)}
+    >HBox{(DilFT_SP,6); (DilFT_SP_Stat,1)}
+    >HBox{(DilFT,6); (DilFT_Stat,1)}
     sccm;
   CalP:
     >HBox{(CalP_SP,6); (CalP_SP_Stat,1)}

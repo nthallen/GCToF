@@ -1,9 +1,9 @@
 %{
   #define GBHoriba_channel(x,y) GBHoriba.channel[x].y
 %}
-TM typedef short Fluorine_sccm { text "%6.4lf"; }
-TM typedef short IonSrc_sccm { text "%7.3lf"; }
-TM typedef short DilFT_sccm { text "%7.2lf"; }
+TM typedef short Fluorine_sccm { text "%5.3lf"; }
+TM typedef short IonSrc_sccm { text "%4.1lf"; }
+TM typedef short DilFT_sccm { text "%6.1lf"; }
 TM typedef short CalP_mbar { text "%6.1lf"; }
 TM typedef unsigned short GBHoribaS_t { text "%04x"; }
 TM typedef unsigned char GBHoribaSt_t { text "%3d"; }
@@ -21,12 +21,12 @@ TM 1 Hz GBHoribaSt_t GBHoriba_Stale;
 TM "Receive" GBHoriba 1;
 
 Group GBHoriba (Fluorine_SP, Fluorine, IonSrc_SP, IonSrc, DilFT_SP, DilFT, CalP_SP, CalP) {
-  Fluorine_SP = GBHoriba_channel(0,SP) * 10000;
-  Fluorine = GBHoriba_channel(0,RB) * 10000;
-  IonSrc_SP = GBHoriba_channel(1,SP) * 1000;
-  IonSrc = GBHoriba_channel(1,RB) * 1000;
-  DilFT_SP = GBHoriba_channel(2,SP) * 100;
-  DilFT = GBHoriba_channel(2,RB) * 100;
+  Fluorine_SP = GBHoriba_channel(0,SP) * 1000;
+  Fluorine = GBHoriba_channel(0,RB) * 1000;
+  IonSrc_SP = GBHoriba_channel(1,SP) * 10;
+  IonSrc = GBHoriba_channel(1,RB) * 10;
+  DilFT_SP = GBHoriba_channel(2,SP) * 10;
+  DilFT = GBHoriba_channel(2,RB) * 10;
   CalP_SP = GBHoriba_channel(3,SP) * 10*30.;
   CalP = GBHoriba_channel(3,RB) * 10*30.;
   GBHoribaS = GBHoriba.HoribaS;
