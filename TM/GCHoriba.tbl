@@ -6,8 +6,8 @@ ColumnN2 {
 }
 GC_Intake {
   GC_Intake:
-    >HBox{(GC_Intake_SP,6); (GC_Intake_SP_Stat,1)}
-    >HBox{(GC_Intake,6); (GC_Intake_Stat,1)}
+    >HBox{(GC_Intake_SP,4); (GC_Intake_SP_Stat,1)}
+    >HBox{(GC_Intake,4); (GC_Intake_Stat,1)}
     sccm;
 }
 PickupFlow {
@@ -18,8 +18,8 @@ PickupFlow {
 }
 GC_Dilution {
   GC_Dilution:
-    >HBox{(GC_Dilution_SP,7); (GC_Dilution_SP_Stat,1)}
-    >HBox{(GC_Dilution,7); (GC_Dilution_Stat,1)}
+    >HBox{(GC_Dilution_SP,6); (GC_Dilution_SP_Stat,1)}
+    >HBox{(GC_Dilution,6); (GC_Dilution_Stat,1)}
     sccm;
 }
 GCHoriba_Status {
@@ -33,16 +33,16 @@ GCHoriba {
     >HBox{(ColumnN2,6); (ColumnN2_Stat,1)}
     sccm;
   GC_Intake:
-    >HBox{(GC_Intake_SP,6); (GC_Intake_SP_Stat,1)}
-    >HBox{(GC_Intake,6); (GC_Intake_Stat,1)}
+    >HBox{(GC_Intake_SP,4); (GC_Intake_SP_Stat,1)}
+    >HBox{(GC_Intake,4); (GC_Intake_Stat,1)}
     sccm;
   PickupFlow:
     >HBox{(PickupFlow_SP,6); (PickupFlow_SP_Stat,1)}
     >HBox{(PickupFlow,6); (PickupFlow_Stat,1)}
     sccm;
   GC_Dilution:
-    >HBox{(GC_Dilution_SP,7); (GC_Dilution_SP_Stat,1)}
-    >HBox{(GC_Dilution,7); (GC_Dilution_Stat,1)}
+    >HBox{(GC_Dilution_SP,6); (GC_Dilution_SP_Stat,1)}
+    >HBox{(GC_Dilution,6); (GC_Dilution_Stat,1)}
     sccm;
   { Cmd: (GCHoriba_CS,2) HGlue 0+1 Stale: (GCHoriba_Stale,3) }
 }
