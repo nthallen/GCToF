@@ -11,6 +11,16 @@ int main(int argc, char **argv) {
   oui_init_options(argc, argv);
   { Selector Loop;
     Modbus_t MB_TM;
+    MB_TM.PM6C_T1 = 0.;
+    MB_TM.PM6C_SP1 = 0.;
+    MB_TM.PM6C_T2 = 0.;
+    MB_TM.PM6C_SP2 = 0.;
+    MB_TM.F4_T1 = 0;
+    MB_TM.F4_T2 = 0;
+    MB_TM.F4_T3 = 0;
+    MB_TM.F4_Op = 0;
+    MB_TM.F4_SP1 = 0;
+    MB_TM.F4_SP2 = 0;
     modbus MB(modbus_path, &MB_TM);
     TM_Selectee TM(modbus_name, &MB_TM, sizeof(MB_TM));
     modbus_cmd Cmd(&MB);
