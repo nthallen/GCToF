@@ -1,0 +1,28 @@
+Moduledef Watlow [ src= name=Watlow ] {
+  Watlow Module requires a src variable
+  Source file syntax documentation goes here.
+  The driver mode will distribute the driver
+}
+
+mode (default,driver) {
+  tmcbase = @name@.tmc:
+  colbase = @name@_col.tmc:
+  cmdbase = @name@.cmd:
+  genuibase = @name@.genui:
+  SRC = @src@
+  %%
+@name@.tmc @name@_col.tmc @name@.cmd @name@.genui @name@.tbl : @src@ @MODDIR@/Watlow_gen
+	@MODDIR@/Watlow_gen @src@ name=@name@
+}
+
+mode (driver) {
+  DISTRIB = @MODDIR@/../modbus
+  CPPFLAGS = -I @MODDIR@/..
+  %%
+.PHONY : clean-Watlow
+@MODDIR@/../modbus :
+	cd @MODDIR@/.. && make
+clean-dist : clean-Watlow
+clean-Watlow :
+	cd @MODDIR@/.. && make clean
+}

@@ -1,0 +1,9 @@
+# GCWatlow.txt
+Name GCWatlow
+Rate 1 Hz
+Port /net/GCAthena2/dev/ser
+Data GC_T F4 1 "GC Column Temperature"
+Data GCF42T F4 2 "GC Spare F4 Temperature 1"
+Data GCF43T F4 3
+Data GCPM61T PM6C 1 "GC Spare PM6 Temperature 1"
+Data GCPM62T PM6C 2 "GC Spare PM6 Temperature 2"
