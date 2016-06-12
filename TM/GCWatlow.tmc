@@ -1,0 +1,43 @@
+%{
+  #include "modbus.h"
+  extern Modbus_t GCWatlow;
+  const char *GCWatlow_F4_status_text(signed short in) {
+    switch (in) {
+      case 0: return "Termina";
+      case 1: return "Pre-run";
+      case 2: return "Running";
+      case 3: return "Holding";
+      default: return "*******";
+    }
+  }
+%}
+TM "Receive" GCWatlow 1;
+
+TM typedef float GCWatlow_PM6C_T { text "%5.1f"; }
+TM typedef signed short GCWatlow_F4_T { text "%5.1f"; }
+TM typedef signed short GCWatlow_F4_Op_t { text "%7d" GCWatlow_F4_status_text(); }
+TM typedef unsigned char GCWatlowSt_t { text "%3d"; }
+
+TM 1 Hz GCWatlow_F4_T GC_T_SP;
+TM 1 Hz GCWatlow_F4_T GC_T;
+TM 1 Hz GCWatlow_F4_T GCF4_2T_SP;
+TM 1 Hz GCWatlow_F4_T GCF4_2T;
+TM 1 Hz GCWatlow_F4_T GCF4_3T;
+TM 1 Hz GCWatlow_PM6C_T GCPM6_1T_SP;
+TM 1 Hz GCWatlow_PM6C_T GCPM6_1T;
+TM 1 Hz GCWatlow_PM6C_T GCPM6_2T_SP;
+TM 1 Hz GCWatlow_PM6C_T GCPM6_2T;
+TM 1 Hz GCWatlowSt_t GCWatlow_Stale;
+Group GCWatlow (GC_T_SP, GC_T, GCF4_2T_SP, GCF4_2T, GCF4_3T, GCPM6_1T_SP, GCPM6_1T, GCPM6_2T_SP, GCPM6_2T, GCWatlow_Stale) {
+  GC_T_SP = GCWatlow.F4_SP1;
+  GC_T = GCWatlow.F4_T1;
+  GCF4_2T_SP = GCWatlow.F4_SP2;
+  GCF4_2T = GCWatlow.F4_T2;
+  GCF4_3T = GCWatlow.F4_T3;
+  GCPM6_1T_SP = GCWatlow.PM6C_SP1;
+  GCPM6_1T = GCWatlow.PM6C_T1;
+  GCPM6_2T_SP = GCWatlow.PM6C_SP2;
+  GCPM6_2T = GCWatlow.PM6C_T2;
+  GCWatlow_Stale = GCWatlow_obj->stale(255);
+  GCWatlow_obj->synch();
+}

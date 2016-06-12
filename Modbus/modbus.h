@@ -2,7 +2,7 @@
 #define MODBUS_H_INCLUDED
 
 #include <stdint.h>
-extern char *modbus_path, *modbus_name;
+extern const char *modbus_path, *modbus_name;
 extern int opt_echo, opt_f4;
 
 typedef struct __attribute__((__packed__)) {

@@ -83,7 +83,7 @@ open(my $cmd, ">", "$Name.cmd") ||
   die "$srcfile: Unable to write output file $Name.cmd\n";
 
 my ($typedef, $datadef, $coldef, @grpmem, $tbldef);
-my %cmddef = {'F4' => '', 'PM6C' => ''};
+my %cmddef = ('F4' => '', 'PM6C' => '');
 
 for my $datum (@Data) {
   my $D = $Data{$datum};
@@ -91,27 +91,25 @@ for my $datum (@Data) {
   my $text = $D->{text};
   my $channel = $D->{channel};
   my $type = "${Name}_${comp}_T";
-  $datadef .= "TM $Rate Hz $type ${datum}_SP;\n";
-  $datadef .= "TM $Rate Hz $type ${datum};\n";
 
   my $datumtbl = "  $datum: ";
   if ( $no_SP{"$comp/$channel"} ) {
     $datumtbl .= ' ""';
   } else {
-    $coldef .= "  ${datum}_SP = ${Name}.${comp}_SP$channel;\n"
+    $datadef .= "TM $Rate Hz $type ${datum}_SP;\n";
+    $coldef .= "  ${datum}_SP = ${Name}.${comp}_SP$channel;\n";
     push(@grpmem, "${datum}_SP");
     print $genui
       "  $Rate ${datum}_SP $Name $datum\n";
     $datumtbl .= " (${datum}_SP,5)";
     if ($text) {
       my @text = split(' ',$text);
-      my $textlen = @text + 1;
       $cmddef{$comp} .=
         "  : " . join(' ', @text) .
-          " %f (Enter value in C) C\n" .
-        "    { \$0 = \$$textlen; }\n";
+        "  { \$0 = $channel; }\n";
     }
   }
+  $datadef .= "TM $Rate Hz $type ${datum};\n";
   $coldef .= "  ${datum} = ${Name}.${comp}_T$channel;\n";
   push(@grpmem, $datum);
 
@@ -123,9 +121,8 @@ for my $datum (@Data) {
   print $tbl
     "$datum {\n$datumtbl" . 
     "}\n";
-
-  }
 }
+push(@grpmem, "${Name}_Stale");
 
 print $tmc
   "%{\n" .
@@ -191,17 +188,17 @@ print $cmd
   "\n" .
   "&command\n" .
   "  : ${Name} PM Set &${Name}_PM %f (Enter Temperature in Celcius) * {\n" .
-  "      if_modbus.Turf(\"S%d:%.1f\n\", \$4, \$5);\n" .
+  "      if_${Name}.Turf(\"S%d:%.1f\\n\", \$4, \$5);\n" .
   "    }\n";
 print $cmd
   "  : ${Name} F4 Set &${Name}_F4 %f (Enter Temperature in Celcius) * {\n" .
-  "      if_modbus.Turf(\"F%d:%d\n\", \$4, (int)floor(\$5*10 + 0.5));\n" .
+  "      if_${Name}.Turf(\"F%d:%d\\n\", \$4, (int)floor(\$5*10 + 0.5));\n" .
   "    }\n" .
   "  : ${Name} F4 Resume Profile * {\n" .
-  "      if_modbus.Turf(\"F3:1\n\");\n" .
+  "      if_${Name}.Turf(\"F3:1\\n\");\n" .
   "    }\n" .
   "  : ${Name} F4 Terminate Profile * {\n" .
-  "      if_modbus.Turf(\"F4:1\n\");\n" .
+  "      if_${Name}.Turf(\"F4:1\\n\");\n" .
   "    }\n" if $has_F4;
 print $cmd
   "  ;\n" .

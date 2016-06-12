@@ -2,8 +2,8 @@
 #include "oui.h"
 #include "nortlib.h"
 
-char *modbus_path;
-char *modbus_name = "Modbus";
+const char *modbus_path;
+const char *modbus_name = "Modbus";
 int opt_echo = 1;
 int opt_f4 = 0;
 

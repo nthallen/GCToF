@@ -1,0 +1,16 @@
+HotCalT {
+  HotCalT:  (HotCalT_SP,5) (HotCalT,5) C;
+}
+GBPM6_2T {
+  GBPM6_2T:  (GBPM6_2T_SP,5) (GBPM6_2T,5) C;
+}
+GBWatlow_Status {
+  { HGlue 0+1 Stale: (GBWatlow_Stale,3) }
+}
+GBWatlow {
+  HBox { +-; Title: GBWatlow; -+ };
+  "" >Set< >Flow<;
+  HotCalT:  (HotCalT_SP,5) (HotCalT,5) C;
+  GBPM6_2T:  (GBPM6_2T_SP,5) (GBPM6_2T,5) C;
+  { HGlue 0+1 Stale: (GBWatlow_Stale,3) }
+}

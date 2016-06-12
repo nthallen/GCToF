@@ -39,6 +39,8 @@ DISTRIB = ../UPS/ups
 
 Module Horiba src=GBHoriba.txt name=GBHoriba mode=driver
 Module Horiba src=GCHoriba.txt name=GCHoriba
+Module Watlow src=GCWatlow.txt name=GCWatlow mode=driver
+Module Watlow src=GBWatlow.txt name=GBWatlow
 
 #GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl \
 #    nXDS.tbl sonic.tbl UPS.tbl
