@@ -24,5 +24,6 @@ GCWatlow {
   GCF4_3T:  "" (GCF4_3T,5) C;
   GCPM6_1T:  (GCPM6_1T_SP,5) (GCPM6_1T,5) C;
   GCPM6_2T:  (GCPM6_2T_SP,5) (GCPM6_2T,5) C;
+  F4_Op: (GCWatlow_F4_Op,7);
   { HGlue 0+1 Stale: (GCWatlow_Stale,3) }
 }

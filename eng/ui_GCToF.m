@@ -148,6 +148,7 @@ f = ne_dialg(f, 'add', 1, 0, 'pGCToFgcwgcft', 'GCF4 2T' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgcwgcf4_3t', 'GCF4 3T' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgcwgcpmt', 'GCPM6 1T' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgcwgcpm6_2t', 'GCPM6 2T' );
+f = ne_dialg(f, 'add', 1, 0, 'pGCToFgcwfo', 'F4 Op' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgcws', 'Stale' );
 f = ne_dialg(f, 'add', 0, 1, 'gGCToFgbw', 'GB Watlow' );
 f = ne_dialg(f, 'add', 1, 0, 'pGCToFgbwhct', 'Hot Cal T' );
