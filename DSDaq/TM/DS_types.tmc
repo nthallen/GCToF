@@ -99,7 +99,7 @@ TM typedef unsigned short A2_DAC_t {
   }
   calibration (A2_DAC_t, DS_VOLTS) { 0, -10, 4096, 10 }
 TM typedef A1_ADC_t A2_ADC_t {
-  collect x = A2.read(x.address);
+  collect x = A2.read(x.address + 0x1000);
 }
 TM typedef A1_ADCx2_t A2_ADCx2_t {
   collect x = A2.read(x.address + 0x1100);

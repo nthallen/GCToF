@@ -1,7 +1,7 @@
 TM 1 Hz A1_V1000sccm_sp MFC_AMBZ_SP; Address MFC_AMBZ_SP 0x2002;
 TM 1 Hz A1_DAC_t MFC_Sp1_SP; Address MFC_Sp1_SP 0x2003;
-TM 1 Hz A1_DAC_t MFC_Sp2_SP; Address MFC_Sp1_SP 0x2000;
-TM 1 Hz A1_DAC_t MFC_Sp3_SP; Address MFC_Sp1_SP 0x2001;
+TM 1 Hz A1_DAC_t MFC_Sp2_SP; Address MFC_Sp2_SP 0x2000;
+TM 1 Hz A1_DAC_t MFC_Sp3_SP; Address MFC_Sp3_SP 0x2001;
 
 TM 1 Hz A1_V1000sccm MFC_AMBZ; Address MFC_AMBZ 10;
 TM 1 Hz A1_ADC_t MFC_Sp1; Address MFC_Sp1 9;
