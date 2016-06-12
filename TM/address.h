@@ -20,9 +20,9 @@
 #define MFC_Sp2_Address 0x1
 #define MFC_Sp1_Address 0x9
 #define MFC_AMBZ_Address 0xA
-#define MFC_Sp3_SP_Address 0x0
-#define MFC_Sp2_SP_Address 0x0
-#define MFC_Sp1_SP_Address 0x2001
+#define MFC_Sp3_SP_Address 0x2001
+#define MFC_Sp2_SP_Address 0x2000
+#define MFC_Sp1_SP_Address 0x2003
 #define MFC_AMBZ_SP_Address 0x2002
 #define TPB_TV_Address 0x1F
 #define TPBx_TV_Address 0xF

@@ -22,6 +22,7 @@
   Launch - IonGauge -d /dev/ser7
   Launch - ups -p /dev/ser10
   Launch - TwisTorr -d /dev/ser3
+  Launch - zaber -p /dev/ser2
   Launch - horiba -h GBHoriba -n4 -d /net/GCAthena1/dev/ser1 -ev
   Launch - horiba -h GCHoriba -n5 -d /net/GCAthena2/dev/ser1 -ev
   Launch - Zeno_Ser -d /dev/ser8
