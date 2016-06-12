@@ -7,7 +7,7 @@
 <sort>
 	-d <serial device>
 	-e RS485 Hardware suppresses echo
-  -f Collect F4 data
+	-f Collect F4 data
 <unsort>
 The '-h' message header option will also change the name
 used for command and telemetry communications.
