@@ -25,8 +25,8 @@
   Launch - zaber -p /dev/ser2
   Launch - horiba -h GBHoriba -n4 -d /net/GCAthena1/dev/ser1 -ev
   Launch - horiba -h GCHoriba -n5 -d /net/GCAthena2/dev/ser1 -ev
-  Launch - modbus -h GBWatlow -d /net/GCAthena1/dev/ser2 -efv
-  Launch - modbus -h GCWatlow -d /net/GCAthena2/dev/ser2 -ev
+  Launch - modbus -h GBWatlow -d /net/GCAthena1/dev/ser2 -ev
+  Launch - modbus -h GCWatlow -d /net/GCAthena2/dev/ser2 -efv
   Launch - Zeno_Ser -d /dev/ser8
 # Launch - nXDS -d /dev/ser4
 # Launch - nice --2 sonic -t SonicData1 -h Sonic1 -p /dev/ser2
