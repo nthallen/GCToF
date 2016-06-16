@@ -185,7 +185,7 @@ print $tbl
   "}\n" .
   "$Name {\n" .
   "  HBox { +-; Title: $Name; -+ };\n" .
-  '  "" >Set< >Flow<;' . "\n" .
+  '  "" >Set< >Temp<;' . "\n" .
   $tbldef .
   "  { HGlue 0+1 Stale: (${Name}_Stale,3) }\n" .
   "}\n";

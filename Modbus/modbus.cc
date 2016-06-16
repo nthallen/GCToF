@@ -27,7 +27,9 @@ int main(int argc, char **argv) {
     Loop.add_child(&MB);
     Loop.add_child(&TM);
     Loop.add_child(&Cmd);
+    nl_error(0,"Starting, V1.2.4");
     Loop.event_loop();
+    nl_error(0,"Terminating");
   }
 }
 
@@ -41,9 +43,9 @@ modbus::modbus(const char *path, Modbus_t *MB_TM) :
     cmd_int_free.push_back(new modbus_cmd_int);
   }
   polls.push_back(new modbus_poll_float(PM6C_1_ID, 360, &MB_TM->PM6C_T1));
-  polls.push_back(new modbus_poll_float(PM6C_1_ID, 2172, &MB_TM->PM6C_SP1));
+  polls.push_back(new modbus_poll_float(PM6C_1_ID, 2160, &MB_TM->PM6C_SP1)); // 2172 or 2160 (cmd)
   polls.push_back(new modbus_poll_float(PM6C_1_ID, 440, &MB_TM->PM6C_T2));
-  polls.push_back(new modbus_poll_float(PM6C_1_ID, 2252, &MB_TM->PM6C_SP2));
+  polls.push_back(new modbus_poll_float(PM6C_1_ID, 2240, &MB_TM->PM6C_SP2)); // 2252 or 2240 (cmd)
   if (opt_f4) {
     polls.push_back(new modbus_poll_int(F4_1_ID, 100, &MB_TM->F4_T1));
     polls.push_back(new modbus_poll_int(F4_1_ID, 104, &MB_TM->F4_T2));
@@ -111,6 +113,7 @@ void modbus::queue_cmd_int(uint8_t device, uint16_t address, int16_t value) {
 
 void modbus::check_cmd() {
   if (!pending && !cmds.empty()) {
+    nl_error(-2, "Command: '%s'", ascii_escape((const char *)cmds[0]->req_buf, cmds[0]->req_sz));
     submit_req(cmds[0]);
     cmds.pop_front();
   }
@@ -132,14 +135,15 @@ int modbus::ProcessData(int flag) {
     if (cur_poll == polls.end())
       cur_poll = polls.begin();
   }
-  if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
+  if ((flag & Selector::Sel_Read) || TO.Expired()) {
     fillbuf();
     if (pending) {
       unsigned echo_sz = opt_echo ? pending->req_sz : 0;
       // This block skips past the echo
       // but it does not advance cp
+      cp = 0;
       if (opt_echo) {
-        for (cp = 0; cp + pending->req_sz + pending->rep_sz < nc; ++cp) {
+        for (; cp + pending->req_sz + pending->rep_sz < nc; ++cp) {
           unsigned i;
           for (i = 0; i < pending->req_sz; ++i) {
             if (buf[cp+i] != pending->req_buf[i])
@@ -153,7 +157,7 @@ int modbus::ProcessData(int flag) {
       // Now we either have the request at buf[cp] or we
       // don't have enough characters.
       if (cp + echo_sz + pending->rep_sz > nc) {
-        if (flag & Selector::Sel_Timeout) {
+        if (TO.Expired()) {
           report_err("Timeout from Modbus request: %s",
             pending->ascii_escape());
         } else {
@@ -166,7 +170,7 @@ int modbus::ProcessData(int flag) {
             report_ok();
             break;
           case MB_rep_incomplete:
-            if (flag & Selector::Sel_Timeout)
+            if (TO.Expired())
               report_err("Timeout from Modbus request: %s",
                 pending->ascii_escape());
             else {
@@ -327,6 +331,7 @@ modbus_poll_float::modbus_poll_float(unsigned char device,
   req_buf[5] = 2;
   crc_set();
   destination = dest;
+  nl_error(-2, "Poll float: '%s'", ascii_escape());
 }
 
 modbus_poll_float::~modbus_poll_float() {}
@@ -344,6 +349,7 @@ modbus_poll_int::modbus_poll_int(uint8_t device,
   req_buf[5] = 1;
   crc_set();
   destination = dest;
+  nl_error(-2, "Poll int: '%s'", ascii_escape());
 }
 
 modbus_poll_int::~modbus_poll_int() {}

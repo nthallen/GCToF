@@ -18,7 +18,7 @@ GCWatlow_Status {
 }
 GCWatlow {
   HBox { +-; Title: GCWatlow; -+ };
-  "" >Set< >Flow<;
+  "" >Set< >Temp<;
   GC_T:  (GC_T_SP,5) (GC_T,5) C;
   GCF4_2T:  (GCF4_2T_SP,5) (GCF4_2T,5) C;
   GCF4_3T:  "" (GCF4_3T,5) C;
