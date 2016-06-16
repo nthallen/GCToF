@@ -30,8 +30,9 @@ if (@ARGV > 1) {
 open(my $ifh, "<", $srcfile)
   or die "Cannot open < $srcfile\n";
 
-my %valid_chan = map { ($_ => 1) } qw(F4/1 F4/2 F4/3 PM6C/1 PM6C/2);
+my %valid_chan = map { ($_ => 1) } qw(F4/1 F4/2 F4/3 PM6C/1);
 my %no_SP = ('F4/3' => 1);
+my $profile_cmd = '';
 
 while (my $line = <$ifh>) {
   ++$linenum;
@@ -46,7 +47,7 @@ while (my $line = <$ifh>) {
       if $Name ne '';
     $Name = $1;
   } elsif ( $line =~ m,^\s* Data \s+ ([A-Za-z]\w+) \s+ (F4|PM6C)
-                        \s+ (\d+) (?:\s+ "([^"]*)")? \s* $,x ) {
+                        \s+ (\d+) (?:\s+ "([^"]*)")? \s* $,xi ) {
     my ($datum,$comp,$channel,$text) =
       ($1,$2,$3,$4);
     die "$srcfile:$linenum: Datum $datum conflicts with earlier definition\n"
@@ -58,6 +59,8 @@ while (my $line = <$ifh>) {
     $Data{$datum} = { channel => $channel, comp => $comp, text => $text };
     $Channel{"$comp/$channel"} = $datum;
     push @Data, $datum;
+  } elsif ($line =~ m,^ \s* Profile \s+ (\d+) \s+ "([^"]*)" \s* $,xi) {
+    $profile_cmd .= "  : $2 { \$0 = $1; }\n";
   } else {
     die "$srcfile:$linenum: Syntax error: '$line'\n";
   }
@@ -205,22 +208,32 @@ print $cmd
   "  : ${Name} F4 Set &${Name}_F4 %f (Enter Temperature in Celcius) * {\n" .
   "      if_${Name}.Turf(\"F%d:%d\\n\", \$4, (int)floor(\$5*10 + 0.5));\n" .
   "    }\n" .
-  "  : ${Name} F4 &${Name}_F4_PC Profile * {\n" .
-  "      if_${Name}.Turf(\"F%d:1\\n\", \$3);\n" .
-  "    }\n" if $has_F4;
+  "  : ${Name} F4 Profile &${Name}_F4_PC * {\n" .
+  "      if_${Name}.Turf(\"F%d:1\\n\", \$4);\n" .
+  "    }\n" .
+  "  : ${Name} F4 Profile Start &${Name}_F4_FN * {\n" .
+  "      if_${Name}.Turf(\"F5:%d\\n\", \$5);\n" .
+  "    }\n"
+    if $has_F4;
 print $cmd
   "  ;\n" .
   "\n" .
   "&${Name}_PM <int>\n" . $cmddef{PM6C} . "  ;\n";
-print $cmd
-  "\n" .
-  "&${Name}_F4 <int>\n" . $cmddef{F4} . "  ;\n" .
-  "&${Name}_F4_PC <int>\n" .
-  "  : Start { \$0 = 5; }\n" .
-  "  : Suspend { \$0 = 6; }\n" .
-  "  : Resume { \$0 = 3; }\n" .
-  "  : Terminate { \$0 = 4; }\n" .
-  "  ;\n" if $has_F4;
+if ($has_F4) {
+  print $cmd
+    "\n" .
+    "&${Name}_F4 <int>\n" . $cmddef{F4} . "  ;\n" .
+    "&${Name}_F4_PC <int>\n" .
+    "  : Suspend { \$0 = 6; }\n" .
+    "  : Resume { \$0 = 3; }\n" .
+    "  : Terminate { \$0 = 4; }\n" .
+    "  ;\n" .
+    "&${Name}_F4_FN <int>\n";
+  print $cmd
+    ($profile_cmd ? $profile_cmd :
+      "  : File Number %d (Enter file number 1-40) * { \$0 = \$3; }\n") .
+    "  ;\n";
+}
 
 close($tmc) || warn "$srcfile: Error closing output file $Name.tmc\n";
 close($col) || warn "$srcfile: Error closing output file ${Name}_col.tmc\n";

@@ -2,8 +2,13 @@
 Name GCWatlow
 Rate 1 Hz
 Port /net/GCAthena2/dev/ser2
+
 Data GC_T F4 1 "GC Column Temperature"
 Data GCF4_2T F4 2 "GC Spare F4 Temperature 1"
 Data GCF4_3T F4 3
+Profile 1 "File Number 1"
+Profile 2 "File Number 2"
+Profile 3 "File Number 3"
+
 Data GCPM6_T PM6C 1 "GC Spare PM6 Temperature"
 # Data GCPM6_2T PM6C 2 "GC Spare PM6 Temperature 2"
