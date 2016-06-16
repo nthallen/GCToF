@@ -23,22 +23,18 @@ TM 1 Hz GCWatlow_F4_T GC_T;
 TM 1 Hz GCWatlow_F4_T GCF4_2T_SP;
 TM 1 Hz GCWatlow_F4_T GCF4_2T;
 TM 1 Hz GCWatlow_F4_T GCF4_3T;
-TM 1 Hz GCWatlow_PM6C_T GCPM6_1T_SP;
-TM 1 Hz GCWatlow_PM6C_T GCPM6_1T;
-TM 1 Hz GCWatlow_PM6C_T GCPM6_2T_SP;
-TM 1 Hz GCWatlow_PM6C_T GCPM6_2T;
+TM 1 Hz GCWatlow_PM6C_T GCPM6_T_SP;
+TM 1 Hz GCWatlow_PM6C_T GCPM6_T;
 TM 1 Hz GCWatlow_F4_Op_t GCWatlow_F4_Op;
 TM 1 Hz GCWatlowSt_t GCWatlow_Stale;
-Group GCWatlow (GC_T_SP, GC_T, GCF4_2T_SP, GCF4_2T, GCF4_3T, GCPM6_1T_SP, GCPM6_1T, GCPM6_2T_SP, GCPM6_2T, GCWatlow_F4_Op, GCWatlow_Stale) {
+Group GCWatlow (GC_T_SP, GC_T, GCF4_2T_SP, GCF4_2T, GCF4_3T, GCPM6_T_SP, GCPM6_T, GCWatlow_F4_Op, GCWatlow_Stale) {
   GC_T_SP = GCWatlow.F4_SP1;
   GC_T = GCWatlow.F4_T1;
   GCF4_2T_SP = GCWatlow.F4_SP2;
   GCF4_2T = GCWatlow.F4_T2;
   GCF4_3T = GCWatlow.F4_T3;
-  GCPM6_1T_SP = GCWatlow.PM6C_SP1;
-  GCPM6_1T = GCWatlow.PM6C_T1;
-  GCPM6_2T_SP = GCWatlow.PM6C_SP2;
-  GCPM6_2T = GCWatlow.PM6C_T2;
+  GCPM6_T_SP = GCWatlow.PM6C_SP1;
+  GCPM6_T = GCWatlow.PM6C_T1;
   GCWatlow_F4_Op = GCWatlow.F4_Op;
   GCWatlow_Stale = GCWatlow_obj->stale(255);
   GCWatlow_obj->synch();

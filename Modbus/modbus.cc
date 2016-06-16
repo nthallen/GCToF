@@ -474,21 +474,32 @@ int modbus_cmd::ProcessData(int flag) {
             int dev_id = 0;
             uint16_t chan_addr;
             switch (channel) {
-              case 1:
+              case 1: // Channel 1 Setpoint
                 dev_id = modbus::F4_1_ID;
                 chan_addr = 300;
                 break;
-              case 2:
+              case 2: // Channel 2 Setpoint
                 dev_id = modbus::F4_1_ID;
                 chan_addr = 319;
                 break;
-              case 3:
+              case 3: // Resume Profile
                 dev_id = modbus::F4_1_ID;
                 chan_addr = 1209;
                 break;
-              case 4:
+              case 4: // Terminate Profile
                 dev_id = modbus::F4_1_ID;
                 chan_addr = 1217;
+                break;
+	      case 6: // Suspend Profile
+                dev_id = modbus::F4_1_ID;
+                chan_addr = 1210;
+                break;
+	      case 5: // Start Profile
+                dev_id = modbus::F4_1_ID;
+                MB->queue_cmd_int(dev_id, 4000, (int16_t)value);
+                MB->queue_cmd_int(dev_id, 4001, 1);
+                chan_addr = 4002;
+                value = 5;
                 break;
               default:
                 nl_error(2, "Invalid channel number: %d", channel);

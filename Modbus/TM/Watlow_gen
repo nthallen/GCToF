@@ -205,11 +205,8 @@ print $cmd
   "  : ${Name} F4 Set &${Name}_F4 %f (Enter Temperature in Celcius) * {\n" .
   "      if_${Name}.Turf(\"F%d:%d\\n\", \$4, (int)floor(\$5*10 + 0.5));\n" .
   "    }\n" .
-  "  : ${Name} F4 Resume Profile * {\n" .
-  "      if_${Name}.Turf(\"F3:1\\n\");\n" .
-  "    }\n" .
-  "  : ${Name} F4 Terminate Profile * {\n" .
-  "      if_${Name}.Turf(\"F4:1\\n\");\n" .
+  "  : ${Name} F4 &${Name}_F4_PC Profile * {\n" .
+  "      if_${Name}.Turf(\"F%d:1\\n\", \$3);\n" .
   "    }\n" if $has_F4;
 print $cmd
   "  ;\n" .
@@ -217,7 +214,13 @@ print $cmd
   "&${Name}_PM <int>\n" . $cmddef{PM6C} . "  ;\n";
 print $cmd
   "\n" .
-  "&${Name}_F4 <int>\n" . $cmddef{F4} . "  ;\n" if $has_F4;
+  "&${Name}_F4 <int>\n" . $cmddef{F4} . "  ;\n" .
+  "&${Name}_F4_PC <int>\n" .
+  "  : Start { \$0 = 5; }\n" .
+  "  : Suspend { \$0 = 6; }\n" .
+  "  : Resume { \$0 = 3; }\n" .
+  "  : Terminate { \$0 = 4; }\n" .
+  "  ;\n" if $has_F4;
 
 close($tmc) || warn "$srcfile: Error closing output file $Name.tmc\n";
 close($col) || warn "$srcfile: Error closing output file ${Name}_col.tmc\n";

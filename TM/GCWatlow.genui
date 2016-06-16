@@ -3,9 +3,7 @@
   1 GCF4_2T_SP GCWatlow GCF4_2T
   1 GCF4_2T   GCWatlow GCF4_2T
   1 GCF4_3T   GCWatlow GCF4_3T
-  1 GCPM6_1T_SP GCWatlow GCPM6_1T
-  1 GCPM6_1T   GCWatlow GCPM6_1T
-  1 GCPM6_2T_SP GCWatlow GCPM6_2T
-  1 GCPM6_2T   GCWatlow GCPM6_2T
+  1 GCPM6_T_SP GCWatlow GCPM6_T
+  1 GCPM6_T   GCWatlow GCPM6_T
   1 GCWatlow_F4_Op GCWatlow F4_Op %3.0lf
   1 GCWatlow_Stale GCWatlow Stale

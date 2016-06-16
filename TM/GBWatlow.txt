@@ -1,6 +1,6 @@
 # GBWatlow.txt
 Name GBWatlow
 Rate 1 Hz
-Port /net/GCAthena2/dev/ser2
+Port /net/GCAthena1/dev/ser2
 Data HotCalT PM6C 1 "GB Hot Cal Temperature"
-Data GBPM6_2T PM6C 2 "GB Spare PM6 Temperature 2"
+# Data GBPM6_2T PM6C 2 "GB Spare PM6 Temperature 2"

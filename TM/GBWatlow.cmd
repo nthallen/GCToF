@@ -12,5 +12,4 @@
 
 &GBWatlow_PM <int>
   : GB Hot Cal Temperature  { $0 = 1; }
-  : GB Spare PM6 Temperature 2  { $0 = 2; }
   ;
