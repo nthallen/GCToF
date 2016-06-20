@@ -51,9 +51,18 @@ devb-umass cam pnp
 echo "==> Starting Daemons"
 /usr/sbin/sshd
 
-/usr/sbin/ntpdate ntp1.caltech.edu
+echo "==> Starting PPS"
+ln -sP /dev/ser11 /dev/gps1
+# start pps and wait for /dev/pps1 to be created
+nohup /usr/local/sbin/pps -S -d 2>./pps.log >/dev/null &
+waitfor /dev/pps1
 
+echo "==> Starting gpsd"
+/usr/local/sbin/gpsd /dev/gps1
+
+## start ntpd
+# /usr/sbin/ntpdate ntp1.caltech.edu
 sleep 1
-
-/usr/sbin/ntpd
+# /usr/sbin/ntpd
+/usr/local/sbin/ntpd -c /etc/ntp/ntp_gps.conf -g
 
