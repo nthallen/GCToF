@@ -67,10 +67,10 @@ if [ -f /var/log/ntpd_console.log ]; then
   echo "==> Rotating ntpd_console.log"
   today=`/usr/bin/date +%y%m%d`
   run=1
-  while [ -f /var/log/ntpd_console_${date}.$run.log ]; do
+  while [ -f /var/log/ntpd_console_${today}.$run.log ]; do
     let run=$run+1
   done
-  mv -f /var/log/ntpd_console.log /var/log/ntpd_console_${date}.$run.log
+  mv -f /var/log/ntpd_console.log /var/log/ntpd_console_${today}.$run.log
 fi
 # /usr/sbin/ntpd
 /usr/local/sbin/ntpd -c /etc/ntp/ntp_gps.conf -g -d 2>&1 >>/var/log/ntpd_console.log &
