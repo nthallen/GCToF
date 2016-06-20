@@ -64,5 +64,5 @@ echo "==> Starting gpsd"
 # /usr/sbin/ntpdate ntp1.caltech.edu
 sleep 1
 # /usr/sbin/ntpd
-/usr/local/sbin/ntpd -c /etc/ntp/ntp_gps.conf -g
+/usr/local/sbin/ntpd -c /etc/ntp/ntp_gps.conf -g -d 2>&1 >>/home/GCToF/ntpd.log &
 
