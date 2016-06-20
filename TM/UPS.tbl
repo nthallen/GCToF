@@ -27,8 +27,3 @@ UPS {
   HBox{ +-; Title: "UPS"; -+ };
   HBox{[UPS1]; |; [UPS2] };
 }
-
-{ HBox { |+; [UPS]; |+ };
-  -;
-  { (flttime,9) MFCtr: (MFCtr,5) }
-}

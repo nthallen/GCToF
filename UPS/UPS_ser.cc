@@ -80,6 +80,16 @@ void UPS_ser::update_termios() {
   }
 }
 
+void UPS_ser::set_response_bit(uint8_t mask) {
+  UPS_TMp->UPS_Response |= mask;
+  UPS_TMp->UPS_Response2 |= mask;
+}
+
+void UPS_ser::clear_response_bit(uint8_t mask) {
+  UPS_TMp->UPS_Response &= ~mask;
+  UPS_TMp->UPS_Response2 &= ~mask;
+}
+
 /**
  * @return NULL on error.
  */
@@ -175,7 +185,6 @@ Timeout *UPS_ser::GetTimeout() {
  */
 int UPS_ser::ProcessData(int flag) {
   if (flag & Selector::gflag(0)) {
-    UPS_TMp->UPS_Response &= ~UPSR_RESPONSES;
     if (cur_poll == polls.end()) {
       cur_poll = polls.begin();
     }

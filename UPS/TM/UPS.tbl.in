@@ -1,5 +1,4 @@
-UPS {
-  HBox{ +-; Title: "UPS"; -+ };
+UPS1 {
   Mode: (UPS_Mode,1);
   V_in: (UPS_V_in,6) V;
   F_in: (UPS_F_in,6) Hz;
@@ -8,10 +7,12 @@ UPS {
   I_out: (UPS_I_out,6) A;
   Load:  (UPS_LoadPct,3) "%";
   VBatP: (UPS_VBatP,6) V;
-  VBatn: (UPS_VBatn,6) V;
+  VBatN: (UPS_VBatN,6) V;
   VBat:  (UPS_VBat,6) V;
   VBusP: (UPS_VBusP,6) V;
   VBusN: (UPS_VBusN,6) V;
+}
+UPS2 {
   Tmax: (UPS_Tmax,6) C;
   Pc:    (UPS_Piece,3);
   Grp:   (UPS_Group,3);
@@ -21,4 +22,8 @@ UPS {
   Warn:  (UPS_Warn,4);
   Resp:  (UPS_Response,2);
   Stale: (UPS_Stale,3);
+}
+UPS {
+  HBox{ +-; Title: "UPS"; -+ };
+  HBox{[UPS1]; |; [UPS2] };
 }

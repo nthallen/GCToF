@@ -1,5 +1,6 @@
 batchfile interact
 display GCToFdisp
 display DSDaqdisp
+display gpsddisp
 client GCToFclt
 memo

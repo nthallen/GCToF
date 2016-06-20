@@ -46,7 +46,7 @@ Group UPS (UPS_Response, UPS_Mode, UPS_V_in, UPS_F_in, UPS_V_out, UPS_F_out,
       UPS_VBusP, UPS_VBusN, UPS_VBatP, UPS_VBatN, UPS_Tmax, UPS_Status,
       UPS_Warn, UPS_VBat, UPS_Piece, UPS_Group, UPS_Capacity,
       UPS_Remain_Time, UPS_Stale) {
-  UPS_Response = UPS_TM.UPS_Response;
+  UPS_Response = UPS_TM.UPS_Response@RN@;
   UPS_Mode = UPS_TM.QMOD;
   UPS_V_in = UPS_TM.QGS_V_in;
   UPS_F_in = UPS_TM.QGS_F_in;

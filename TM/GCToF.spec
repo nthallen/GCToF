@@ -3,56 +3,51 @@ tmcbase = base.tmc
 tmcbase = TwisTorr.tmc
 tmcbase = nXDS.tmc
 tmcbase = zaber.tmc
-#tmcbase = Horiba.tmc
 tmcbase = IG.tmc
-tmcbase = UPS.tmc
 
 cmdbase = TwisTorr.cmd
 cmdbase = nXDS.cmd
 cmdbase = zaber.cmd
-# cmdbase = Horiba.cmd
-cmdbase = ../UPS/TM/UPS.cmd
 cmdbase = address.h
 
 colbase = TwisTorr_col.tmc
 colbase = nXDS_col.tmc
-colbase = UPS_col.tmc
 
 swsbase = GCToF.sws
 
 genuibase = GCToF.genui
-genuibase = ../UPS/TM/UPS.genui
 genuibase = ../Zaber/TM/zaber.genui
 
 Module TMbase
 Module Sonic Suffix=1 mode=csat3
 Module Sonic Suffix=2 mode=csat3b
 Module DSDaq
-Module Zeno mode=default
+Module Zeno mode=default ZTBL=Zeno_yes_bare
+Module gpsd TBLNAME=
 
 SCRIPT = interact runfile.A1 runfile.A2
 TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS
 DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber
-DISTRIB = ../UPS/ups
 
 Module Horiba src=GBHoriba.txt name=GBHoriba mode=driver
 Module Horiba src=GCHoriba.txt name=GCHoriba
 Module Watlow src=GCWatlow.txt name=GCWatlow mode=driver
 Module Watlow src=GBWatlow.txt name=GBWatlow
+Module UPS
 
 #GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc Horiba_conv.tmc GCToF.tbl \
-#    nXDS.tbl sonic.tbl UPS.tbl
+#    nXDS.tbl sonic.tbl
 GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc \
-    GCHoriba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl UPS.tbl
+    GCHoriba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl
+gpsddisp : ../GPS/TM/gpsd_conv.tmc gpsd.tbl
 GCToFalgo : GCToF.tma GCToF.sws
 doit : GCToF.doit
 %%
 COLFLAGS = -Haddress.h
 address.h : GCToFcol.cc
 CPPFLAGS += -I ../Agilent -I ../Edwards -I ../IonGauge -I ../Zaber
-CPPFLAGS += -I ../UPS
 
 
 ../Agilent/TwisTorr :
@@ -63,5 +58,3 @@ CPPFLAGS += -I ../UPS
 	cd ../IonGauge && make
 ../Zaber/zaber :
 	cd ../Zaber && make
-../UPS/ups :
-	cd ../UPS && make
