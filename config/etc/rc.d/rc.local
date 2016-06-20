@@ -1,0 +1,59 @@
+# slay io-pkt-v4-hc
+#sleep 2
+
+#echo "==> Checking file system"
+#/sbin/chkfsys -qruP /
+mount -tqnx6 /dev/hd0t179 /fs/spd
+echo "==> Starting Network"
+
+io-pkt-v4-hc -ptcpip -pqnet -de1000 vid=0x8086,did=0x10d3
+#io-pkt-v4-hc -ptcpip -pqnet -de1000 -dtopcliff
+sleep 2
+echo "==> Starting Serial Drivers"
+devc-ser8250 -u1 3f8,4 -u2 2f8,3 -u3 3e8,6 -u4 2e8,7 -u5 100,10 -u6 108,11 -u7 300,15 -u8 308,15 -u9 310,15 -u10 318,15
+# stty baud=9600 -ihflow -ohflow </dev/ser1
+stty baud=9600 -ihflow -ohflow </dev/ser2
+stty baud=9600 -ihflow -ohflow </dev/ser3
+stty baud=9600 -ihflow -ohflow </dev/ser4
+stty baud=9600 -ihflow -ohflow </dev/ser5
+stty baud=9600 -ihflow -ohflow </dev/ser6
+stty baud=9600 -ihflow -ohflow </dev/ser7
+stty baud=9600 -ihflow -ohflow </dev/ser8
+stty baud=9600 -ihflow -ohflow </dev/ser9
+stty baud=9600 -ihflow -ohflow </dev/ser10 
+#devc-ser8250 3f8,4 2f8,3 100,5 108,10 2a0,7 2a8,7 2b0,7 2b8,7
+sleep 1
+/sbin/devc-serpci vid=0x8086,did=0x8812,pci=00
+/sbin/devc-serpci vid=0x8086,did=0x8811,pci=00
+sleep 1 
+stty -ihflow -ohflow baud=9600 </dev/ser11
+stty -ihflow -ohflow baud=9600 </dev/ser12
+ifconfig wm0 up
+sleep 2 
+# hostname gctofherc.caltech.edu
+# dhcp.client
+# sleep 10
+netmanager -r wm0 -f /etc/net.cfg
+#echo "==> Starting USB Driver"
+#io-usb -duhci -dehci
+#waitfor /dev/io-usb
+#sleep 2
+#io-hid -dusb -dps2ser
+#slay devc-con
+#devc-con-hid -n4
+
+devb-umass cam pnp
+
+#Photon Vid driver
+#io-display -dvid=0x8086,did=0x4108
+#ph
+
+echo "==> Starting Daemons"
+/usr/sbin/sshd
+
+/usr/sbin/ntpdate ntp1.caltech.edu
+
+sleep 1
+
+/usr/sbin/ntpd
+
