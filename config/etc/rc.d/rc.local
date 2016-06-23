@@ -63,6 +63,16 @@ echo "==> Starting gpsd"
 ## start ntpd
 # /usr/sbin/ntpdate ntp1.caltech.edu
 sleep 1
+if [ -f /var/log/ntpd_console.log -o /var/log/ntp.log ]; then
+  echo "==> Rotating ntpd_console.log"
+  today=`/usr/bin/date +%y%m%d`
+  run=1
+  while [ -f /var/log/ntpd_console_${today}.$run.log -o -f /var/log/ntp_${today}.$run.log ]; do
+    let run=$run+1
+  done
+  mv -f /var/log/ntpd_console.log /var/log/ntpd_console_${today}.$run.log
+  mv -f /var/log/ntp.log /var/log/ntp_${today}.$run.log
+fi
 # /usr/sbin/ntpd
-/usr/local/sbin/ntpd -c /etc/ntp/ntp_gps.conf -g
+/usr/local/sbin/ntpd -c /etc/ntp/ntp_gps.conf -g -d 2>&1 >>/var/log/ntpd_console.log &
 
