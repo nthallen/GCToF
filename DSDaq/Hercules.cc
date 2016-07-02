@@ -11,7 +11,8 @@ Hercules::Hercules(int ad_se) : dsdaqdrv("Hercules") {
   n_ad = ad_se ? 16 : 8;
   n_dio = 5;
   n_bio = 48; // hard coded, but really configurable.
-  dabu = 0; // bipolar. Set to 4 for unipolar
+  dabu = 4; // Set to 0 for bipolar, 4 for unipolar
+  dac_init = 0; // 0V for unipolar
   base = 0x240;
   for (i = 0; i < n_dio; ++i) dio_values[i] = 0;
 }
@@ -27,11 +28,12 @@ int Hercules::init_hardware() {
   out8(base, 0x40); // Reset board
   out8(base, 0x00); // Unreset board
   out8(base + 22, 0xF ); // A-D: Out, E: In
-  da_write(HERC_DA_SU + 0, 2048);
-  da_write(HERC_DA_SU + 1, 2048);
-  da_write(HERC_DA_SU + 2, 2048);
-  da_write(3, 2048); // D/As will Glitch to +5V
-  out8(base + 1, dabu); // D/As will return to zero, Bipolar, single-ended
+  // We'll leave the DACs in the default unipolar configuration
+  da_write(HERC_DA_SU + 0, dac_init);
+  da_write(HERC_DA_SU + 1, dac_init);
+  da_write(HERC_DA_SU + 2, dac_init);
+  da_write(3, dac_init); // D/As will update
+  out8(base + 1, dabu); // D/As will update again as mode switches
   return 0;
 }
 
@@ -236,6 +238,7 @@ int Hercules::bit_write(unsigned short offset, unsigned short value) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
+  nl_error(0,"Start V1.1");
   { Hercules dsd(1);
     dsd.init();
     dsd.operate();

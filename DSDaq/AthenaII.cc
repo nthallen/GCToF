@@ -143,6 +143,7 @@ int AthenaII::bit_write(unsigned short offset, unsigned short value) {
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
+  nl_error(0,"Start V1.1");
   { AthenaII dsd(1);
     dsd.init();
     dsd.operate();

@@ -22,7 +22,7 @@ TM typedef unsigned short Herc_DAC_t {
     text "%6.2lf";
     collect x = Herc.read(x.address);
   }
-  calibration (Herc_DAC_t, DS_VOLTS) { 0, -10, 4096, 10 }
+  calibration (Herc_DAC_t, DS_VOLTS) { 0, 0, 4096, 10 }
 
 TM typedef unsigned char Herc_DS_t {
   text "%3u";

@@ -30,6 +30,7 @@ class Hercules : public dsdaqdrv {
     int n_dio;
     int n_bio;
     unsigned short dabu;
+    unsigned short dac_init;
     unsigned short da_values[4];
     unsigned char dio_values[5];
     static dio_scdc_def scdc_def[];
