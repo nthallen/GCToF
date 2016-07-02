@@ -6,13 +6,20 @@
 #include "oui.h"
 #include "nortlib.h"
 
+int dac_bipolar = 0;
+
 Hercules::Hercules(int ad_se) : dsdaqdrv("Hercules") {
   int i;
   n_ad = ad_se ? 16 : 8;
   n_dio = 5;
   n_bio = 48; // hard coded, but really configurable.
-  dabu = 4; // Set to 0 for bipolar, 4 for unipolar
-  dac_init = 0; // 0V for unipolar
+  if (dac_bipolar) {
+    dabu = 0;
+    dac_init = 2048;
+  } else {
+    dabu = 4;
+    dac_init = 0;
+  }
   base = 0x240;
   for (i = 0; i < n_dio; ++i) dio_values[i] = 0;
 }

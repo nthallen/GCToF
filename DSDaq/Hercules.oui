@@ -1,6 +1,14 @@
 <package> Hercules
 <include> msg
 <follow> msghdr
+<include> "Hercules.h"
+
+<sort>
+	-u Set DAC outputs to unipolar mode (default)
+	-b Set DAC outputs to bipolar mode
+<switch>
+  case 'u': dac_bipolar = 0; break;
+  case 'b': dac_bipolar = 1; break;
 
 <package> msghdr_default
 <var>

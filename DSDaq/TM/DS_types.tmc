@@ -17,13 +17,6 @@ TM typedef double DS_PSI { text "%4.0lf"; }
   }
 %}
 
-TM typedef unsigned short Herc_DAC_t {
-    convert DS_VOLTS;
-    text "%6.2lf";
-    collect x = Herc.read(x.address);
-  }
-  calibration (Herc_DAC_t, DS_VOLTS) { 0, 0, 4096, 10 }
-
 TM typedef unsigned char Herc_DS_t {
   text "%3u";
   collect x = Herc.read(x.address);

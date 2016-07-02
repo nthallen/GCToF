@@ -1,4 +1,12 @@
-/* D/A */
+/* D/A (@DAC_COMMENT@) */
+
+TM typedef unsigned short Herc_DAC_t {
+    convert DS_VOLTS;
+    text "%6.2lf";
+    collect x = Herc.read(x.address);
+  }
+  calibration (Herc_DAC_t, DS_VOLTS) { 0, @DAC_MIN@, 4096, 10 }
+
 TM 1 Hz Herc_DAC_t Oct_Amp_sp; Address Oct_Amp_sp 0x2000;
 TM 1 Hz Herc_DAC_t Oct_Bias_sp; Address Oct_Bias_sp 0x2001;
 TM 1 Hz Herc_DAC_t FlySt; Address FlySt 0x2002;

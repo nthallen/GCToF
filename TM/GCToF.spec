@@ -21,7 +21,7 @@ genuibase = ../Zaber/TM/zaber.genui
 Module TMbase
 Module Sonic Suffix=1 mode=csat3
 Module Sonic Suffix=2 mode=csat3b
-Module DSDaq
+Module DSDaq mode=bipolar
 Module Zeno mode=default ZTBL=Zeno_yes_bare
 Module gpsd TBLNAME=
 

@@ -1,11 +1,22 @@
-ModuleDef DSDaq {
+ModuleDef DSDaq [ DAC_COMMENT=unipolar DAC_OFFSET=0 DAC_MIN=0 ] {
   Definitions for Hercules and Athena I/O
 }
 
-tmcbase = DS_types.tmc Hercules.tmc Athena1.tmc Athena2.tmc
+tmcbase = DS_types.tmc
+
+mode (default,unipolar) {
+  tmcbase = Hercules.tmc:Hercules.tmc.in
+  cmdbase = Hercules.cmd:Hercules.cmd.in
+}
+mode (bipolar) [ DAC_COMMENT=bipolar DAC_OFFSET=2048 DAC_MIN=-10 ] {
+  tmcbase = Hercules.tmc:Hercules.tmc.in
+  cmdbase = Hercules.cmd:Hercules.cmd.in
+}
+
+tmcbase = Athena1.tmc Athena2.tmc
 colbase = Hercules_col.tmc Athena1_col.tmc Athena2_col.tmc
 colbase = ../dsdaq.cc
-cmdbase = Hercules.cmd Athena1.cmd Athena2.cmd
+cmdbase = Athena1.cmd Athena2.cmd
 genuibase = DSDaq.genui
 DSDaqdisp : Hercules_conv.tmc Athena_conv.tmc DSDaq.tbl:Hercules.tbl.in Athena.tbl:Athena.tbl.in
 CPPFLAGS = -I @MODDIR@/..

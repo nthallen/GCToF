@@ -14,7 +14,7 @@
       waitfor /net/$i/dev/huarp/GCToF/AthenaII 10 2>$memo
     fi
   done
-  Launch Hercules Hercules
+  Launch Hercules Hercules -b
   Launch DG/cmd GCToFcol
   Launch cmd/server GCToFsrvr
   Launch - lgr -N `mlf_find LOG`
