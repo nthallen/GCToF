@@ -30,6 +30,7 @@ TGTDIR = $(TGTNODE)/home/GCToF
 OBJ = SWData.cmd SWData.h SWData.tmc SWData_col.tmc
 DISTRIB = ../Agilent/TwisTorr ../Edwards/nXDS
 DISTRIB = ../IonGauge/IonGauge ../Zaber/zaber
+SRCDIST = flows.tma
 
 Module Horiba src=GBHoriba.txt name=GBHoriba mode=driver
 Module Horiba src=GCHoriba.txt name=GCHoriba
@@ -42,7 +43,7 @@ Module UPS
 GCToFdisp : TwisTorr_conv.tmc nXDS_conv.tmc GBHoriba_conv.tmc \
     GCHoriba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl
 gpsddisp : ../GPS/TM/gpsd_conv.tmc gpsd.tbl
-GCToFalgo : GCToF.tma GCToF.sws
+GCToFalgo : GCToF.tma GCToF.sws flows.tma
 doit : GCToF.doit
 %%
 COLFLAGS = -Haddress.h

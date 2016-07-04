@@ -1,7 +1,162 @@
 state init {
   > Telemetry Start
+  > set oct amp 0 volts
+  > set oct bias 0 volts
+  > set fly valve set point 0 volts
+  > set herc spare analog out 0 volts
 }
 
 state shutdown {
+     > gcwatlow f4 profile terminate
+     > set oct amp 0 volts
+     > set oct bias 0 volts
   +5 > Quit
 }
+
+Partition 
+
+State data_loop_idle { }
+
+State data_loop_fluxgc {
+# Data loop for flux and GC measurements: 
+       Validate GC_IDLE;
+       Hold until valid (GC_FLOW_WAIT);
+       Validate ZEROES;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Validate AMB_DATA_FULL;
+  +946 Validate WATLOW_COOL;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Validate ZEROES;
+  +185 Validate GC_COLLECT;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Validate GC_DATA_HS;
+       Hold until valid (GC_WAIT);
+       Validate data_loop_fluxgc;
+}
+
+State data_loop_fluxonly {
+# Data loop for flux measurements only:
+       Validate GC_IDLE;
+       Hold until valid (GC_FLOW_WAIT);
+       Validate ZEROES;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Validate AMB_DATA_FLUX;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Validate data_loop_fluxonly;
+} 
+
+Partition
+
+# Timing of zeros, CIMS data, CIMS calibration, and two GC states
+
+State DATA_COLLECT_IDLE {
+}
+
+State ZEROES {
+       Validate oct_off;
+       Validate FT_Z_N2;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+  +120 Validate oct_off;
+       Validate FT_Z_AMB;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+  +240 Validate DATA_COLLECT_IDLE;
+}
+       
+
+State CAL {
+       Validate oct_off;
+       Validate FT_Z_N2;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+   +30 Validate FT_Z_N2_CAL;
+       Hold until valid ( GB_WAIT );
+  +120 > cold cal 2 off
+       > Set FT dilution flow 1400 sccm
+       > ambient zero valve on
+  +240 Validate DATA_COLLECT_IDLE;
+}
+
+
+State AMB_DATA_FULL {
+       Validate oct_off;
+       Validate FT_AMB_SAMP;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+# Time for flux and GC measurements:
+ +1659 Validate DATA_COLLECT_IDLE;
+
+}
+
+State AMB_DATA_FLUX {
+       Validate oct_off;
+       Validate FT_AMB_SAMP;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+# Time for flux only:
+ +1430 Validate DATA_COLLECT_IDLE;
+}
+
+Partition
+# GC sampling
+
+State GC_WAIT{
+}
+
+State GC_COLLECT {
+       Validate GC_SAMPLE_D5;
+       Hold until valid ( GC_FLOW_WAIT );
+       > Set GC intake flow 1000 sccm
+       > GC sample dilution on
+  +120 > GC sample dilution off
+       > Set GC intake flow 1150 sccm
+   +60 Validate GC_WAIT; 
+}
+
+State GC_DATA_NORM {
+       Validate oct_off;
+       Validate GC_OUTPUT_FT;
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+       Validate WATLOW_HEAT;
+ +1200 Validate WATLOW_IDLE;
+       Validate GC_WAIT;
+}
+
+
+State GC_DATA_HS {
+       Validate oct_off;
+       Validate GC_OUTPUT_IONSOURCE;
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+       Validate WATLOW_HEAT;
+ +1200 Validate WATLOW_IDLE;
+       Validate GC_WAIT;
+}
+
+Partition
+
+# Octopole driver start/stop
+
+state oct_idle {}
+
+state oct_on {
+	> set oct amp 0.2 Volts
+	+1 > set oct amp 0.4 Volts
+	+1 > set oct amp 0.6 Volts
+	> set oct bias 0.0 Volts
+	+1 Validate oct_idle;
+}
+
+state oct_off {
+	> set oct amp 0 Volts
+	> set oct bias 0 Volts
+	+1 Validate oct_idle;
+}
+

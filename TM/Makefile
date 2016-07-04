@@ -9,7 +9,7 @@
 # Invoking: appgen_module Watlow X src=GCWatlow.txt name=GCWatlow mode=driver
 # Invoking: appgen_module Watlow X src=GBWatlow.txt name=GBWatlow
 # Invoking: appgen_module UPS X 
-# Makefile Generated Mon Jun 20 10:13:04 EDT 2016
+# Makefile Generated Mon Jul 04 12:44:30 PDT 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
@@ -26,9 +26,9 @@ SRC+=GBHoriba.tmc GCHoriba.tmc GCWatlow.tmc GBWatlow.tmc UPS.tmc
 SRC+=../DSDaq/TM/Hercules_conv.tmc ../DSDaq/TM/Athena_conv.tmc
 SRC+=DSDaq.tbl Athena.tbl TwisTorr_conv.tmc nXDS_conv.tmc
 SRC+=GBHoriba_conv.tmc GCHoriba_conv.tmc GCToF.tbl nXDS.tbl sonic.tbl
-SRC+=../GPS/TM/gpsd_conv.tmc gpsd.tbl GCToF.tma GCToF.sws GCToF.doit
-SRC+=/usr/local/share/huarp/root.cmd TwisTorr.cmd nXDS.cmd zaber.cmd
-SRC+=address.h SWData.cmd /usr/local/share/huarp/getcon.cmd
+SRC+=../GPS/TM/gpsd_conv.tmc gpsd.tbl GCToF.tma GCToF.sws flows.tma
+SRC+=GCToF.doit /usr/local/share/huarp/root.cmd TwisTorr.cmd nXDS.cmd
+SRC+=zaber.cmd address.h SWData.cmd /usr/local/share/huarp/getcon.cmd
 SRC+=../DSDaq/TM/Hercules.cmd ../DSDaq/TM/Athena1.cmd
 SRC+=../DSDaq/TM/Athena2.cmd ../Zeno/TM/Zeno.cmd GBHoriba.cmd
 SRC+=GCHoriba.cmd GCWatlow.cmd GBWatlow.cmd ../UPS/TM/UPS.cmd
@@ -79,9 +79,10 @@ DISTRIB+=../Agilent/TwisTorr ../Edwards/nXDS ../IonGauge/IonGauge
 DISTRIB+=../Zaber/zaber ../Horiba/TM/../horiba ../Modbus/TM/../modbus
 DISTRIB+=../UPS/TM/../ups GCToF.pcm tm.dac
 IDISTRIB=Experiment.config VERSION doit
-SRCDIST=DSDaq.tbl Athena.tbl GCToF.tbl nXDS.tbl sonic.tbl gpsd.tbl
-SRCDIST+=GCToF.tma types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc
-SRCDIST+=IG.tmc SWData.tmc SWData.h /usr/local/share/huarp/tdrift.tmc
+SRCDIST=flows.tma DSDaq.tbl Athena.tbl GCToF.tbl nXDS.tbl sonic.tbl
+SRCDIST+=gpsd.tbl GCToF.tma types.tmc base.tmc TwisTorr.tmc nXDS.tmc
+SRCDIST+=zaber.tmc IG.tmc SWData.tmc SWData.h
+SRCDIST+=/usr/local/share/huarp/tdrift.tmc
 SRCDIST+=/usr/local/share/huarp/cpu_usage.tmc
 SRCDIST+=/usr/local/share/huarp/tmdf.tmc freemem.tmc
 SRCDIST+=/usr/local/share/huarp/flttime.tmc
@@ -277,9 +278,9 @@ gpsddispncoui.o : gpsddispncoui.c SWData.h
 gpsddispnc.o : gpsddispnc.cc SWData.h
 GCToFsws.tma : GCToF.sws
 	$(COMPILE.sws) GCToF.sws
-GCToFalgoa.tmc : GCToF.tma GCToFsws.tma GCToFsrvr
+GCToFalgoa.tmc : GCToF.tma GCToFsws.tma flows.tma GCToFsrvr
 	$(SERVER) ./GCToFsrvr
-	$(TMCALGO) -V "`./GCToFsrvr -R`" GCToF.tma GCToFsws.tma
+	$(TMCALGO) -V "`./GCToFsrvr -R`" GCToF.tma GCToFsws.tma flows.tma
 GCToFalgo.cc : types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc ../GPS/TM/gpsd.tmc GBHoriba.tmc GCHoriba.tmc GCWatlow.tmc GBWatlow.tmc UPS.tmc GCToFalgoa.tmc VERSION
 	$(TMC) types.tmc base.tmc TwisTorr.tmc nXDS.tmc zaber.tmc IG.tmc SWData.tmc /usr/local/share/huarp/tdrift.tmc /usr/local/share/huarp/cpu_usage.tmc /usr/local/share/huarp/tmdf.tmc freemem.tmc /usr/local/share/huarp/flttime.tmc ../Sonic/TM/sonic_types.tmc sonic1.tmc sonic2.tmc ../DSDaq/TM/DS_types.tmc ../DSDaq/TM/Hercules.tmc ../DSDaq/TM/Athena1.tmc ../DSDaq/TM/Athena2.tmc ../Zeno/TM/Zeno.tmc ../GPS/TM/gpsd.tmc GBHoriba.tmc GCHoriba.tmc GCWatlow.tmc GBWatlow.tmc UPS.tmc GCToFalgoa.tmc
 GCToFalgooui.c : $(OUIDIR)/tma.oui $(OUIDIR)/dc.oui $(OUIDIR)/msg.oui

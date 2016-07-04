@@ -1,3 +1,5 @@
 SW_Variable: SWStat SW Status
   SWS_SHUTDOWN 1 Shutdown: Validate shutdown; break;
-
+  SWS_DATALOOP_FLUXGC_START 10 data loop fluxgc start: Validate data_loop_fluxgc; break;
+  SWS_DATALOOP_STOP 11 data loop stop: Validate data_loop_idle; break; 
+  SWS_DATALOOP_FLUXONLY_START 12 data loop fluxonly start: Validate data_loop_fluxonly; break;

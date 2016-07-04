@@ -1,0 +1,291 @@
+#Partitions to control gas deck and gc
+
+##########################################
+
+Partition
+# Partition: Gas deck (GB and GC flows)
+#
+# cold cal valve 1 has been hijacked to overfill the ToF inlet with N2 (unpowered or off)
+# cold cal valve 2 (powered or on) pumps on inlet
+# hot cal assumed to be 25 sccm (acetic); tracer to be 15 sccm
+
+
+
+State GB_WAIT {
+}
+
+State GB_OFF {
+# Turns all flows off
+     > cold cal 1 off
+     > cold cal 2 off
+     > ambient zero valve off
+     > hot cal valve 1 off
+     > GC tracer flow to FT off
+     > Set FT reagent flow 0 sccm
+     > Set FT Ion Source dilution flow 0 sccm
+     > Set FT dilution flow 0 sccm
+     > Set ambient zero flow 0 sccm
+  +1 Validate GB_WAIT;
+}
+
+
+State FT_Z_N2 {
+# GC valves off; inlet overfilled with dry N2.
+# note: this has flows set at nominal operating  
+     > cold cal 1 off
+     > cold cal 2 off
+     > hot cal valve 1 off 
+     > GC tracer flow to FT off
+     > ambient zero valve off
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1580 sccm
+     > Set ambient zero flow 130 sccm
+  +1 Validate GB_WAIT;
+}
+
+
+State FT_Z_N2_CAL {
+# GC valves off; inlet overfilled with dry N2
+# calibration gases on 
+     > cold cal 1 off
+     > cold cal 2 off
+     > hot cal valve 1 on
+     > GC tracer flow to FT on
+     > ambient zero valve off
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1540 sccm
+     > Set ambient zero flow 130 sccm
+  +1 Validate GB_WAIT;
+}
+
+
+State FT_Z_AMB {
+# GC valves off; inlet overfilled with wet N2.  
+     > cold cal 1 off
+     > cold cal 2 off
+     > hot cal valve 1 off
+     > GC tracer flow to FT off
+     > ambient zero valve on
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1380 sccm
+     > Set ambient zero flow 130 sccm
+  +1 Validate GB_WAIT;
+}
+
+
+State FT_Z_AMB_CAL {
+# GC valves off; inlet overfilled with wet N2
+# Calibration gases on
+     > cold cal 1 off
+     > cold cal 2 off
+     > hot cal valve 1 on
+     > GC tracer flow to FT on
+     > ambient zero valve on
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1340 sccm
+     > Set ambient zero flow 130 sccm
+  +1 Validate GB_WAIT;
+}
+
+
+State FT_AMB_SAMP {
+# sampling ambient air, no calibration gases
+     > hot cal valve 1 off 
+     > GC tracer flow to FT off
+     > ambient zero valve off
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1580 sccm
+     > Set ambient zero flow 130 sccm
+     > cold cal 2 on
+     > cold cal 1 on
+  +1 Validate GB_WAIT;
+}
+
+
+State FT_AMB_SAMP_CAL {
+# sampling ambient air, calibration gases 
+     > hot cal valve 1 on 
+     > GC tracer flow to FT on
+     > ambient zero valve off
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1540 sccm
+     > Set ambient zero flow 130 sccm
+     > cold cal 2 on
+     > cold cal 1 on
+  +1 Validate GB_WAIT;
+}
+
+State GBFLOWS_GCNORM {
+# Flows in FT when GC is running in normal mode
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 380 sccm
+     > Set FT dilution flow 1480 sccm
+     > Set ambient zero flow 130 sccm
+}
+
+State GBFLOWS_GCIONSRC {
+# Flows in FT when GC is running in normal mode
+     > Set FT reagent flow 0.2 sccm
+     > Set FT ion source dilution flow 280 sccm
+     > Set FT dilution flow 1580 sccm
+     > Set ambient zero flow 130 sccm
+}
+
+##########################################
+
+
+Partition
+# GC flows
+
+State GC_FLOW_WAIT {
+}
+
+State GC_IDLE {
+# GC Flows set at nominal operating values   
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 400 sccm
+     > Set GC intake flow 500 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm 
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_OFF {
+# GC Flows set at nominal operating values     
+     > column N2 pickup flow valve off
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 0 sccm 
+     > Set GC dilution flow 0 sccm
+     > Set GC intake flow 0 sccm
+     > Set GC pickup flow 0 sccm
+     > Set GC bypass flow 0 sccm 
+  +1 Validate GC_FLOW_WAIT;
+}
+
+
+State GC_SAMPLE_D10 {
+# ambient air through GC
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm 
+     > Set GC dilution flow 400 sccm
+     > Set GC intake flow 500 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_SAMPLE_D5 {
+# ambient air through GC, dilution of 5x
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm 
+     > Set GC dilution flow 960 sccm
+     > Set GC intake flow 1150 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_SAMPLE_D2 {
+# ambient air through GC, dilution of 2x
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm 
+     > Set GC dilution flow 765 sccm
+     > Set GC intake flow 1150 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+
+State GC_OUTPUT_FT {
+# Send output of GC to flowtube, i.e. “normal mode”
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode on
+     Validate GBFLOWS_GCNORM;
+     Hold until valid ( GB_WAIT ); 
+     > Set GC column N2 flow 7 sccm 
+     > Set GC dilution flow 400 sccm
+     > Set GC intake flow 500 sccm
+     > Set GC pickup flow 100 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_OUTPUT_IONSOURCE {
+# Send output of GC to ion source, i.e. “high sensitivity mode”
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode on
+     > normal GC mode off
+     Validate GBFLOWS_GCIONSRC;
+     Hold until valid ( GB_WAIT ); 
+     > Set GC column N2 flow 7 sccm 
+     > Set GC dilution flow 400 sccm
+     > Set GC intake flow 500 sccm
+     > Set GC pickup flow 100 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+
+
+#######################################
+
+Partition 
+# Watlow, temperature and CO2 control
+
+
+State WATLOW_WAIT {
+}
+
+State WATLOW_IDLE {
+     > CO2 valve off
+     > Spare valve a2_1 off
+     > GCwatlow F4 profile terminate
+     > GCwatlow F4 set GC column temperature -60
+  +1 Validate WATLOW_WAIT;
+}
+
+State WATLOW_COOL {
+     > GCwatlow F4 set GC column temperature -20
+     > CO2 valve on
+     > Spare valve a2_1 on 
+#    Hold until (convert(GC_T )< -19) or 15:00;
+# +10 > CO2 valve off
+ +901 Validate WATLOW_WAIT;
+}
+
+State WATLOW_HEAT {
+     > GCwatlow F4 set GC column temperature 30
+     > CO2 valve off
+     > Spare valve a2_1 off
+#    Hold until (convert(GC_T) > 29);
+     > GCwatlow F4 profile start file number 3
+  +1 Validate WATLOW_WAIT;
+}
