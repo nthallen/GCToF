@@ -163,17 +163,3 @@ ROWS 20
  10 IG_PRESENT:IG_stat:0 IonGauge Stat
  10 IG_HEX_P_FRESH:IG_stat:1 IonGauge Stat
  10 IG_TOF_P_FRESH:IG_stat:2 IonGauge Stat
-
- 10 Sonic1_U Sonic1 Winds
- 10 Sonic1_V Sonic1 Winds
- 10 Sonic1_W Sonic1 Winds
- 10 Sonic1_C Sonic1 Sound
- 10 Sonic1_N Sonic1 N
- 10 Sonic1_S Sonic1 Status
-
- 10 Sonic2_U Sonic2 Winds
- 10 Sonic2_V Sonic2 Winds
- 10 Sonic2_W Sonic2 Winds
- 10 Sonic2_C Sonic2 Sound
- 10 Sonic2_N Sonic2 N
- 10 Sonic2_S Sonic2 Status
