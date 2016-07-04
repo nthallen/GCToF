@@ -1,6 +1,10 @@
 #ifndef HERCULES_H_INCLUDED
 #define HERCULES_H_INCLUDED
 
+extern int dac_bipolar;
+
+#ifdef __cplusplus
+
 #include "dsdaqdrv.h"
 
 typedef enum {
@@ -51,4 +55,5 @@ class Hercules : public dsdaqdrv {
 #define HERC_AD_OFFSET_MAX 0x1FF
 #define HERC_DA_SU 0x80 // simultaneous update
 
+#endif // __cplusplus
 #endif

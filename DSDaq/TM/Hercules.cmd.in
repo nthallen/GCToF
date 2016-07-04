@@ -2,28 +2,16 @@
   #ifdef SERVER
     #include "address.h"
 
-    // This scaling is for bipolar output
-    // static unsigned short Herc_Scale( double val, double minV, double maxV ) {
-      // signed short s_val;
-      // unsigned short u_val;
-      // if ( val < minV ) val = minV;
-      // else if ( val > maxV) val = maxV;
-      // s_val = (val * 2048 / 10.);
-      // if ( s_val < -2048 ) s_val = -2048;
-      // else if (s_val > 2047 ) s_val = 2047;
-      // u_val = s_val + 2048;
-      // return u_val;
-    // }
-    // This version is for unipolar output
+    // @DAC_COMMENT@
     static unsigned short Herc_Scale( double val, double minV, double maxV ) {
       signed short s_val;
       unsigned short u_val;
       if ( val < minV ) val = minV;
       else if ( val > maxV) val = maxV;
-      s_val = (val * 4096 / 10.);
-      if ( s_val < 0 ) s_val = 0;
-      else if (s_val > 4095 ) s_val = 4095;
-      u_val = s_val;
+      s_val = (val * (4096-@DAC_OFFSET@) / 10.);
+      if ( s_val < -@DAC_OFFSET@ ) s_val = -@DAC_OFFSET@;
+      else if (s_val > 4095-@DAC_OFFSET@ ) s_val = 4095-@DAC_OFFSET@;
+      u_val = s_val + @DAC_OFFSET@;
       return u_val;
     }
   #endif
