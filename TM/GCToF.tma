@@ -7,43 +7,141 @@ state init {
 }
 
 state shutdown {
-     > gcwatlow f4 profile terminate
+     validate terminate_profile;
+     hold until valid ( F4_idle);
      > set oct amp 0 volts
      > set oct bias 0 volts
   +5 > Quit
 }
 
-Partition 
+Partition
 
 State data_loop_idle { }
 
-State data_loop_fluxgc {
-# Data loop for flux and GC measurements: 
+State data_loop_standby {
+       Validate GB_STANDBY;
+       Validate GC_STANDBY;
+       Validate data_loop_idle;
+}
+
+State data_loop_gcblank {
+# Data loop for flux and blank GC measurements:
        Validate GC_IDLE;
        Hold until valid (GC_FLOW_WAIT);
-       Validate ZEROES;
-       Hold until valid (DATA_COLLECT_IDLE);
        Validate AMB_DATA_FULL;
-  +946 Validate WATLOW_COOL;
+       Validate WATLOW_COOL;
+       Hold until valid (WATLOW_WAIT);
+       Validate WATLOW_EQIL;
+       Validate GC_SAMPLE_D10;
+       Hold until valid (WATLOW_WAIT);
+       Validate GC_COLLECT;
+  +239 Validate ZEROES_AMB;
        Hold until valid (DATA_COLLECT_IDLE);
-       Validate ZEROES;
-  +185 Validate GC_COLLECT;
-       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
        Validate GC_DATA_HS;
        Hold until valid (GC_WAIT);
+       Validate ZEROES_AMB;
+       Validate GC_BAKE;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
        Validate data_loop_fluxgc;
+}
+
+State data_loop_fluxgc {
+# Data loop for flux and GC measurements:
+       Validate GC_IDLE;
+       Hold until valid (GC_FLOW_WAIT);
+       Validate AMB_DATA_FULL;
+#    Hold until (itime() % 3600 == 1200);
+       Validate WATLOW_COOL;
+       Hold until valid (WATLOW_WAIT);
+       Validate WATLOW_EQIL;
+       Validate GC_SAMPLE_D10;
+       Hold until valid (WATLOW_WAIT);
+       Validate GC_COLLECT;
+  +239 Validate ZEROES_AMB;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate GC_DATA_HS;
+       Hold until valid (GC_WAIT);
+       Validate ZEROES_GC;
+       Validate GC_BAKE;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate data_loop_fluxgc;
+}
+
+State data_loop_fluxgcdil {
+# Data loop for flux and GC measurements
+# Alternating GC dilution flows 10 and 20
+       Validate GC_IDLE;
+       Hold until valid (GC_FLOW_WAIT);
+       Validate AMB_DATA_FULL;
+       Validate WATLOW_COOL;
+       Hold until valid (WATLOW_WAIT);
+       Validate WATLOW_EQIL;
+       Validate GC_SAMPLE_D10;
+       Hold until valid (WATLOW_WAIT);
+       Validate GC_COLLECT;
+  +239 Validate ZEROES_AMB;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate GC_DATA_HS;
+       Hold until valid (GC_WAIT);
+       Validate ZEROES_GC;
+       Validate GC_BAKE;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate GC_IDLE;
+       Hold until valid (GC_FLOW_WAIT);
+       Validate AMB_DATA_FULL;
+       Validate WATLOW_COOL;
+       Hold until valid (WATLOW_WAIT);
+       Validate WATLOW_EQIL;
+       Validate GC_SAMPLE_D26;
+       Hold until valid (WATLOW_WAIT);
+       Validate GC_COLLECT_2;
+  +239 Validate ZEROES_AMB;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate GC_DATA_HS;
+       Hold until valid (GC_WAIT);
+       Validate ZEROES_GC;
+       Validate GC_BAKE;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate data_loop_fluxgcdil;
 }
 
 State data_loop_fluxonly {
 # Data loop for flux measurements only:
        Validate GC_IDLE;
        Hold until valid (GC_FLOW_WAIT);
-       Validate ZEROES;
+       Validate ZEROES_AMB;
        Hold until valid (DATA_COLLECT_IDLE);
        Validate AMB_DATA_FLUX;
        Hold until valid (DATA_COLLECT_IDLE);
        Validate data_loop_fluxonly;
-} 
+}
+
+State data_loop_gconly {
+# Data loop for GC measurements only:
+       Validate GC_IDLE;
+       Hold until valid (GC_FLOW_WAIT);
+       Validate FT_Z_N2;
+       Validate WATLOW_COOL;
+       Validate GC_SAMPLE_D10;
+  +270 Validate GC_COLLECT;
+      Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate GC_DATA_HS;
+       Hold until valid (GC_WAIT);
+       Validate GC_BAKE;
+       Hold until valid (DATA_COLLECT_IDLE);
+       Hold until valid (GC_WAIT);
+       Validate data_loop_gconly;
+}
+
 
 Partition
 
@@ -52,20 +150,36 @@ Partition
 State DATA_COLLECT_IDLE {
 }
 
-State ZEROES {
+State ZEROES_GC {
        Validate oct_off;
        Validate FT_Z_N2;
        Hold until valid ( GB_WAIT );
     +2 Validate oct_on;
        Hold until valid ( oct_idle );
-  +120 Validate oct_off;
+ +112 Validate oct_off;
        Validate FT_Z_AMB;
        Hold until valid ( GB_WAIT );
     +2 Validate oct_on;
        Hold until valid ( oct_idle );
-  +240 Validate DATA_COLLECT_IDLE;
+  +232 > Set FT dilution flow 1430 sccm
+       Validate DATA_COLLECT_IDLE;
 }
-       
+
+
+State ZEROES_AMB {
+       Validate oct_off;
+       Validate FT_Z_AMB;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+  +232 Validate oct_off;
+       Validate FT_Z_N2;
+       Hold until valid ( GB_WAIT );
+    +2 Validate oct_on;
+       Hold until valid ( oct_idle );
+  +112 Validate DATA_COLLECT_IDLE;
+}
+
 
 State CAL {
        Validate oct_off;
@@ -88,9 +202,7 @@ State AMB_DATA_FULL {
        Hold until valid ( GB_WAIT );
     +2 Validate oct_on;
        Hold until valid ( oct_idle );
-# Time for flux and GC measurements:
- +1659 Validate DATA_COLLECT_IDLE;
-
+       Validate DATA_COLLECT_IDLE;
 }
 
 State AMB_DATA_FLUX {
@@ -106,17 +218,45 @@ State AMB_DATA_FLUX {
 Partition
 # GC sampling
 
-State GC_WAIT{
+State GC_WAIT {
+}
+
+State GC_COLLECT_BLANK {
+       Validate GC_IDLE;
+       Hold until valid ( GC_FLOW_WAIT );
+       > Set GC column N2 flow 0 sccm
+   +30 > GC sample dilution on
+  +600 > GC sample dilution off
+       > Set GC column N2 flow 7 sccm
+   +29 Validate GC_WAIT;
 }
 
 State GC_COLLECT {
-       Validate GC_SAMPLE_D5;
+       Validate GC_SAMPLE_D10;
        Hold until valid ( GC_FLOW_WAIT );
-       > Set GC intake flow 1000 sccm
-       > GC sample dilution on
-  +120 > GC sample dilution off
-       > Set GC intake flow 1150 sccm
-   +60 Validate GC_WAIT; 
+       > Set GC intake flow 500 sccm
+       > Set GC column N2 flow 0 sccm
+   +59 > GC sample dilution on
+       Validate WATLOW_TRAP;
+  +600 > GC sample dilution off
+       > Set GC column N2 flow 7 sccm
+       > Set GC intake flow 720 sccm
+       Hold until valid ( WATLOW_WAIT );
+       Validate GC_WAIT;
+}
+
+State GC_COLLECT_2 {
+       Validate GC_SAMPLE_D26;
+       Hold until valid ( GC_FLOW_WAIT );
+       > Set GC intake flow 500 sccm
+       > Set GC column N2 flow 0 sccm
+   +59 > GC sample dilution on
+       Validate WATLOW_TRAP;
+  +600 > GC sample dilution off
+       > Set GC column N2 flow 7 sccm
+       > Set GC intake flow 720 sccm
+       Hold until valid ( WATLOW_WAIT );
+       Validate GC_WAIT;
 }
 
 State GC_DATA_NORM {
@@ -125,7 +265,7 @@ State GC_DATA_NORM {
     +2 Validate oct_on;
        Hold until valid ( oct_idle );
        Validate WATLOW_HEAT;
- +1200 Validate WATLOW_IDLE;
+ +1378 Validate WATLOW_IDLE;
        Validate GC_WAIT;
 }
 
@@ -136,8 +276,15 @@ State GC_DATA_HS {
     +2 Validate oct_on;
        Hold until valid ( oct_idle );
        Validate WATLOW_HEAT;
- +1200 Validate WATLOW_IDLE;
-       Validate GC_WAIT;
+ +1378 Validate GC_WAIT;
+}
+
+State GC_BAKE {
+      Validate GC_BAKE_FLOWS;
+      Hold until valid ( GC_FLOW_WAIT );
+      Validate WATLOW_BAKE;
+ +116 Validate WATLOW_IDLE;
+      Validate GC_WAIT;
 }
 
 Partition
@@ -150,7 +297,9 @@ state oct_on {
 	> set oct amp 0.2 Volts
 	+1 > set oct amp 0.4 Volts
 	+1 > set oct amp 0.6 Volts
-	> set oct bias 0.0 Volts
+	+1 > set oct amp 0.8 Volts
+	   > set oct amp 0.9 Volts
+	> set oct bias 0.1 Volts
 	+1 Validate oct_idle;
 }
 
@@ -159,4 +308,3 @@ state oct_off {
 	> set oct bias 0 Volts
 	+1 Validate oct_idle;
 }
-

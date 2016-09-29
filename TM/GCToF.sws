@@ -3,3 +3,7 @@ SW_Variable: SWStat SW Status
   SWS_DATALOOP_FLUXGC_START 10 data loop fluxgc start: Validate data_loop_fluxgc; break;
   SWS_DATALOOP_STOP 11 data loop stop: Validate data_loop_idle; break; 
   SWS_DATALOOP_FLUXONLY_START 12 data loop fluxonly start: Validate data_loop_fluxonly; break;
+  SWS_DATALOOP_STANDBY 13 data loop standby: Validate data_loop_standby; break;
+  SWS_DATALOOP_GCBLANK 14 data loop gcblank: Validate data_loop_gcblank; break;
+  SWS_DATALOOP_GCONLY 15 data loop gconly: Validate data_loop_gconly; break;
+  SWS_DATALOOP_FLUXGCDIL_START 16 data loop fluxgcdil start: Validate data_loop_fluxgcdil; break;

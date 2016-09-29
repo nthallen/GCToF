@@ -28,26 +28,39 @@ State GB_OFF {
   +1 Validate GB_WAIT;
 }
 
+State GB_STANDBY{
+# Standby flows (low flow state)
+     > cold cal 1 off
+     > cold cal 2 off
+     > ambient zero valve off
+     > hot cal valve 1 off
+     > GC tracer flow to FT off
+     > Set FT reagent flow 0 sccm
+     > Set FT Ion Source dilution flow 50 sccm
+     > Set FT dilution flow 50 sccm
+     > Set ambient zero flow 100 sccm
+  +1 Validate GB_WAIT;
+}
 
 State FT_Z_N2 {
 # GC valves off; inlet overfilled with dry N2.
-# note: this has flows set at nominal operating  
+# note: this has flows set at nominal operating
      > cold cal 1 off
      > cold cal 2 off
-     > hot cal valve 1 off 
+     > hot cal valve 1 off
      > GC tracer flow to FT off
      > ambient zero valve off
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1580 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
   +1 Validate GB_WAIT;
 }
 
 
 State FT_Z_N2_CAL {
 # GC valves off; inlet overfilled with dry N2
-# calibration gases on 
+# calibration gases on
      > cold cal 1 off
      > cold cal 2 off
      > hot cal valve 1 on
@@ -56,13 +69,13 @@ State FT_Z_N2_CAL {
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1540 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
   +1 Validate GB_WAIT;
 }
 
 
 State FT_Z_AMB {
-# GC valves off; inlet overfilled with wet N2.  
+# GC valves off; inlet overfilled with wet N2.
      > cold cal 1 off
      > cold cal 2 off
      > hot cal valve 1 off
@@ -71,7 +84,7 @@ State FT_Z_AMB {
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1380 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
   +1 Validate GB_WAIT;
 }
 
@@ -87,20 +100,20 @@ State FT_Z_AMB_CAL {
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1340 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
   +1 Validate GB_WAIT;
 }
 
 
 State FT_AMB_SAMP {
 # sampling ambient air, no calibration gases
-     > hot cal valve 1 off 
+     > hot cal valve 1 off
      > GC tracer flow to FT off
      > ambient zero valve off
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1580 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
      > cold cal 2 on
      > cold cal 1 on
   +1 Validate GB_WAIT;
@@ -108,14 +121,14 @@ State FT_AMB_SAMP {
 
 
 State FT_AMB_SAMP_CAL {
-# sampling ambient air, calibration gases 
-     > hot cal valve 1 on 
+# sampling ambient air, calibration gases
+     > hot cal valve 1 on
      > GC tracer flow to FT on
      > ambient zero valve off
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1540 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
      > cold cal 2 on
      > cold cal 1 on
   +1 Validate GB_WAIT;
@@ -123,18 +136,26 @@ State FT_AMB_SAMP_CAL {
 
 State GBFLOWS_GCNORM {
 # Flows in FT when GC is running in normal mode
+     > ambient zero valve off
+     > cold cal 1 off
+     > cold cal 2 off
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 380 sccm
      > Set FT dilution flow 1480 sccm
-     > Set ambient zero flow 130 sccm
+     > Set ambient zero flow 129 sccm
+  +1 Validate GB_WAIT;
 }
 
 State GBFLOWS_GCIONSRC {
 # Flows in FT when GC is running in normal mode
+     > ambient zero valve off
+     > cold cal 1 off
+     > cold cal 2 off
      > Set FT reagent flow 0.2 sccm
      > Set FT ion source dilution flow 280 sccm
-     > Set FT dilution flow 1580 sccm
-     > Set ambient zero flow 130 sccm
+     > Set FT dilution flow 1480 sccm
+     > Set ambient zero flow 129 sccm
+  +1 Validate GB_WAIT;
 }
 
 ##########################################
@@ -146,34 +167,77 @@ Partition
 State GC_FLOW_WAIT {
 }
 
+State GC_OFF {
+# GC Flows set at nominal operating values
+     > column N2 pickup flow valve off
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 0 sccm
+     > Set GC dilution flow 0 sccm
+     > Set GC intake flow 0 sccm
+     > Set GC pickup flow 0 sccm
+     > Set GC bypass flow 0 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_STANDBY {
+# GC Flows set at nominal operating values
+     > column N2 pickup flow valve on
+     > GC sample dilution on
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 0 sccm
+     > Set GC dilution flow 500 sccm
+     > Set GC intake flow 100 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
 State GC_IDLE {
-# GC Flows set at nominal operating values   
+# GC Flows set at nominal operating values
      > column N2 pickup flow valve on
      > GC sample dilution off
      > high sensitivity mode off
      > normal GC mode off
      > Set GC column N2 flow 7 sccm
-     > Set GC dilution flow 400 sccm
-     > Set GC intake flow 500 sccm
+     > Set GC dilution flow 600 sccm
+     > Set GC intake flow 100 sccm
      > Set GC pickup flow 20 sccm
-     > Set GC bypass flow 500 sccm 
+     > Set GC bypass flow 500 sccm
   +1 Validate GC_FLOW_WAIT;
 }
 
-State GC_OFF {
-# GC Flows set at nominal operating values     
-     > column N2 pickup flow valve off
+State GC_SAMPLE_D26 {
+# ambient air through GC
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
      > GC sample dilution off
      > high sensitivity mode off
      > normal GC mode off
-     > Set GC column N2 flow 0 sccm 
-     > Set GC dilution flow 0 sccm
-     > Set GC intake flow 0 sccm
-     > Set GC pickup flow 0 sccm
-     > Set GC bypass flow 0 sccm 
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 693 sccm
+     > Set GC intake flow 720 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
   +1 Validate GC_FLOW_WAIT;
 }
 
+State GC_SAMPLE_D20 {
+# ambient air through GC
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 686 sccm
+     > Set GC intake flow 720 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
 
 State GC_SAMPLE_D10 {
 # ambient air through GC
@@ -182,9 +246,39 @@ State GC_SAMPLE_D10 {
      > GC sample dilution off
      > high sensitivity mode off
      > normal GC mode off
-     > Set GC column N2 flow 7 sccm 
-     > Set GC dilution flow 400 sccm
-     > Set GC intake flow 500 sccm
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 655 sccm
+     > Set GC intake flow 720 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_SAMPLE_D8 {
+# ambient air through GC
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 640 sccm
+     > Set GC intake flow 720 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
+
+State GC_SAMPLE_D6 {
+# ambient air through GC, dilution of 5x
+# Dry N2 in FT, no calibration gases
+     > column N2 pickup flow valve on
+     > GC sample dilution off
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 617 sccm
+     > Set GC intake flow 720 sccm
      > Set GC pickup flow 20 sccm
      > Set GC bypass flow 500 sccm
   +1 Validate GC_FLOW_WAIT;
@@ -197,9 +291,9 @@ State GC_SAMPLE_D5 {
      > GC sample dilution off
      > high sensitivity mode off
      > normal GC mode off
-     > Set GC column N2 flow 7 sccm 
-     > Set GC dilution flow 960 sccm
-     > Set GC intake flow 1150 sccm
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 600 sccm
+     > Set GC intake flow 720 sccm
      > Set GC pickup flow 20 sccm
      > Set GC bypass flow 500 sccm
   +1 Validate GC_FLOW_WAIT;
@@ -212,9 +306,9 @@ State GC_SAMPLE_D2 {
      > GC sample dilution off
      > high sensitivity mode off
      > normal GC mode off
-     > Set GC column N2 flow 7 sccm 
-     > Set GC dilution flow 765 sccm
-     > Set GC intake flow 1150 sccm
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 480 sccm
+     > Set GC intake flow 720 sccm
      > Set GC pickup flow 20 sccm
      > Set GC bypass flow 500 sccm
   +1 Validate GC_FLOW_WAIT;
@@ -228,8 +322,8 @@ State GC_OUTPUT_FT {
      > high sensitivity mode off
      > normal GC mode on
      Validate GBFLOWS_GCNORM;
-     Hold until valid ( GB_WAIT ); 
-     > Set GC column N2 flow 7 sccm 
+     Hold until valid ( GB_WAIT );
+     > Set GC column N2 flow 7 sccm
      > Set GC dilution flow 400 sccm
      > Set GC intake flow 500 sccm
      > Set GC pickup flow 100 sccm
@@ -244,20 +338,32 @@ State GC_OUTPUT_IONSOURCE {
      > high sensitivity mode on
      > normal GC mode off
      Validate GBFLOWS_GCIONSRC;
-     Hold until valid ( GB_WAIT ); 
-     > Set GC column N2 flow 7 sccm 
+     Hold until valid ( GB_WAIT );
+     > Set GC column N2 flow 7 sccm
      > Set GC dilution flow 400 sccm
      > Set GC intake flow 500 sccm
-     > Set GC pickup flow 100 sccm
+     > Set GC pickup flow 200 sccm
      > Set GC bypass flow 500 sccm
   +1 Validate GC_FLOW_WAIT;
 }
 
-
+State GC_BAKE_FLOWS {
+# Flows needed to clean out the column
+     > column N2 pickup flow valve on
+     > GC sample dilution on
+     > high sensitivity mode off
+     > normal GC mode off
+     > Set GC column N2 flow 7 sccm
+     > Set GC dilution flow 1000 sccm
+     > Set GC intake flow 500 sccm
+     > Set GC pickup flow 20 sccm
+     > Set GC bypass flow 500 sccm
+  +1 Validate GC_FLOW_WAIT;
+}
 
 #######################################
 
-Partition 
+Partition
 # Watlow, temperature and CO2 control
 
 
@@ -266,26 +372,265 @@ State WATLOW_WAIT {
 
 State WATLOW_IDLE {
      > CO2 valve off
-     > Spare valve a2_1 off
-     > GCwatlow F4 profile terminate
+#     > Spare valve a2_1 off
+     Validate terminate_profile;
+     Hold until valid ( F4_idle );
      > GCwatlow F4 set GC column temperature -60
   +1 Validate WATLOW_WAIT;
 }
 
 State WATLOW_COOL {
-     > GCwatlow F4 set GC column temperature -20
+     Validate set_F4_m50;
+     Hold until valid ( F4_idle );
      > CO2 valve on
-     > Spare valve a2_1 on 
-#    Hold until (convert(GC_T )< -19) or 15:00;
-# +10 > CO2 valve off
- +901 Validate WATLOW_WAIT;
+#     > Spare valve a2_1 on
+#     > CO2 valve off
+#     > Spare valve a2_1 off
+#     +1 Validate set_F4_m23
+#     Hold until valid ( F4_idle );
+ +600 > CO2 valve off
+      Validate WATLOW_WAIT;
+}
+
+State WATLOW_EQIL {
+     Validate set_F4_m50;
+     Hold until valid ( F4_idle );
+ +90 Validate set_F4_m45;
+     Hold until valid ( F4_idle );
+ +90 Validate set_F4_m40;
+     Hold until valid ( F4_idle );
+ +90 Validate set_F4_m35;
+     Hold until valid ( F4_idle );
+ +90 Validate set_F4_m30;
+     Hold until valid ( F4_idle );
+ +90 Validate set_F4_m25;
+     Hold until valid ( F4_idle );
+ +90 Validate set_F4_m20;
+     Hold until valid ( F4_idle );
+ +60 Validate set_F4_m30;
+     Hold until valid ( F4_idle );
+     Validate WATLOW_WAIT;
+}
+
+
+State WATLOW_TRAP {
+    > CO2 valve on
+    Hold until (convert(GC_T)<-22) or 1:00;
+    > CO2 valve off
+    Hold until (convert(GC_T)>-18) or 1:00;
+    > CO2 valve on
+    Hold until (convert(GC_T)<-22) or 1:00;
+    > CO2 valve off
+    Hold until (convert(GC_T)>-18) or 1:00;
+    > CO2 valve on
+    Hold until (convert(GC_T)<-22) or 1:00;
+    > CO2 valve off
+    Hold until (convert(GC_T)<-18) or 1:00;
+    > CO2 valve on
+    Hold until (convert(GC_T)<-22) or 1:00;
+    > CO2 valve off
+    Hold until (convert(GC_T)<-18) or 1:00;
+    > CO2 valve on
+    Hold until (convert(GC_T)<-22) or 1:00;
+    > CO2 valve off
++60 Validate WATLOW_WAIT;
 }
 
 State WATLOW_HEAT {
-     > GCwatlow F4 set GC column temperature 30
+     Validate set_F4_0;
+ +58 Validate set_F4_10;
+ +57 Validate set_F4_20;
+     Hold until valid ( F4_idle );
      > CO2 valve off
      > Spare valve a2_1 off
-#    Hold until (convert(GC_T) > 29);
-     > GCwatlow F4 profile start file number 3
+    Hold until ( convert(GC_T) > 19);
++88 Validate start_profile;
+     Hold until valid ( F4_idle );
   +1 Validate WATLOW_WAIT;
+}
+
+State WATLOW_BAKE {
+     > CO2 valve off
+     > Spare valve a2_1 off
+     Validate terminate_profile;
+     Hold until valid ( F4_idle );
+     Validate set_F4_130;
+     Hold until valid ( F4_idle );
+  +1 Validate WATLOW_WAIT;
+}
+
+Partition
+
+State watlow_monitor {
+hold until ( convert( GCWatlow_F4_Op ) < 1 );
++1 Validate F4_profile_stopped;
+
+hold until ( convert( GCWatlow_F4_Op ) > 1 );
++1 Validate F4_profile_running;
+
++1 Validate watlow_monitor;
+}
+
+Partition
+# watlow_status
+
+State F4_profile_stopped { }
+
+State F4_profile_running { }
+
+
+Partition
+# F4 watlow control
+
+State F4_idle { }
+
+State start_profile { 
+	> gcwatlow f4 profile start File Number 3
+     +1 depending on ( F4_profile_running ) {
+               Validate F4_idle;
+      }
+    +1 Validate start_profile;
+}
+
+State terminate_profile { 
+         > gcwatlow f4 profile terminate
+      +1 depending on ( F4_profile_stopped ) {
+		Validate F4_idle;
+          }
+         +1 Validate terminate_profile;
+}
+
+State set_F4_130 {
+         > gcwatlow f4 set GC column temperature 130
+        +1 > log set F4 T to 130.
+       { if ( fabs( convert( GC_T_SP ) - 130 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_130;
+}
+
+State set_F4_30 {
+         > gcwatlow f4 set GC column temperature 30
+        +1 > log set F4 T to 30.
+       { if ( fabs( convert( GC_T_SP ) - 30 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_30;
+}
+
+State set_F4_20 {
+         > gcwatlow f4 set GC column temperature 20
+        +1 > log set F4 T to 20.
+       { if ( fabs( convert( GC_T_SP ) - 20 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_20;
+}
+
+State set_F4_10 {
+         > gcwatlow f4 set GC column temperature 10
+        +1 > log set F4 T to 10.
+       { if ( fabs( convert( GC_T_SP ) - 10 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_10;
+}
+
+State set_F4_0 {
+         > gcwatlow f4 set GC column temperature 0
+        +1 > log set F4 T to 0.
+       { if ( fabs( convert( GC_T_SP ) - 0 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_0;
+}
+
+State set_F4_m10 {
+         > gcwatlow f4 set GC column temperature -10
+        +1 > log set F4 T to -10.
+       { if ( fabs( convert( GC_T_SP ) + 10 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m10;
+}
+
+State set_F4_m15 {
+         > gcwatlow f4 set GC column temperature -15
+        +1 > log set F4 T to -15.
+       { if ( fabs( convert( GC_T_SP ) + 15 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         + 1 Validate set_F4_m15;
+}
+
+State set_F4_m20 {
+         > gcwatlow f4 set GC column temperature -20
+        +1 > log set F4 T to -20.
+       { if ( fabs( convert( GC_T_SP ) + 20 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m20;
+}
+
+State set_F4_m23 {
+         > gcwatlow f4 set GC column temperature -23
+        +1 > log set F4 T to -23.
+       { if ( fabs( convert( GC_T_SP ) + 23 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m23;
+}
+
+State set_F4_m25 {
+         > gcwatlow f4 set GC column temperature -25
+        +1 > log set F4 T to -25.
+       { if ( fabs( convert( GC_T_SP ) + 25 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m25;
+}
+
+State set_F4_m30 {
+         > gcwatlow f4 set GC column temperature -30
+        +1 > log set F4 T to -30.
+       { if ( fabs( convert( GC_T_SP ) + 30 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m30;
+}
+
+State set_F4_m35 {
+         > gcwatlow f4 set GC column temperature -35
+        +1 > log set F4 T to -35.
+       { if ( fabs( convert( GC_T_SP ) + 35 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m35;
+}
+
+State set_F4_m40 {
+         > gcwatlow f4 set GC column temperature -40
+        +1 > log set F4 T to -40.
+       { if ( fabs( convert( GC_T_SP ) + 40 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m40;
+}
+
+State set_F4_m45 {
+         > gcwatlow f4 set GC column temperature -45
+        +1 > log set F4 T to -45.
+       { if ( fabs( convert( GC_T_SP ) + 45 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m45;
+}
+
+State set_F4_m50 {
+         > gcwatlow f4 set GC column temperature -50
+        +1 > log set F4 T to -50.
+       { if ( fabs( convert( GC_T_SP ) + 50 ) < 1 ) {
+          	Validate F4_idle;
+          }}
+         +1 Validate set_F4_m50;
 }

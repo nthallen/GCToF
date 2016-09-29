@@ -3,6 +3,7 @@
 <follow> msghdr
 <include> "Hercules.h"
 
+<opts> "ub"
 <sort>
 	-u Set DAC outputs to unipolar mode (default)
 	-b Set DAC outputs to bipolar mode

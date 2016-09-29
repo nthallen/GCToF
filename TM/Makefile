@@ -9,7 +9,7 @@
 # Invoking: appgen_module Watlow X src=GCWatlow.txt name=GCWatlow mode=driver
 # Invoking: appgen_module Watlow X src=GBWatlow.txt name=GBWatlow
 # Invoking: appgen_module UPS X 
-# Makefile Generated Mon Jul 04 12:50:01 PDT 2016
+# Makefile Generated Mon Jul 04 19:51:53 PDT 2016
 MNC=GCToF
 SPECFILE=GCToF.spec
 PCMFILE=GCToF.pcm
