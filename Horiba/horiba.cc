@@ -14,7 +14,7 @@ int opt_echo = 1;
 
 int main(int argc, char **argv) {
   oui_init_options(argc, argv);
-  nl_error( 0, "Starting V13.03" );
+  nl_error( 0, "Starting V14.0" );
   { Selector S;
     HoribaCmd HC;
     horiba_tm_t TMdata;
@@ -60,7 +60,7 @@ void HoribaQuery::format(unsigned short addr, float *resultp,
   query.append(&buf[0], nc);
   if (bcc == '@')
     query.append("\003\003\003", 3);
-  else if (bcc == '*')
+  else if (bcc == '*' || bcc == '.')
     query.append("\003\003\003\003\003\003\003\003\003", 9);
   nl_error(-2, "Query formatted: '%s'", ascii_escape(query));
 }
@@ -108,7 +108,7 @@ int HoribaCmd::ProcessData(int flag) {
     report_err("Invalid address %d in HoribaCmd", addr);
     return 0;
   }
-  HCquery.format( addr, 0, 0, 'B', "AFC%.2lf,B", value );
+  HCquery.format( addr, 0, HORIBA_CMD_S << (addr-1), 'B', "AFC%.2lf,B", value );
   flags = 0; // Don't listen for more commands
   Stor->set_gflag(1);
   report_ok();
@@ -121,13 +121,17 @@ HoribaQuery *HoribaCmd::query() {
     nl_error( 2, "HoribaCmd::query() called when flags != 0" );
     return NULL;
   }
-  flags = Selector::Sel_Read; // listen again
+  // flags = Selector::Sel_Read; // listen again
   return &HCquery;
+}
+
+void HoribaCmd::query_complete() {
+  flags = Selector::Sel_Read; // listen again
 }
 
 /* Buf Size arbitrarily set to 50 for now */
 HoribaSer::HoribaSer(const char *ser_dev, horiba_tm_t *data, HoribaCmd *HCmd)
-  : Ser_Sel( ser_dev, O_RDWR|O_NONBLOCK, 50 ) {
+  : Ser_Sel( ser_dev, O_RDWR|O_NONBLOCK, 100 ) {
   Cmd = HCmd;
   setup(38400, 7, 'o', 1, 45, 1 ); // Let's go with the timeout
   flags |= Selector::gflag(0) | Selector::gflag(1) | Selector::Sel_Timeout;
@@ -150,6 +154,8 @@ HoribaSer::HoribaSer(const char *ser_dev, horiba_tm_t *data, HoribaCmd *HCmd)
   do {
     nc = cp = 0;
   } while (fillbuf() == 0 && nc > 0);
+  cur_min = 1;
+  init_termios();
 }
 
 HoribaSer::~HoribaSer() {
@@ -164,25 +170,49 @@ int HoribaSer::ProcessData(int flag) {
   if (flag & Selector::gflag(1)) { // Command Received
     cmdq = 1;
   }
-  if (state == HS_WaitResp) {
-    if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
-      if (parse_response()) return 1;
-      if (CurQuery && CurQuery->result) {
+  if (flag & (Selector::Sel_Read | Selector::Sel_Timeout)) {
+    switch (parse_response()) {
+      case HP_Die: return 1;
+      case HP_Wait:
+        if (TO.Expired()) {
+          report_err("Timeout: Query was: '%s'",
+            ascii_escape(CurQuery->query));
+          break;
+        } else {
+          update_termios();
+          return 0;
+        }
+      case HP_OK:
+        break;
+      default:
+        nl_error(4, "Invalid return code from parse_response()");
+    }
+    if (CurQuery) {
+      if (CurQuery->result) {
         if (++qn == Qlist.size())
           qn = 0;
         --nq;
+      } else {
+        Cmd->query_complete();
       }
+      CurQuery = 0;
     }
   }
-  CurQuery = 0;
+  if (CurQuery) {
+    update_termios();
+    return 0;
+  }
   if (cmdq) {
     CurQuery = Cmd->query();
     cmdq = 0;
-  } else if (nq) {
+  }
+  if ((CurQuery == 0) && nq) {
     CurQuery = &Qlist[qn];
   }
   if (CurQuery == 0) {
     state = HS_Idle;
+    TO.Clear();
+    update_termios();
     return 0;
   }
   nbw = write(fd, CurQuery->query.c_str(), CurQuery->query.length());
@@ -194,45 +224,99 @@ int HoribaSer::ProcessData(int flag) {
     report_err("Incomplete write: expected %d, wrote %d",
       CurQuery->query.length(), nbw);
   }
-  TO.Set(0, CurQuery->result ? 70 : 150);
+  if (CurQuery->result) {
+    TO.Set(0, 70);
+  } else {
+    // nl_error(-2, "Set command timeout");
+    TO.Set(1, 0);
+  }
   state = HS_WaitResp;
+  cur_min = CurQuery->query.length()+5;
+  update_termios();
   return 0;
 }
 
-int HoribaSer::parse_response() {
-  if (fillbuf()) return 1; // Die on read error
-  if (CurQuery == 0) {
-    report_err("Unexpected input");
-    return 0;
-  }
-  if (opt_echo) {
-    if (nc < CurQuery->query.length()) {
-      report_err("Did not see complete echo. Query was: '%s'",
-        ascii_escape(CurQuery->query));
-      return 0;
-    } else if (not_str(CurQuery->query)) {
-      return 0;
+/**
+ * Search for string in the input, discarding
+ * characters from the front of the buffer as
+ * necessary. The string is assumed to begin with
+ * a unique synch character ('@') not located
+ * elsewhere in the string, so we can
+ * search forward from the first unmatched
+ * character in the input buffer.
+ * @param str The string
+ * @return 0 if entire string is found, 1 if the end of input is
+ *   reached without matching the string. If a partial match is
+ *   found, cp will point to the beginning of the partial match
+ */
+int HoribaSer::str_not_found(const char *str_in, int len) {
+  unsigned int start_cp = cp;
+  const unsigned char *str = (const unsigned char *)str_in;
+  int i = 0;
+  while (i < len && cp < nc) {
+    while (cp < nc && buf[cp] != str[0])
+      ++cp;
+    if (cp < nc) {
+      start_cp = cp++;
+      for (i = 1; i < len && cp < nc; ++i) {
+        if (str[i] != buf[cp])
+          break;
+        ++cp;
+      }
     }
   }
-  if (cp >= nc) {
-    report_err("Timeout: Query was: '%s'",
-      ascii_escape(CurQuery->query));
+  cur_min = len+5-i;
+  if (i >= len) {
+    if (start_cp > 0) {
+      nl_error(2, "Unexpected input '%s' before string ...",
+        ascii_escape((const char *)buf, start_cp));
+      nl_error(2, "... Found expected '%s'",
+        ascii_escape(ascii_escape(str_in, len)));
+      consume(start_cp);
+      cp = i;
+    }
     return 0;
+  } else return 1;
+}
+
+/**
+ * @return HP_OK means we are done with this query, good or bad.
+ *   HP_Wait means we have not received what we're looking for.
+ *   HP_Die means a serious error occurred and the driver should terminate.
+ */
+HoribaSer::Horiba_Parse_Resp HoribaSer::parse_response() {
+  cp = 0;
+  if (fillbuf()) return HP_Die; // Die on read error
+  if (CurQuery == 0) {
+    report_err("Unexpected input");
+    consume(nc);
+    return HP_OK;
+  }
+  if (str_not_found(CurQuery->query.c_str(), CurQuery->query.length())) {
+    return HP_Wait;
   }
   // I expect either ACK for a command response or
   // STX <float>,[A-Z] ETX BCC for a value request
   // NACK for error
-  if (buf[cp] == 21) {
-    report_err( "NAK on %d response: Query was: '%s'",
+  if (cp < nc && buf[cp] == 21) {
+    report_err( "NAK on %s response: Query was: '%s'",
       CurQuery->result ? "Data" : "Command",
       ascii_escape(CurQuery->query));
-    return 0;
+    consume(nc);
+    return HP_OK;
   }
   if (CurQuery->result) {
     float val;
     unsigned int cp0 = cp;
-    if (not_str("\002", 1) || not_float(val))
-      return 0;
+    if (not_str("\002", 1) || not_float(val)) {
+      if (cp < nc) {
+        consume(nc);
+        return HP_OK;
+      }
+      cur_min -= cp - cp0;
+      return HP_Wait;
+    }
+    cur_min = 1;
     if (cp+1 < nc && buf[cp] == ',' && buf[cp+1] >= 'A' &&
         buf[cp+1] <= 'Z') {
       if (CurQuery->unit != buf[cp+1]) {
@@ -241,9 +325,16 @@ int HoribaSer::parse_response() {
       }
       cp += 2;
     }
-    if (not_str("\003", 1)) return 0;
+    if (not_str("\003", 1)) {
+      if (cp < nc) {
+        consume(nc);
+        return HP_OK;
+      }
+      return HP_Wait;
+    }
+    if (cp >= nc) return HP_Wait;
     if (bcc_ok(cp0)) {
-      *(CurQuery->result) = val; // (short)floor(val/CurQuery->scale + 0.5);
+      *(CurQuery->result) = (short)floor(val/CurQuery->scale + 0.5);
       TMdata->HoribaS |= CurQuery->mask;
       report_ok();
       consume(cp);
@@ -251,15 +342,22 @@ int HoribaSer::parse_response() {
   } else {
     unsigned int cp0 = cp;
     if (not_str("\002OK\003",4)) {
-      return 0;
+      if (cp < nc) {
+        consume(nc);
+        return HP_OK;
+      }
+      cur_min -= cp-cp0;
+      return HP_Wait;
     }
+    cur_min = 1;
+    if (cp >= nc) return HP_Wait;
     if (bcc_ok(cp0)) {
-      TMdata->HoribaS |= HORIBA_CMD_S;
+      TMdata->HoribaS |= CurQuery->mask;
       report_ok();
       consume(cp);
     }
   }
-  return 0;
+  return HP_OK;
 }
 
 /**
@@ -300,4 +398,30 @@ int HoribaSer::bcc_ok(unsigned int from) {
 
 Timeout *HoribaSer::GetTimeout() {
   return state == HS_Idle ? 0 : &TO;
+}
+
+void HoribaSer::init_termios() {
+  if (tcgetattr(fd, &termios_s)) {
+    nl_error(2, "Error from tcgetattr: %s", strerror(errno));
+  }
+}
+
+/**
+ * Adapted from TwisTorr. Adjusts the VMIN termios value
+ * based on the specific command. This version is incomplete.
+ * It adjusts for the request size so we can skip over the RS485 echo,
+ * but it does not anticipate any more than the minimal response
+ * of 6 characters. We could add command-specific response size
+ * as noted in the comments. We could also adjust the VTIME
+ * parameter, but it may be redundant, since we have the overriding
+ * Selector timeout working for us.
+ */
+void HoribaSer::update_termios() {
+  if (cur_min < 1) cur_min = 1;
+  if (cur_min != termios_s.c_cc[VMIN]) {
+    termios_s.c_cc[VMIN] = cur_min;
+    if (tcsetattr(fd, TCSANOW, &termios_s)) {
+      nl_error(2, "Error from tcsetattr: %s", strerror(errno));
+    }
+  }
 }

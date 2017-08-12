@@ -31,6 +31,7 @@ class HoribaCmd : public Ser_Sel {
     ~HoribaCmd();
     int ProcessData(int flag);
     HoribaQuery *query();
+    void query_complete();
   private:
     HoribaQuery HCquery;
 };
@@ -42,9 +43,15 @@ class HoribaSer : public Ser_Sel {
     int ProcessData(int flag);
     Timeout *GetTimeout();
   private:
-    int parse_response();
+    void init_termios();
+    void update_termios();
+    enum Horiba_Parse_Resp { HP_Die, HP_Wait, HP_OK };
+    Horiba_Parse_Resp parse_response();
     int bcc_ok(unsigned int from);
+    int str_not_found(const char *str, int len);
     HoribaCmd *Cmd;
+    short cur_min;
+    termios termios_s;
     Timeout TO;
     horiba_tm_t *TMdata;
     std::vector<HoribaQuery> Qlist;
