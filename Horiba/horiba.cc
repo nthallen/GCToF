@@ -231,7 +231,7 @@ int HoribaSer::ProcessData(int flag) {
     TO.Set(1, 0);
   }
   state = HS_WaitResp;
-  cur_min = CurQuery->query.length()+5;
+  cur_min = opt_echo ? CurQuery->query.length()+5 : 5;
   update_termios();
   return 0;
 }
@@ -292,7 +292,8 @@ HoribaSer::Horiba_Parse_Resp HoribaSer::parse_response() {
     consume(nc);
     return HP_OK;
   }
-  if (str_not_found(CurQuery->query.c_str(), CurQuery->query.length())) {
+  if (opt_echo &&
+      str_not_found(CurQuery->query.c_str(), CurQuery->query.length())) {
     return HP_Wait;
   }
   // I expect either ACK for a command response or
