@@ -334,7 +334,7 @@ HoribaSer::Horiba_Parse_Resp HoribaSer::parse_response() {
     }
     if (cp >= nc) return HP_Wait;
     if (bcc_ok(cp0)) {
-      *(CurQuery->result) = (short)floor(val/CurQuery->scale + 0.5);
+      *(CurQuery->result) = val;
       TMdata->HoribaS |= CurQuery->mask;
       report_ok();
       consume(cp);

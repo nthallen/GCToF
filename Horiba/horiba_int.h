@@ -1,6 +1,7 @@
 #ifndef HORIBA_INT_H_INCLUDED
 #define HORIBA_INT_H_INCLUDED
 
+#include <termios.h>
 #include "horiba.h"
 
 extern const char *horiba_path;
